@@ -1,0 +1,405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\Entity">
+      <UniqueIdentifier>{821daf21-2164-4500-9023-76ebb14b702f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene">
+      <UniqueIdentifier>{920f840d-9ba5-4a09-8dc3-560dbd564372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Win">
+      <UniqueIdentifier>{a6e5ba26-34a2-4ba8-8868-83d9bf85ee2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library">
+      <UniqueIdentifier>{0dd2f149-de01-48b6-9116-e490e9669bf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\Doxygen">
+      <UniqueIdentifier>{d2d74791-61b1-4096-b800-29109308d89f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\event">
+      <UniqueIdentifier>{88e0c9d0-53f8-4b47-8a23-f3bce0cf4058}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\shader">
+      <UniqueIdentifier>{dce88fc8-a722-4a56-b15e-f511a8b35bd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\Event">
+      <UniqueIdentifier>{13bfdd17-b9cc-4615-892d-c47a35059364}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System">
+      <UniqueIdentifier>{7d8d4247-db27-4391-9be6-390b58997f3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\Scene">
+      <UniqueIdentifier>{a24e3d99-1e41-47a6-9f0b-ef6324e71554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\Scene\WinConfig">
+      <UniqueIdentifier>{22b7f5ae-3ba0-486b-942f-5fd947eeeca6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Entity\Test">
+      <UniqueIdentifier>{55b0b984-588b-4eeb-828a-91d5a5ad8953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\Event\ResourceLoad">
+      <UniqueIdentifier>{33a7fb6a-3923-4d95-b84a-3c2223ed2b69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\Event\WindowsEvent">
+      <UniqueIdentifier>{bf69b6ac-3d82-4abb-951d-73873541ef54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\Event\WindowEvent">
+      <UniqueIdentifier>{fe172df8-8dd5-450b-8567-76cf4142661c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Button">
+      <UniqueIdentifier>{11841041-dfcc-4b92-a018-754ad4cf425e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Camera">
+      <UniqueIdentifier>{6065176c-61cc-4fb2-9e07-40abba02b3a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Collider">
+      <UniqueIdentifier>{1fda776d-177b-4e6b-8d79-217fa5a4e6e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Easing">
+      <UniqueIdentifier>{3285e4f2-7cfa-478f-91b3-fd0f1c9510d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Engine">
+      <UniqueIdentifier>{32dc8036-fc99-4d10-9e42-05a088ad054e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Entity">
+      <UniqueIdentifier>{6743128c-4680-4cbb-9d06-70057fa628b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Font">
+      <UniqueIdentifier>{25477714-16ae-4417-b1b0-540a76cc49eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\FrameRate">
+      <UniqueIdentifier>{20e7f658-7eb7-49e6-ad2f-ca85e26e2be3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Icon">
+      <UniqueIdentifier>{34f32bc7-4487-47f2-a2c3-5195ac6a355c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Input">
+      <UniqueIdentifier>{654ed971-6dd4-4d47-b46f-b9fec1c78240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\MovieImage">
+      <UniqueIdentifier>{eba0e3c6-0229-48ee-9aa7-a969e22023c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\NonCopy">
+      <UniqueIdentifier>{8d266b36-78e5-476b-a62e-f51c62e71955}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Order">
+      <UniqueIdentifier>{d3419b88-0bb6-49cd-a03c-68470f40389c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Random">
+      <UniqueIdentifier>{ab939e0c-f372-42ec-a80d-1225d990514f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\RenderingManager">
+      <UniqueIdentifier>{594d29da-fb81-4f20-92e8-5a0e3a52e033}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\ResourceManager">
+      <UniqueIdentifier>{a4fe55cc-6e87-450e-9c51-bd149fe3f470}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Scene">
+      <UniqueIdentifier>{4f614ccd-1d0b-42d8-ad92-ce366af1a659}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Shader">
+      <UniqueIdentifier>{e9a0dfb4-51f8-429a-bb04-88509467ccbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Sound">
+      <UniqueIdentifier>{19e6a111-b14d-49e4-8df9-2bb0dbdfabeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Sound\Audio">
+      <UniqueIdentifier>{1dab5e4f-5f83-4810-87dd-040974b94834}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Sprite">
+      <UniqueIdentifier>{5f3a9c00-afd5-46d4-9a5f-896c27a660af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Texture">
+      <UniqueIdentifier>{4bf35a0d-31ad-4fe7-8fda-d1eaf25668de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Timer">
+      <UniqueIdentifier>{0f267fca-57c2-4b76-b69c-0450928c3266}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Window">
+      <UniqueIdentifier>{0282cdd2-7528-4cea-a937-cfabc75e545b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\State">
+      <UniqueIdentifier>{d4eb0fcf-6d0a-4c28-9d05-445543970c2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\WinConfig">
+      <UniqueIdentifier>{b3094bd6-15b5-4f88-89ee-31e5a3895a05}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\lib\System\randmais.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Entity\EntityLayer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Object\State\State.h">
+      <Filter>ソース ファイル\Library\State</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\Event\WindowEvent\WindowEvent.h">
+      <Filter>ソース ファイル\Library\Event\WindowEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\Event\WindowsEvent\WindowsEvent.h">
+      <Filter>ソース ファイル\Library\Event\WindowsEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\Event\ResourceLoad\ResourceLoad.h">
+      <Filter>ソース ファイル\Library\Event\ResourceLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\Event\Event.h">
+      <Filter>ソース ファイル\Library\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Camera\Camera.h">
+      <Filter>ソース ファイル\Library\System\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Collision\Collision.h">
+      <Filter>ソース ファイル\Library\System\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Easing\easing.hpp">
+      <Filter>ソース ファイル\Library\System\Easing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Engine\Data.h">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Engine\Engine.h">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Engine\Framework.h">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Engine\Initializer.h">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Engine\OGF.hpp">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Entity\Entity.h">
+      <Filter>ソース ファイル\Library\System\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Font\Font.h">
+      <Filter>ソース ファイル\Library\System\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\FPS\FPS.h">
+      <Filter>ソース ファイル\Library\System\FrameRate</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Input\Input.h">
+      <Filter>ソース ファイル\Library\System\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\MovieImage\MovieImage.h">
+      <Filter>ソース ファイル\Library\System\MovieImage</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Window\Window.h">
+      <Filter>ソース ファイル\Library\System\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Timer\glTimer.h">
+      <Filter>ソース ファイル\Library\System\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Texture\Texture.h">
+      <Filter>ソース ファイル\Library\System\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Sprite\Sprite.h">
+      <Filter>ソース ファイル\Library\System\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Audio\Audio.h">
+      <Filter>ソース ファイル\Library\System\Sound\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Audio\Sound.h">
+      <Filter>ソース ファイル\Library\System\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Audio\SoundManager.h">
+      <Filter>ソース ファイル\Library\System\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Audio\StreamingSound.h">
+      <Filter>ソース ファイル\Library\System\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Shader\Shader.h">
+      <Filter>ソース ファイル\Library\System\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Scene\Scene.h">
+      <Filter>ソース ファイル\Library\System\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Scene\SceneManager.h">
+      <Filter>ソース ファイル\Library\System\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\ResourceManager\ResourceManager.h">
+      <Filter>ソース ファイル\Library\System\ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\RenderingManager\RenderingManager.h">
+      <Filter>ソース ファイル\Library\System\RenderingManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Random\Random.h">
+      <Filter>ソース ファイル\Library\System\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Order\Order.h">
+      <Filter>ソース ファイル\Library\System\Order</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\NonCopyable\NonCopyable.hpp">
+      <Filter>ソース ファイル\Library\System\NonCopy</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\System\System.h">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\WinConfig\WinConfig.h">
+      <Filter>ソース ファイル\Scene\WinConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Button\Button.h">
+      <Filter>ソース ファイル\Library\System\Button</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Win\WinMain.cpp">
+      <Filter>ソース ファイル\Win</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Object\State\State.cpp">
+      <Filter>ソース ファイル\Library\State</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\Event\WindowEvent\WindowEvent.cpp">
+      <Filter>ソース ファイル\Library\Event\WindowEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\Event\WindowsEvent\WindowsEvent.cpp">
+      <Filter>ソース ファイル\Library\Event\WindowsEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\Event\ResourceLoad\ResourceLoad.cpp">
+      <Filter>ソース ファイル\Library\Event\ResourceLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\Event\Event.cpp">
+      <Filter>ソース ファイル\Library\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Camera\Camera.cpp">
+      <Filter>ソース ファイル\Library\System\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Collision\Collision.cpp">
+      <Filter>ソース ファイル\Library\System\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Engine\Data.cpp">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Engine\Engine.cpp">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Engine\Framework.cpp">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Engine\Initializer.cpp">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Entity\Entity.cpp">
+      <Filter>ソース ファイル\Library\System\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Font\Font.cpp">
+      <Filter>ソース ファイル\Library\System\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\FPS\FPS.cpp">
+      <Filter>ソース ファイル\Library\System\FrameRate</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Input\Input.cpp">
+      <Filter>ソース ファイル\Library\System\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\MovieImage\MovieImage.cpp">
+      <Filter>ソース ファイル\Library\System\MovieImage</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Window\Window.cpp">
+      <Filter>ソース ファイル\Library\System\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Timer\glTimer.cpp">
+      <Filter>ソース ファイル\Library\System\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Texture\Texture.cpp">
+      <Filter>ソース ファイル\Library\System\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Sprite\Sprite.cpp">
+      <Filter>ソース ファイル\Library\System\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Audio\Audio.cpp">
+      <Filter>ソース ファイル\Library\System\Sound\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Audio\Sound.cpp">
+      <Filter>ソース ファイル\Library\System\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Audio\SoundManager.cpp">
+      <Filter>ソース ファイル\Library\System\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Audio\StreamingSound.cpp">
+      <Filter>ソース ファイル\Library\System\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Shader\Shader.cpp">
+      <Filter>ソース ファイル\Library\System\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Scene\Scene.cpp">
+      <Filter>ソース ファイル\Library\System\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Scene\SceneManager.cpp">
+      <Filter>ソース ファイル\Library\System\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\ResourceManager\ResourceManager.cpp">
+      <Filter>ソース ファイル\Library\System\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\RenderingManager\RenderingManager.cpp">
+      <Filter>ソース ファイル\Library\System\RenderingManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Random\Random.cpp">
+      <Filter>ソース ファイル\Library\System\Random</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Order\Order.cpp">
+      <Filter>ソース ファイル\Library\System\Order</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\System\System.cpp">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\WinConfig\WinConfig.cpp">
+      <Filter>ソース ファイル\Scene\WinConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Button\Button.cpp">
+      <Filter>ソース ファイル\Library\System\Button</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="src\lib\System\Icon\Resource.rc">
+      <Filter>ソース ファイル\Library\System\Icon</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\event\kiritan.og">
+      <Filter>リソース ファイル\event</Filter>
+    </None>
+    <None Include="data\event\kiritanFile.og">
+      <Filter>リソース ファイル\event</Filter>
+    </None>
+    <None Include="data\event\sampleLoad.og">
+      <Filter>リソース ファイル\event</Filter>
+    </None>
+    <None Include="data\event\windowSize.og">
+      <Filter>リソース ファイル\event</Filter>
+    </None>
+    <None Include="data\shader\font.fsh">
+      <Filter>リソース ファイル\shader</Filter>
+    </None>
+    <None Include="data\shader\sample.fsh">
+      <Filter>リソース ファイル\shader</Filter>
+    </None>
+    <None Include="src\lib\doxygen.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </None>
+    <None Include="data\shader\font.vsh">
+      <Filter>リソース ファイル\shader</Filter>
+    </None>
+    <None Include="data\shader\sample.vsh">
+      <Filter>リソース ファイル\shader</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\image\testicon.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
