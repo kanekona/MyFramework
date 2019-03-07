@@ -22,5 +22,4 @@ public:
 	bool LoadShader(const std::string& name);
 	Shader* GetShader();
 	void SetBuffer(unsigned char* buffer, unsigned int w, unsigned int h);
-	void Draw(Box2D* draw);
 };

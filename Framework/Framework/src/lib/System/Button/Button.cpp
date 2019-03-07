@@ -39,7 +39,4 @@ void Button::ChangeColor(const bool flag)
 void Button::Update()
 {
 	ChangeColor(Enable(Input::Get()->mouse->GetCollision()));
-	Box2D draw(transform.position, transform.scale);
-	draw.OffsetCenterSize();
-	//back.texture->Draw(&draw);
 }
