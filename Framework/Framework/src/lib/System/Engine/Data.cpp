@@ -264,7 +264,7 @@ void Box2D::operator+=(const Box2D& b){ { x += b.x; y += b.y; w += b.w; h += b.h
 void Box2D::operator-=(const Box2D& b){ { x -= b.x; y -= b.y; w -= b.w; h -= b.h; } }
 void Box2D::operator*=(const Box2D& b){ { x *= b.x; y *= b.y; w *= b.w; h *= b.h; } }
 Color::Color()
-	:red(0.f), green(0.f), blue(0.f), alpha(0.f)
+	:red(1.f), green(1.f), blue(1.f), alpha(1.f)
 {}
 Color::Color(const float r, const float g, const float b, const float a)
 	:red(r), green(g), blue(b), alpha(a)

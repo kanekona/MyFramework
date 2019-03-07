@@ -1,9 +1,10 @@
 #pragma once
-#include "Scene\Scene.h"
+#include "Entity\Entity.h"
 
-class WinConfig : public Scene
+class WinConfig : public Entity
 {
 	void Enter() override;
+	void Update() override;
 public:
 	explicit WinConfig();
 	virtual ~WinConfig();

@@ -11,8 +11,7 @@ Button::Button(const Transform& t)
 	this->back.transform = &transform;
 	this->back.color = &notSelect;
 	this->font.transform = &transform;
-	this->select = { 1,1,1,1 };
-	this->notSelect = { 0.5f,0.5f,0.5f,1.0f };
+	notSelect = { 0.5f,0.5f,0.5f,0.5f };
 }
 
 Button::~Button()
@@ -38,5 +37,14 @@ void Button::ChangeColor(const bool flag)
 }
 void Button::Update()
 {
-	ChangeColor(Enable(Input::Get()->mouse->GetCollision()));
+	bool hit = Enable(Input::Get()->mouse->GetCollision());
+	ChangeColor(hit);
+	if (hit && Input::Get()->mouse->down(Mouse::LEFT))
+	{
+		this->Decision();
+	}
+}
+void Button::Decision()
+{
+
 }

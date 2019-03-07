@@ -161,6 +161,8 @@
     <ClInclude Include="src\lib\System\Texture\Texture.h" />
     <ClInclude Include="src\lib\System\Timer\glTimer.h" />
     <ClInclude Include="src\lib\System\Window\Window.h" />
+    <ClInclude Include="src\lib\WinConfig\ConfigButton.h" />
+    <ClInclude Include="src\lib\WinConfig\StartScene.h" />
     <ClInclude Include="src\lib\WinConfig\WinConfig.h" />
     <ClInclude Include="src\Object\State\State.h" />
   </ItemGroup>
@@ -197,6 +199,8 @@
     <ClCompile Include="src\lib\System\Texture\Texture.cpp" />
     <ClCompile Include="src\lib\System\Timer\glTimer.cpp" />
     <ClCompile Include="src\lib\System\Window\Window.cpp" />
+    <ClCompile Include="src\lib\WinConfig\ConfigButton.cpp" />
+    <ClCompile Include="src\lib\WinConfig\StartScene.cpp" />
     <ClCompile Include="src\lib\WinConfig\WinConfig.cpp" />
     <ClCompile Include="src\Object\State\State.cpp" />
     <ClCompile Include="src\Win\WinMain.cpp" />

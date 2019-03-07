@@ -90,7 +90,7 @@ void Engine::OutsideLibraryInitialize()
 	//Specification Normal Vector
 	glEnable(GL_NORMALIZE);
 	//Back Color
-	glClearColor(0.5f, 0.5f, 0.5f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	//Random Seed Initialize
 	Random::Init();
 }

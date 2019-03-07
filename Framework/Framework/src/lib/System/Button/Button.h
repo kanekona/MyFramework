@@ -17,6 +17,7 @@ public:
 	bool Enable(Collider* collision);
 	void ChangeColor(const bool flag);
 	virtual void Update() override;
+	virtual void Decision();
 protected:
 	Color select;
 	Color notSelect;

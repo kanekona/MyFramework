@@ -136,6 +136,9 @@
     <Filter Include="ソース ファイル\Scene\WinConfig">
       <UniqueIdentifier>{b3094bd6-15b5-4f88-89ee-31e5a3895a05}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Scene\WinConfig\Entity">
+      <UniqueIdentifier>{59c0ba49-e370-4653-9770-bcd8d84d3dcb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\lib\System\randmais.h">
@@ -249,11 +252,17 @@
     <ClInclude Include="src\lib\System\System\System.h">
       <Filter>ソース ファイル\Library\System\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\lib\WinConfig\WinConfig.h">
-      <Filter>ソース ファイル\Scene\WinConfig</Filter>
-    </ClInclude>
     <ClInclude Include="src\lib\System\Button\Button.h">
       <Filter>ソース ファイル\Library\System\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\WinConfig\StartScene.h">
+      <Filter>ソース ファイル\Scene\WinConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\WinConfig\WinConfig.h">
+      <Filter>ソース ファイル\Scene\WinConfig\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\WinConfig\ConfigButton.h">
+      <Filter>ソース ファイル\Scene\WinConfig\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -356,11 +365,17 @@
     <ClCompile Include="src\lib\System\System\System.cpp">
       <Filter>ソース ファイル\Library\System\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\lib\WinConfig\WinConfig.cpp">
-      <Filter>ソース ファイル\Scene\WinConfig</Filter>
-    </ClCompile>
     <ClCompile Include="src\lib\System\Button\Button.cpp">
       <Filter>ソース ファイル\Library\System\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\WinConfig\StartScene.cpp">
+      <Filter>ソース ファイル\Scene\WinConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\WinConfig\WinConfig.cpp">
+      <Filter>ソース ファイル\Scene\WinConfig\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\WinConfig\ConfigButton.cpp">
+      <Filter>ソース ファイル\Scene\WinConfig\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
