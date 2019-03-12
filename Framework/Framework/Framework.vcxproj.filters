@@ -40,12 +40,6 @@
     <Filter Include="ソース ファイル\Library\System">
       <UniqueIdentifier>{7d8d4247-db27-4391-9be6-390b58997f3d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Library\Scene">
-      <UniqueIdentifier>{a24e3d99-1e41-47a6-9f0b-ef6324e71554}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Library\Scene\WinConfig">
-      <UniqueIdentifier>{22b7f5ae-3ba0-486b-942f-5fd947eeeca6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Entity\Test">
       <UniqueIdentifier>{55b0b984-588b-4eeb-828a-91d5a5ad8953}</UniqueIdentifier>
     </Filter>
@@ -139,6 +133,12 @@
     <Filter Include="ソース ファイル\Scene\WinConfig\Entity">
       <UniqueIdentifier>{59c0ba49-e370-4653-9770-bcd8d84d3dcb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Scene\TestScene">
+      <UniqueIdentifier>{0fe5237f-fd74-4a66-a949-c6ba566cf976}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\TestScene\Entity">
+      <UniqueIdentifier>{a9a9fb3a-5889-48d8-8524-6f2a8d47befd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\lib\System\randmais.h">
@@ -181,9 +181,6 @@
       <Filter>ソース ファイル\Library\System\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\lib\System\Engine\Initializer.h">
-      <Filter>ソース ファイル\Library\System\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\lib\System\Engine\OGF.hpp">
       <Filter>ソース ファイル\Library\System\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\lib\System\Entity\Entity.h">
@@ -263,6 +260,15 @@
     </ClInclude>
     <ClInclude Include="src\lib\WinConfig\ConfigButton.h">
       <Filter>ソース ファイル\Scene\WinConfig\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Engine\OGF.hpp">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\TestScene\TestScene.h">
+      <Filter>ソース ファイル\Scene\TestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\TestScene\Entity\TestEntity.h">
+      <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -376,6 +382,12 @@
     </ClCompile>
     <ClCompile Include="src\lib\WinConfig\ConfigButton.cpp">
       <Filter>ソース ファイル\Scene\WinConfig\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\TestScene\TestScene.cpp">
+      <Filter>ソース ファイル\Scene\TestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\TestScene\Entity\TestEntity.cpp">
+      <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

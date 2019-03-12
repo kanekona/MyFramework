@@ -161,7 +161,12 @@ public:
 	*/
 	template <class T> T* GetEntity()
 	{
-		return Scene::GetEntity<T>(&this->entitys) || Scene::GetEntity<T>(&this->plansEntity);
+		T* now = Scene::GetEntity<T>(&this->entitys);
+		if (now)
+		{
+			return now;
+		}
+		return Scene::GetEntity<T>(&this->plansEntity);
 	}
 	/**
 	*@brief	Get Entity
@@ -173,7 +178,12 @@ public:
 	*/
 	template <class T> T* GetEntity(const std::string& tag)
 	{
-		return Scene::GetEntity<T>(&this->entitys, tag) || Scene::GetEntity<T>(&this->plansEntity, tag);
+		T* now = Scene::GetEntity<T>(&this->entitys,tag);
+		if (now)
+		{
+			return now;
+		}
+		return Scene::GetEntity<T>(&this->plansEntity,tag);
 	}
 	/**
 	*@brief	Get Entity
@@ -185,7 +195,12 @@ public:
 	*/
 	template <class T> T* GetEntity(const Layer& layer)
 	{
-		return Scene::GetEntity<T>(&this->entitys, layer) || Scene::GetEntity<T>(&this->plansEntity, layer);
+		T* now = Scene::GetEntity<T>(&this->entitys,layer);
+		if (now)
+		{
+			return now;
+		}
+		return Scene::GetEntity<T>(&this->plansEntity,layer);
 	}
 	/**
 	*@brief	Get Entity

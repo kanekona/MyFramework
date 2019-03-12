@@ -24,7 +24,7 @@ class RenderingManager
 	/**
 	*@brief	order sort
 	*/
-	void CanvasOrderSort();
+	void CanvasOrderSort(std::vector<Sprite*>* sortList);
 	/**
 	*@brief UIRendering
 	*/
@@ -42,43 +42,13 @@ class RenderingManager
 	*/
 	void Render();
 	/**
-	*@brief	UI Sprite Adaptation
-	*/
-	void UIStateAdaptation();
-	/**
-	*@brief	Canvas Sprite Adaptation
-	*/
-	void CanvasStateAdaptation();
-	/**
-	*@brief	Back Sprite Adaptation
-	*/
-	void BackStateAdaptation();
-	/**
 	*@brief	All Sprite Adaptation
 	*/
 	void AllStateAdaptation();
 	/**
 	*@brief	Canvas Sprite Adaptation
 	*/
-	template <class T> void CanvasAdaptation(std::vector<T*>* now, std::vector<T*>* plans)
-	{
-		for (auto it = now->begin(); it != now->end();)
-		{
-			if (*it != nullptr)
-			{
-				++it;
-			}
-			else
-			{
-				it = now->erase(it);
-			}
-		}
-		for (auto it : *plans)
-		{
-			now->emplace_back(it);
-		}
-		plans->clear();
-	}
+	void CanvasAdaptation(std::vector<Sprite*>* now, std::vector<Sprite*>* plans);
 public:
 	/**
 	*@brief	constructor
@@ -103,6 +73,23 @@ public:
 	*@param[in] Sprite* sprite Add Data
 	*/
 	void AddSpriteBack(Sprite* sprite);
+
+	/**
+	*@brief	Delete Sprite to Canvas
+	*@param[in] Sprite* sprite Delete Data
+	*/
+	void DeleteSpriteCanvas(Sprite* sprite);
+	/**
+	*@brief	Delete Sprite to UICanvas
+	*@param[in] Sprite* sprite Delete Data
+	*/
+	void DeleteSpriteUI(Sprite* sprite);
+	/**
+	*@brief	Delete Sprite to BackCanvas
+	*@param[in] Sprite* sprite Delete Data
+	*/
+	void DeleteSpriteBack(Sprite* sprite);
+
 	/**
 	*@brief	AllCanvasRendering
 	*@param[in] RenderingManager* renderingManager this

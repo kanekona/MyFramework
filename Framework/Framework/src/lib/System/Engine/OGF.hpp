@@ -146,10 +146,10 @@ public:
 		};
 		Rotate(angle, &vtx[0]);
 		const GLfloat texuv[] = {
-			1.f,0.f,
-			0.f,0.f,
 			0.f,1.f,
 			1.f,1.f,
+			1.f,0.f,
+			0.f,0.f,
 		};
 		const GLfloat texcolor[] = {
 			color->red,
@@ -212,22 +212,17 @@ public:
 	}
 	static void Draw(Font* font, const Vec2* pos)
 	{
-		for (int i = 0; i < font->GetText().size(); ++i)
-		{
-			Font::TextureData d = font->GetData()->at(font->GetText().at(i));
-			float x = (d.size.x * i) + pos->x;
-			Box2D draw(x, pos->y, (float)d.size.x, (float)d.size.y);
-			draw.OffsetSize();
-			OGF::Draw(d.texture, &draw);
-		}
+		OGF::Draw(font, pos, &Color::one);
 	}
 	static void Draw(Font* font, const Vec2* pos, const Color* color)
 	{
+		Vec2 offset;
 		for (int i = 0;i < font->GetText().size();++i)
 		{
 			Font::TextureData d = font->GetData()->at(font->GetText().at(i));
-			float x = (d.size.x * i) + pos->x;
-			Box2D draw(x, pos->y, (float)d.size.x, (float)d.size.y);
+			float x = offset.x + pos->x;
+			Box2D draw(x, pos->y - (float)d.size.y, (float)d.size.x, (float)d.size.y);
+			offset.x += d.size.x;
 			draw.OffsetSize();
 			OGF::Draw(d.texture, &draw, color);
 		}

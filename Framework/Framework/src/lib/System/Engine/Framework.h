@@ -68,4 +68,19 @@ public:
 	*@param[in] Scene* begin Start Scene
 	*/
 	void CreateSceneManager(Scene* begin);
+	/**
+	*@brief Get Position In The Window
+	*@param[in] unsigned int x X Coordinate Split
+	*@param[in] unsigned int y Y Coordinate Split
+	*@param[in] unsigned int number Split Number
+	*@return Vec2Int In The Window Position
+	*/
+	Vec2Int GetPosition(const unsigned int x, const unsigned int y, const unsigned int number);
+	/**
+	*@brief Get Size In The Window
+	*@param[in] unsigned int x X Coordinate Split
+	*@param[in] unsigned int y Y Coordinate Split
+	*@return Vec2Int In The Window Size
+	*/
+	Vec2Int GetSize(const unsigned int x, const unsigned int y);
 };

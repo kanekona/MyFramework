@@ -12,9 +12,6 @@
 #include <crtdbg.h>
 #define new ::new(_NORMAL_BLOCK, __FILE__, __LINE__)
 #endif
-Framework* Framework::instance = nullptr;
-Input* Input::instance = nullptr;
-ResourceManager* ResourceManager::instance = nullptr;
 /**
 *@brief	エントリーポイント
 */

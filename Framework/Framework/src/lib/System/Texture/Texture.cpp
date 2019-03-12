@@ -9,10 +9,12 @@
 Texture::Texture()
 {
 	glGenTextures(1, &this->id);
+	shader = ResourceManager::Get()->GetShaderData("simple");
 }
 Texture::Texture(const std::string& path)
 {
 	glGenTextures(1, &this->id);
+	shader = ResourceManager::Get()->GetShaderData("simple");
 	Load(path);
 }
 Texture::~Texture()
@@ -39,7 +41,6 @@ bool Texture::Load(const std::string& path)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	shader = ResourceManager::Get()->GetShaderData("simple");
 	glBindTexture(GL_TEXTURE_2D, 0);
 	return true;
 }
@@ -47,14 +48,13 @@ bool Texture::Load(const cv::Mat& mat)
 {
 	glBindTexture(GL_TEXTURE_2D, this->id);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, mat.cols, mat.rows, 0, GL_RGB, GL_UNSIGNED_BYTE, mat.ptr());
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, mat.cols, mat.rows, 0, GL_BGR, GL_UNSIGNED_BYTE, mat.ptr());
 	size.x = mat.cols;
 	size.y = mat.rows;
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	shader = ResourceManager::Get()->GetShaderData("simple");
 	glBindTexture(GL_TEXTURE_2D, 0);
 	return true;
 }

@@ -1,5 +1,5 @@
 #include "RenderingManager.h"
-
+#include <algorithm>
 RenderingManager::RenderingManager()
 {
 
@@ -8,9 +8,32 @@ RenderingManager::~RenderingManager()
 {
 
 }
-void RenderingManager::CanvasOrderSort()
+void RenderingManager::CanvasOrderSort(std::vector<Sprite*>* sortList)
 {
-	//ñ¢é¿ëïÇÕÇÊèëÇØ
+	std::sort(sortList->begin(), sortList->end(), Sprite::Comparison);
+}
+void RenderingManager::CanvasAdaptation(std::vector<Sprite*>*now, std::vector<Sprite*>* plans)
+{
+	for (auto it = now->begin(); it != now->end();)
+	{
+		if (*it != nullptr)
+		{
+			++it;
+		}
+		else
+		{
+			it = now->erase(it);
+		}
+	}
+	if (plans->size())
+	{
+		for (auto it : *plans)
+		{
+			now->emplace_back(it);
+		}
+		plans->clear();
+		CanvasOrderSort(now);
+	}
 }
 void RenderingManager::UIRendering()
 {
@@ -48,74 +71,11 @@ void RenderingManager::Render()
 	this->CanvasRendering();
 	this->BackRendering();
 }
-void RenderingManager::UIStateAdaptation()
-{
-	//çÌèú
-	for (auto it = uiCanvas.begin(); it != uiCanvas.end();)
-	{
-		if (*it != nullptr)
-		{
-			++it;
-		}
-		else
-		{
-			it = uiCanvas.erase(it);
-		}
-	}
-	//ìoò^
-	for (auto it : plansUIs)
-	{
-		uiCanvas.emplace_back(it);
-		//EnterÇÕEntityÇÃìoò^éûÇ…åƒÇŒÇÍÇÈÇÃÇ≈Ç±Ç±Ç≈ÇÕì¡Ç…çsÇÌÇ»Ç¢
-	}
-	plansUIs.clear();
-}
-void RenderingManager::CanvasStateAdaptation()
-{
-	for (auto it = canvas.begin(); it != canvas.end();)
-	{
-		if (*it != nullptr)
-		{
-			++it;
-		}
-		else
-		{
-			it = canvas.erase(it);
-		}
-	}
-	for (auto it : plansCanvas)
-	{
-		canvas.emplace_back(it);
-	}
-	plansCanvas.clear();
-}
-void RenderingManager::BackStateAdaptation()
-{
-	for (auto it = backCanvas.begin(); it != backCanvas.end();)
-	{
-		if (*it != nullptr)
-		{
-			++it;
-		}
-		else
-		{
-			it = backCanvas.erase(it);
-		}
-	}
-	for (auto it : plansBacks)
-	{
-		backCanvas.emplace_back(it);
-	}
-	plansBacks.clear();
-}
 void RenderingManager::AllStateAdaptation()
 {
-	//UIStateAdaptation();
-	//CanvasStateAdaptation();
-	//BackStateAdaptation();
-	CanvasAdaptation<Sprite>(&uiCanvas, &plansUIs);
-	CanvasAdaptation<Sprite>(&canvas, &plansCanvas);
-	CanvasAdaptation<Sprite>(&backCanvas, &plansBacks);
+	CanvasAdaptation(&uiCanvas, &plansUIs);
+	CanvasAdaptation(&canvas, &plansCanvas);
+	CanvasAdaptation(&backCanvas, &plansBacks);
 }
 void RenderingManager::AddSpriteCanvas(Sprite* sprite)
 {
@@ -128,6 +88,51 @@ void RenderingManager::AddSpriteUI(Sprite* sprite)
 void RenderingManager::AddSpriteBack(Sprite* sprite)
 {
 	plansBacks.emplace_back(sprite);
+}
+void RenderingManager::DeleteSpriteCanvas(Sprite* sprite)
+{
+	for (auto it = canvas.begin(); it != canvas.end();)
+	{
+		if (*it == sprite)
+		{
+			canvas.erase(it);
+			return;
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
+void RenderingManager::DeleteSpriteUI(Sprite* sprite)
+{
+	for (auto it = uiCanvas.begin(); it != uiCanvas.end();)
+	{
+		if (*it == sprite)
+		{
+			uiCanvas.erase(it);
+			return;
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
+void RenderingManager::DeleteSpriteBack(Sprite* sprite)
+{
+	for (auto it = backCanvas.begin(); it != backCanvas.end();)
+	{
+		if (*it == sprite)
+		{
+			backCanvas.erase(it);
+			return;
+		}
+		else
+		{
+			++it;
+		}
+	}
 }
 void RenderingManager::Render(RenderingManager* manager)
 {

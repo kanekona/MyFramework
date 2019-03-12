@@ -9,19 +9,28 @@ class LineCollider;
 class CapsuleCollider;
 
 /**
-*@brief	”»’è‚ÌŒ³
+*@file Collision.h
+*@brief Collider System
+*@author kanekona
+*@data 2019/03/11
+*@details “–‚½‚è”»’èclass
+*/
+
+/**
+*@brief Collider Class
+*@details Collider Base
 */
 class Collider
 {
 protected:
-	//! ’¸“_”
+	//! Vertex Number
 	const unsigned short VERTEX_NUM;
 	//! Transform
 	Transform* transform;
 public:
 	/**
 	*@brief	constructor
-	*@param[in]	unsigned short vertex ’¸“_”
+	*@param[in]	unsigned short vertex VertexNumber
 	*/
 	explicit Collider(const unsigned short vertex,Transform* transform);
 	/**

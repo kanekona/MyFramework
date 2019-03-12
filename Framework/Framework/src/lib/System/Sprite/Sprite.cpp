@@ -1,14 +1,32 @@
 #include "Sprite.h"
 #include "Engine\Framework.h"
 #include "Engine\OGF.hpp"
-Sprite::Sprite(const int registerd)
+Sprite::Sprite(const int r)
+	:registerd(r)
 {
-	this->Register(registerd);
+	this->Register();
 }
 Sprite::~Sprite()
 {
+	//登録解除
+	switch (registerd)
+	{
+	case REGISTERD_CANVAS:
+		Framework::Get()->GetScene()->GetRenderingManager()->DeleteSpriteCanvas(this);
+		break;
+	case REGISTERD_UI:
+		Framework::Get()->GetScene()->GetRenderingManager()->DeleteSpriteUI(this);
+		break;
+	case REGISTERD_BACK:
+		Framework::Get()->GetScene()->GetRenderingManager()->DeleteSpriteBack(this);
+		break;
+	default:
+		//エラー出力
+		std::cout << "削除ミス\n";
+		break;
+	}
 }
-void Sprite::Register(const int registerd)
+void Sprite::Register()
 {
 	//SceneManager経由でRenderingManagerに自分を登録する
 	switch (registerd)
@@ -31,4 +49,12 @@ void Sprite::Register(const int registerd)
 void Sprite::Draw()
 {
 	OGF::Draw(texture, transform, color);
+}
+void Sprite::SetDrawOrder(const unsigned int o)
+{
+	order = o;
+}
+bool Sprite::Comparison(const Sprite* first, const Sprite* second)
+{
+	return first->order < second->order;
 }

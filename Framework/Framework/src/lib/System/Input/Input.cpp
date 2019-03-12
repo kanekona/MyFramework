@@ -764,3 +764,4 @@ void Input::Destroy()
 		instance = nullptr;
 	}
 }
+Input* Input::instance = nullptr;

@@ -1,46 +1,54 @@
 #include "MovieImage.h"
-
+#include "Engine\Framework.h"
 MovieImage::MovieImage()
 {
 	Init();
 }
-MovieImage::MovieImage(const std::string& filePath)
+MovieImage::MovieImage(const std::string& filePath, const format& movie, const format& sound)
 {
 	Init();
-	this->Load(filePath);
+	this->Load(filePath, movie, sound);
 }
 MovieImage::~MovieImage()
 {
-	KL::Destroy<FPS>(fps);
+	delete __super::texture;
+	delete sound;
+	delete fps;
+	delete transform;
 }
 void MovieImage::Init()
 {
 	this->enablePlay = true;
 	this->loop = true;
-	fps = new FPS();
+	transform = new Transform();
+	transform->position = Framework::Get()->GetPosition(2, 2, 3);
+	transform->scale = Framework::Get()->GetSize(1, 1);
+	color = &Color::one;
 }
-bool MovieImage::Load(const std::string& filePath)
+bool MovieImage::Load(const std::string& filepath, const format& movie, const format& s)
 {
 	//Openしている場合閉じて読み込む
-	if (!this->videoCapture.open(filePath)) 
+	if (!this->videoCapture.open(filepath + movie))
 	{
 		KL::OutDebugData("log.txt", "MovieLoadError");
 		return false;
 	}
 	//動画のフレームレートの取得
 	this->videoFramerate = (float)videoCapture.get(CV_CAP_PROP_FPS);
-	//動画の映像枚数の取得
-	//videoCapture.get(CV_CAP_PROP_FRAME_COUNT);
 	//1frame目を行列に渡す
 	videoCapture >> mat;
 	//行列データからTextureデータを生成
+	__super::texture = new Texture();
 	__super::texture->Load(mat);
 	//更新速度を指定する
+	fps = new FPS();
 	fps->SetFrameRate(this->videoFramerate);
+	SoundLoad(filepath + s);
 	return true;
 }
 void MovieImage::SoundLoad(const std::string& filePath)
 {
+	sound = new Sound();
 	this->sound->Create(filePath);
 	sound->Play();
 }
@@ -70,7 +78,8 @@ void MovieImage::SetPlay(const bool isPlay)
 {
 	this->enablePlay = isPlay;
 }
-void MovieImage::SetActive(const bool enable)
-{
-	this->active = enable;
-}
+
+const format MovieFormat::MP3 = ".mp3";
+const format MovieFormat::MP4 = ".mp4";
+const format MovieFormat::AVI = ".avi";
+const format MovieFormat::WAV = ".wav";

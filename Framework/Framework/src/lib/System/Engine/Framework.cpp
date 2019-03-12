@@ -61,3 +61,20 @@ void Framework::CreateSceneManager(Scene* begin)
 		sceneManager = new SceneManager(begin);
 	}
 }
+Vec2Int Framework::GetPosition(const unsigned int x, const unsigned int y, const unsigned int number)
+{
+	Vec2Int position(window->GetSize());
+	position.x /= x;
+	position.y /= y;
+	position.x *= number % x;
+	position.y *= number / x;
+	return position;
+}
+Vec2Int Framework::GetSize(const unsigned int x, const unsigned int y)
+{
+	Vec2Int size(window->GetSize());
+	size.x /= x;
+	size.y /= y;
+	return size;
+}
+Framework* Framework::instance = nullptr;

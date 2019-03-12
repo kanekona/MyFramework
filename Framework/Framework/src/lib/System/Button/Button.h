@@ -3,25 +3,78 @@
 #include "Sprite\Sprite.h"
 #include "Font\Font.h"
 #include "Collision\Collision.h"
+/**
+*@file Button.h
+*@brief Button Class
+*@author kanekona
+*@data 2019/03/11
+*@details
+*/
+
+/**
+*@brief Button Class
+*@details Click Action
+*/
 class Button : public Entity
 {
+	//! Button Collision
 	Collider* hitBase;
+	//! Draw Order
+	unsigned int order;
 public:
+	/**
+	*@brief	constructor
+	*@param[in] Transform& transform Button Transform
+	*/
 	explicit Button(const Transform& transform);
+	/**
+	*@brief	destructor
+	*/
 	virtual ~Button();
 	/**
-	*@
-	*押されてる状況を返す
-	*相手の判定をいれてその判定を返す
+	*@brief This Hit Check
+	*@param[in] Collider* collision Partner Collider
+	*@return bool Hit
+	*@details 引数との判定を行いその結果を返す
 	*/
 	bool Enable(Collider* collision);
+	/**
+	*@brief This Color Chenge
+	*@param[in] bool flag Color Branch
+	*@details 引数に応じて選択か非選択のカラーに変更する
+	*/
 	void ChangeColor(const bool flag);
+	/**
+	*@brief	Set Button Draw Order
+	*@param[in] unsigned int order Order
+	*/
+	void SetDrawOrder(const unsigned int order);
+	/**
+	*@brief This Update
+	*@details Buttonの更新処理
+	*/
 	virtual void Update() override;
+	/**
+	*@brief	Default Decision
+	*@details 決定時の処理のDefault処理
+	*継承先でこの関数をoverrideして決定処理を変更する
+	*/
 	virtual void Decision();
+	/**
+	*@brief	Get Button Font
+	*@return Font* This FontData
+	*@details Button内のFontデータを取得する
+	*/
+	Font* GetFont();
 protected:
+	//! Select Color
 	Color select;
+	//! Not Select Color
 	Color notSelect;
+	//! Font
 	Font font;
+	//! Back Image
 	Sprite back;
+	//! Transform
 	Transform transform;
 };

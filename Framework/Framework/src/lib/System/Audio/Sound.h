@@ -15,8 +15,6 @@ private:
 	std::shared_ptr<Source> source;
 	//! ループ再生
 	bool isloop_;
-	//! ファイルパス
-	const std::string filepath_;
 	//! 音量
 	float volume_;
 public:

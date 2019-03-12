@@ -7,11 +7,13 @@ Button::Button(const Transform& t)
 	tag = "Button";
 	layer = Layer::Button;
 	this->hitBase = new BoxCollider(&transform);
-	this->back.texture = ResourceManager::Get()->GetTextureData("back");
+	this->back.texture = ResourceManager::Get()->GetTextureData("button");
 	this->back.transform = &transform;
 	this->back.color = &notSelect;
 	this->font.transform = &transform;
-	notSelect = { 0.5f,0.5f,0.5f,0.5f };
+	notSelect = { 0.5f,0.5f,0.5f,1.0f };
+	//Default
+	SetDrawOrder(0);
 }
 
 Button::~Button()
@@ -47,4 +49,16 @@ void Button::Update()
 void Button::Decision()
 {
 
+}
+
+Font* Button::GetFont()
+{
+	return &this->font;
+}
+
+void Button::SetDrawOrder(const unsigned int o)
+{
+	this->order = o;
+	font.SetDrawOrder(order + 1);
+	back.SetDrawOrder(order);
 }

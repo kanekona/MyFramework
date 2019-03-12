@@ -202,3 +202,4 @@ void ResourceManager::Destroy()
 		instance = nullptr;
 	}
 }
+ResourceManager* ResourceManager::instance = nullptr;

@@ -72,7 +72,6 @@ void Scene::EntityStateAdaptation(Scene* scene)
 }
 void Scene::EntityUpdate(Scene* scene)
 {
-	//scene->Debug();
 	//Entity Update
 	for (auto id : scene->entitys)
 	{

@@ -1,5 +1,6 @@
 #include "Window.h"
 #include "stb_image.h"
+#include "Engine\Framework.h"
 Window::Window()
 {
 	//Default
@@ -181,6 +182,14 @@ void Window::ChangeMode(const int x, const int y, const int w, const int h, cons
 	this->SetPos(x, y);
 	this->SetSize(w, h);
 	glfwSetWindowMonitor(this->window, flag ? glfwGetPrimaryMonitor() : NULL, x, y, w, h, GLFW_DONT_CARE);
+	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
+	Framework::Get()->GetScene()->GetCamera()->Initialize(Box2D(0, 0, w, h));
+
+}
+void Window::ChangeMode(const int x, const int y, const int w, const int h, const char* n, const bool flag)
+{
+	this->ChengeTitle(n);
+	this->ChangeMode(x, y, w, h, flag);
 }
 void Window::ChangeMode(const Vec2Int& pos, const Vec2Int& size, const bool flag)
 {

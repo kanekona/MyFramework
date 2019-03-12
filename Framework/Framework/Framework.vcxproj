@@ -123,6 +123,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Scene\TestScene\Entity\TestEntity.h" />
+    <ClInclude Include="src\Scene\TestScene\TestScene.h" />
     <None Include="src\lib\doxygen.h" />
     <ClInclude Include="src\lib\Event\Event.h" />
     <ClInclude Include="src\lib\Event\ResourceLoad\ResourceLoad.h" />
@@ -203,6 +205,8 @@
     <ClCompile Include="src\lib\WinConfig\StartScene.cpp" />
     <ClCompile Include="src\lib\WinConfig\WinConfig.cpp" />
     <ClCompile Include="src\Object\State\State.cpp" />
+    <ClCompile Include="src\Scene\TestScene\Entity\TestEntity.cpp" />
+    <ClCompile Include="src\Scene\TestScene\TestScene.cpp" />
     <ClCompile Include="src\Win\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>

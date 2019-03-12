@@ -50,7 +50,7 @@ class Entity : private NonCopyable
 			{
 				return static_cast<T*>(it);
 			}
-			T* t = GetChildren<T>(it->childs);
+			T* t = GetChildren<T>(&it->childs);
 			if (t != nullptr)
 			{
 				return t;
@@ -73,7 +73,7 @@ class Entity : private NonCopyable
 			{
 				return static_cast<T*>(it);
 			}
-			T* t = GetChildren<T>(it->childs, tag);
+			T* t = GetChildren<T>(&it->childs, tag);
 			if (t != nullptr)
 			{
 				return t;
@@ -96,7 +96,7 @@ class Entity : private NonCopyable
 			{
 				return static_cast<T*>(it);
 			}
-			T* t = GetChildren<T>(it->childs, layer);
+			T* t = GetChildren<T>(&it->childs, layer);
 			if (t != nullptr)
 			{
 				return t;
@@ -118,7 +118,7 @@ class Entity : private NonCopyable
 			{
 				vector->emplace_back(static_cast<T*>(it));
 			}
-			GetChildrens<T>(it->childs, vector);
+			GetChildrens<T>(&it->childs, vector);
 		}
 	}
 	/**
@@ -136,7 +136,7 @@ class Entity : private NonCopyable
 			{
 				vector->emplace_back(static_cast<T*>(it));
 			}
-			GetChildrens<T>(it->childs, tag, vector);
+			GetChildrens<T>(&it->childs, tag, vector);
 		}
 	}
 	/**
@@ -154,7 +154,7 @@ class Entity : private NonCopyable
 			{
 				vector->emplace_back(static_cast<T*>(it));
 			}
-			GetChildrens<T>(it->childs, layer, vector);
+			GetChildrens<T>(&it->childs, layer, vector);
 		}
 	}
 public:

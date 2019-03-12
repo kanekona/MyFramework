@@ -170,6 +170,16 @@ public:
 	*@param[in]	bool flag true fullScreen
 	*/
 	void ChangeMode(const Vec2Int& pos, const Vec2Int& size, const bool flag);
+	/**
+	*@brief	Windowƒ‚[ƒh‚ğ•ÏX
+	*@param[in]	int x WindowPosition_x
+	*@param[in]	int y WindowPosition_y
+	*@param[in]	int w WindowSize_x
+	*@param[in]	int h WindowSize_h
+	*@param[in] const char* name WindowName
+	*@param[in]	bool flag true hullScreen
+	*/
+	void ChangeMode(const int x, const int y, const int w, const int h, const char* name, const bool flag);
 };
 class WindowParameter
 {

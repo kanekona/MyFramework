@@ -4,13 +4,17 @@
 #include "NonCopyable\NonCopyable.hpp"
 #include "System\System.h"
 /**
-*@brief	2DCamera
-*
-*GL機能を使用し2D上でのカメラを扱うclass
-*
-*既存GameEngineを使用している場合は内部で宣言されている
-*
-*使用しない場合は2Dの描画のために１つ生成する必要がある
+*@file Camera.h
+*@brief Camera Class
+*@author kanekona
+*@data 2019/03/11
+*@details 
+*/
+
+/**
+*@brief Camera2D Class
+*@details camera行列を扱う
+*@details Scene１つに１cameraの生成を行う
 */
 class Camera2D : private NonCopyable
 {
@@ -26,6 +30,19 @@ class Camera2D : private NonCopyable
 	CircleCollider collision;
 	//! Collider値
 	Transform transform;
+	/**
+	*@brief	投影行列を登録する
+	*@param[in] float left 左
+	*@param[in] float right 右
+	*@param[in] float buttom 下
+	*@param[in] float top 上
+	*@param[in] float nearVal 手前
+	*@param[in] float farVal 奥
+	*/
+	void SetProjectionMatrix(
+		const float left, const float right,
+		const float buttom, const float top,
+		const float nearVal, const float farVal);
 public:
 	/**
 	*@brief	constructor
@@ -99,19 +116,6 @@ public:
 	*@return Vec2 カメラの大きさ
 	*/
 	Vec2 GetSize() const;
-	/**
-	*@brief	投影行列を登録する
-	*@param[in] float left 左
-	*@param[in] float right 右
-	*@param[in] float buttom 下
-	*@param[in] float top 上
-	*@param[in] float nearVal 手前
-	*@param[in] float farVal 奥
-	*/
-	void SetProjectionMatrix(
-		const float left, const float right,
-		const float buttom, const float top,
-		const float nearVal, const float farVal);
 	/**
 	*@brief	投影行列を取得する
 	*@return GLfloat* 投影行列

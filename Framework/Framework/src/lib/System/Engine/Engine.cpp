@@ -86,7 +86,7 @@ void Engine::OutsideLibraryInitialize()
 	//Matrix Initialize
 	glLoadIdentity();
 	//ウインドウの座標の巻線に基づいてポリゴンをカリングする
-	glEnable(GL_CULL_FACE);
+//	glEnable(GL_CULL_FACE);
 	//Specification Normal Vector
 	glEnable(GL_NORMALIZE);
 	//Back Color
@@ -96,6 +96,7 @@ void Engine::OutsideLibraryInitialize()
 }
 bool Engine::SystemUpdate()
 {
+	//Update Check
 	if (fps.FrameCheck())
 	{
 		//Double Buffer

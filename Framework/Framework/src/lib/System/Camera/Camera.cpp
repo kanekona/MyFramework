@@ -43,7 +43,7 @@ void Camera2D::Update()
 	//•`‰æc‰¡ƒTƒCƒY‚ÌŽw’è
 	this->transform.position = { this->position.x + this->scale.x / 2,this->position.y + this->scale.y / 2 };
 	this->transform.scale = this->scale * 1.5f;
-	//glOrtho(_camera.x, _camera.w, _camera.h, _camera.y, -1.0f, 1.0f);
+	glOrtho(_camera.x, _camera.w, _camera.h, _camera.y, -1.0f, 1.0f);
 	this->SetProjectionMatrix(_camera.x, _camera.w, _camera.h, _camera.y, -1.0, 1.0f);
 }
 void Camera2D::MovePos(const Vec2& est)

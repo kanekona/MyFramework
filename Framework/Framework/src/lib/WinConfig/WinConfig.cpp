@@ -1,23 +1,26 @@
 #include "WinConfig.h"
 #include "Engine\Framework.h"
-#include "Button\Button.h"
+#include "ConfigButton.h"
 WinConfig::WinConfig()
 {
 	this->tag = "WinConfig";
 }
 WinConfig::~WinConfig()
 {
-
 }
 void WinConfig::Enter()
 {
-	for (int i = 0; i < 2; ++i)
-	{
-		Button* button = new Button(Transform(Vec2(128 * i + (128 / 2) + (i * 30 + 30), 64 / 2 + 30), Vec2(128, 64)));
-		this->SetChildren(button);
-	}
+	Button* button1 = new ConfigButton(Transform(Framework::Get()->GetPosition(4, 2, 5), Framework::Get()->GetSize(2, 1)), true);
+	button1->GetFont()->SetSize(64);
+	button1->GetFont()->SetText(U"12");
+	this->SetChildren(button1);
+	Button* button2 = new ConfigButton(Transform(Framework::Get()->GetPosition(4, 2, 7), Framework::Get()->GetSize(2, 1)), false);
+	button2->GetFont()->SetSize(64);
+	button2->GetFont()->SetText(U"‚¢‚¢‚¦No123");
+	this->SetChildren(button2);
+	//auto button = Framework::Get()->GetScene()->GetEntity<ConfigButton>();
+	//button->Destroy();
 }
 void WinConfig::Update()
 {
-
 }
