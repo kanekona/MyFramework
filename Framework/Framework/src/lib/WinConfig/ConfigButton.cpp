@@ -3,7 +3,6 @@
 #include "Event\WindowEvent\WindowEvent.h"
 #include "Engine\Framework.h"
 #include "StartScene.h"
-#include "Scene\TestScene\TestScene.h"
 ConfigButton::ConfigButton(const Transform& transform,const bool enableFullscreen)
 	:Button(transform)
 {
@@ -19,5 +18,5 @@ void ConfigButton::Decision()
 	std::ifstream ifs("./data/event/windowSize.og");
 	WindowEvent(ifs, &x, &y);
 	Framework::Get()->GetWindow()->ChangeMode(0, 30, x, y, "WindowName", enable);
-	Framework::Get()->ChangeScene(new TestScene());
+	Framework::Get()->ChangeScene(new StartScene());
 }
