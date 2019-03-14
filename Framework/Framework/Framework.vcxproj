@@ -123,7 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="File.hpp" />
+    <ClInclude Include="src\lib\System\File\File.hpp" />
     <ClInclude Include="src\Scene\TestScene\Entity\TestEntity.h" />
     <ClInclude Include="src\Scene\TestScene\TestScene.h" />
     <None Include="src\lib\doxygen.h" />

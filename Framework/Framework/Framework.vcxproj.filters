@@ -273,7 +273,7 @@
     <ClInclude Include="src\Scene\TestScene\Entity\TestEntity.h">
       <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="File.hpp">
+    <ClInclude Include="src\lib\System\File\File.hpp">
       <Filter>ソース ファイル\Library\System\File</Filter>
     </ClInclude>
   </ItemGroup>
