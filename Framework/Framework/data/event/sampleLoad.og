@@ -3,9 +3,8 @@ Shader>font,font
 Texture>./data/image/back.png,back
 Texture>./data/image/Collision.png,collision
 Texture>./data/image/Button.png,button
-Texture>./data/image/A33.png,font1
-Texture>./data/image/kiritan\4.服装・髪型\1.通常\2.png,kiri0
-Texture>./data/image/kiritan\3.表情\0.無表情\1.png,kiri1
-Texture>./data/image/kiritan\3.表情\0.無表情\13.png,kiri2
-Texture>./data/image/kiritan\3.表情\0.無表情\39.png,kiri3
-Texture>./data/image/kiritan\1.感情表現\4.「♪」.png,onpu
+Texture>./data/not/image\4.服装・髪型\1.通常\2.png,kiri0
+Texture>./data/not/image\3.表情\0.無表情\1.png,kiri1
+Texture>./data/not/image\3.表情\0.無表情\13.png,kiri2
+Texture>./data/not/image\3.表情\0.無表情\39.png,kiri3
+Texture>./data/not/image\1.感情表現\4.「♪」.png,onpu

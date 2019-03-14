@@ -34,7 +34,7 @@ public:
 	bool SetState(const unsigned int id, StateParam* state);
 	template <class T> T* GetState(const unsigned int id)
 	{
-		return (T*)this->list[tag];
+		return (T*)this->list[id];
 	}
 	void NextState(const unsigned int id);
 	void Update();

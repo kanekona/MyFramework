@@ -18,18 +18,23 @@
 int main() {
 	//ƒƒ‚ƒŠƒŠ[ƒNŒŸ’m
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//Declaration Engine 
 	Engine* engine = nullptr;
 	try
 	{
+		//Create Engine
 		engine = new Engine();
 	}
 	catch (int errorcode)
 	{
+		//Error Check
 		std::cout << errorcode << std::endl;
 	}
+	//Main Loop
 	while (engine->SystemUpdate())
 	{
 
 	}
+	//Delete Engine
 	delete engine;
 }

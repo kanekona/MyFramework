@@ -139,6 +139,9 @@
     <Filter Include="ソース ファイル\Scene\TestScene\Entity">
       <UniqueIdentifier>{a9a9fb3a-5889-48d8-8524-6f2a8d47befd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Library\System\File">
+      <UniqueIdentifier>{b77fc69f-d32c-40c5-b42a-1afb61c8387b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\lib\System\randmais.h">
@@ -269,6 +272,9 @@
     </ClInclude>
     <ClInclude Include="src\Scene\TestScene\Entity\TestEntity.h">
       <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="File.hpp">
+      <Filter>ソース ファイル\Library\System\File</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -388,4 +388,6 @@ __pycache__/
 *.dgml
 
 #ResourceFile 
-kiritan/
+NotUpload/
+DoNotUpload/
+not/

@@ -11,6 +11,7 @@ Engine::Engine()
 	//Create Engine Initializer
 	initializer = new Initializer();
 	//GameFramework‚Ì¶¬
+	enable = true;
 	framework = Framework::Create(&enable);
 	//Get Framework Window Address
 	window = framework->GetWindow();
@@ -30,15 +31,12 @@ Engine::Engine()
 	ResourceManager::Create();
 	//Input‚Ì¶¬
 	Input::Create(framework->GetWindow()->GetFWWindow());
-
 	//Delete Engine Initializer
 	delete initializer;
-
 	EventTask ev;
 	ev.Load(Event::RESOURCE_LOAD, "./data/event/sampleLoad.og");
 	//Scene Start
 	framework->GetScene()->Enter();
-
 }
 Engine::~Engine()
 {
