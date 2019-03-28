@@ -2,6 +2,7 @@
 #include "Scene\SceneManager.h"
 #include "NonCopyable\NonCopyable.hpp"
 #include "Window\Window.h"
+#include "Timer\glTimer.h"
 /**
 *@brief Game Framework
 */
@@ -13,6 +14,12 @@ class Framework : private NonCopyable
 	Window* window;
 	//! Enable Engine Destroy
 	bool* enableEngineDestroy;
+	//! Timer
+	Time time;
+	//! preTime
+	float preTime;
+	//! DeltaTime
+	float deltaTime;
 	//! FrameworkInstance
 	static Framework* instance;
 	/**
@@ -83,4 +90,9 @@ public:
 	*@return Vec2Int In The Window Size
 	*/
 	Vec2Int GetSize(const unsigned int x, const unsigned int y);
+	/**
+	*@brief	Get DeltaTime
+	*@return float deltaTime
+	*/
+	float DeltaTime() const;
 };

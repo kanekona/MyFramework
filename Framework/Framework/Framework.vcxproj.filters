@@ -142,6 +142,9 @@
     <Filter Include="ソース ファイル\Library\System\File">
       <UniqueIdentifier>{b77fc69f-d32c-40c5-b42a-1afb61c8387b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Library\System\GUI">
+      <UniqueIdentifier>{068d712f-c11d-4bc7-b600-d4dee7584a09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\lib\System\randmais.h">

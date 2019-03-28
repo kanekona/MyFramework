@@ -6,6 +6,9 @@ Framework::Framework(bool* destroy)
 	this->enableEngineDestroy = destroy;
 	//Window¶¬
 	this->window = new Window();
+	time.Start();
+	preTime = 0.0f;
+	deltaTime = 0.0f;
 }
 Framework::~Framework()
 {
@@ -44,6 +47,8 @@ Scene* Framework::GetScene()
 }
 void Framework::Update()
 {
+	deltaTime = time.GetTime() - preTime;
+	preTime = time.GetTime();
 	this->sceneManager->SceneUpdate();
 }
 Window* Framework::GetWindow()
@@ -76,5 +81,9 @@ Vec2Int Framework::GetSize(const unsigned int x, const unsigned int y)
 	size.x /= x;
 	size.y /= y;
 	return size;
+}
+float Framework::DeltaTime() const
+{
+	return deltaTime;
 }
 Framework* Framework::instance = nullptr;

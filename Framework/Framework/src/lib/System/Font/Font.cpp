@@ -23,7 +23,7 @@ Font::~Font()
 	FT_Done_Face(this->face);
 	FT_Done_FreeType(this->ft_library);
 }
-void Font::SetText(const std::u32string& t)
+void Font::SetText(const std::wstring& t)
 {
 	this->text = t;
 	for (auto c : text)
@@ -74,7 +74,7 @@ void Font::SetText(const std::u32string& t)
 	//	++i;
 	//}
 //}
-std::u32string Font::GetText() const
+std::wstring Font::GetText() const
 {
 	return this->text;
 }
@@ -86,7 +86,7 @@ unsigned int Font::GetSize() const
 {
 	return this->size;
 }
-std::map<char32_t,Font::TextureData>* Font::GetData()
+std::map<wchar_t,Font::TextureData>* Font::GetData()
 {
 	return &this->data;
 }

@@ -13,17 +13,21 @@ MovieImage::~MovieImage()
 {
 	delete __super::texture;
 	delete sound;
-	delete fps;
+	if (fps)
+	{
+		delete fps;
+	}
 	delete transform;
 }
 void MovieImage::Init()
 {
-	this->enablePlay = true;
+	this->preEnablePlay = this->enablePlay = true;
 	this->loop = true;
 	transform = new Transform();
 	transform->position = Framework::Get()->GetPosition(2, 2, 3);
 	transform->scale = Framework::Get()->GetSize(1, 1);
 	color = &Color::one;
+	magnification = 1.0f;
 }
 bool MovieImage::Load(const std::string& filepath, const format& movie, const format& s)
 {
@@ -50,10 +54,17 @@ void MovieImage::SoundLoad(const std::string& filePath)
 {
 	sound = new Sound();
 	this->sound->Create(filePath);
+}
+void MovieImage::Enter()
+{
 	sound->Play();
 }
 void MovieImage::Update()
 {
+	if (!this->enablePlay)
+	{
+		return;
+	}
 	//フレーム数から更新フレームを計算する
 	if (fps->FrameCheck())
 	{
@@ -66,7 +77,17 @@ void MovieImage::Update()
 		else
 		{
 			//これでループさせてる
-			videoCapture.set(CV_CAP_PROP_POS_FRAMES, 0.0);
+			if (this->loop)
+			{
+				videoCapture.set(CV_CAP_PROP_POS_FRAMES, 0.0);
+			}
+			else
+			{
+				this->enablePlay = false;
+				delete fps;
+				fps = nullptr;
+				this->sound->Stop();
+			}
 		}
 	}
 }
@@ -77,6 +98,32 @@ void MovieImage::EnableLoop(const bool isLoop)
 void MovieImage::SetPlay(const bool isPlay)
 {
 	this->enablePlay = isPlay;
+	if (enablePlay && !preEnablePlay)
+	{
+		//動き出す
+		fps = new FPS();
+		fps->SetFrameRate(this->videoFramerate);
+		sound->Play();
+	}
+	else if(!enablePlay && preEnablePlay)
+	{
+		//止まる
+		delete fps;
+		fps = nullptr;
+		sound->Pause();
+	}
+	this->preEnablePlay = this->enablePlay;
+}
+void MovieImage::SetVolume(const float volume)
+{
+	if (sound)
+	{
+		this->sound->Volume(volume);
+	}
+}
+void MovieImage::Speed(const float value)
+{
+	this->magnification = value;
 }
 
 const format MovieFormat::MP3 = ".mp3";

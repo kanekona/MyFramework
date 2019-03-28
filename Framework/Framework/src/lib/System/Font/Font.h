@@ -19,30 +19,30 @@ public:
 		Texture* texture;
 		Vec2Int size;
 		Vec2Int bearing;
-		char32_t character;
+		wchar_t character;
 	};
 	void Draw() override;
 private:
-	std::map<char32_t, TextureData> data;
+	std::map<wchar_t, TextureData> data;
 	GLuint texID;
 	FT_Library ft_library;
 	FT_Face face;
 	//std::string text;
-	std::u32string text;
+	std::wstring text;
 	unsigned int size;
 public:
 	explicit Font();
 	virtual ~Font();
 	//void SetText(const std::string& text);
-	void SetText(const std::u32string& text);
+	void SetText(const std::wstring& text);
 	/**
 	*Žg—p‹ÖŽ~
 	*/
 	//void SetText(const std::string& text, unsigned int* offset);
 	//std::string GetText() const;
-	std::u32string GetText() const;
+	std::wstring GetText() const;
 	void SetSize(const unsigned int fontSize);
 	unsigned int GetSize() const;
 	//std::vector<TextureData>* GetData();
-	std::map<char32_t, TextureData>* GetData();
+	std::map<wchar_t, TextureData>* GetData();
 };
