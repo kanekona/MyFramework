@@ -20,9 +20,10 @@ public:
 	Color* color;
 	/**
 	*@brief	constructor
+	*@param[in] bool flag Register in the drawing system
 	*@param[in] int registerd Registerd To Number
 	*/
-	explicit Sprite(const int registerd = REGISTERD_CANVAS);
+	explicit Sprite(const bool flag, const int registerd = REGISTERD_CANVAS);
 	/**
 	*@brief	destructor
 	*/

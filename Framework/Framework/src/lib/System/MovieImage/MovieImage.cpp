@@ -1,10 +1,12 @@
 #include "MovieImage.h"
 #include "Engine\Framework.h"
 MovieImage::MovieImage()
+	:Sprite(true)
 {
 	Init();
 }
 MovieImage::MovieImage(const std::string& filePath, const format& movie, const format& sound)
+	:Sprite(true)
 {
 	Init();
 	this->Load(filePath, movie, sound);

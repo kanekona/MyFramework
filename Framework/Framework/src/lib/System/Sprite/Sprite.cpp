@@ -1,10 +1,13 @@
 #include "Sprite.h"
 #include "Engine\Framework.h"
 #include "Engine\OGF.hpp"
-Sprite::Sprite(const int r)
+Sprite::Sprite(const bool flag,const int r)
 	:registerd(r)
 {
-	this->Register();
+	if (flag)
+	{
+		this->Register();
+	}
 }
 Sprite::~Sprite()
 {

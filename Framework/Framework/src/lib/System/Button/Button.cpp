@@ -2,6 +2,7 @@
 #include "Input\Input.h"
 #include "ResourceManager\ResourceManager.h"
 Button::Button(const Transform& t)
+	:back(true)
 {
 	transform = t;
 	tag = "Button";
