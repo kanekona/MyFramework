@@ -432,6 +432,12 @@
     <None Include="data\shader\sample.vsh">
       <Filter>リソース ファイル\shader</Filter>
     </None>
+    <None Include="data\shader\test.fsh">
+      <Filter>リソース ファイル\shader</Filter>
+    </None>
+    <None Include="data\shader\test.vsh">
+      <Filter>リソース ファイル\shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="data\image\testicon.ico">

@@ -126,6 +126,7 @@
     <ClInclude Include="src\lib\System\File\File.hpp" />
     <ClInclude Include="src\Scene\TestScene\Entity\TestEntity.h" />
     <ClInclude Include="src\Scene\TestScene\TestScene.h" />
+    <None Include="data\shader\test.fsh" />
     <None Include="src\lib\doxygen.h" />
     <ClInclude Include="src\lib\Event\Event.h" />
     <ClInclude Include="src\lib\Event\ResourceLoad\ResourceLoad.h" />
@@ -241,6 +242,11 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="data\image\testicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\shader\test.vsh">
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

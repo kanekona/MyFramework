@@ -12,14 +12,18 @@ class OGF
 {
 	static void Render(Texture* texture, const GLfloat* vtx, const GLfloat* uv, const GLfloat* color)
 	{
-		glBindTexture(GL_TEXTURE_2D,texture->GetID());
+//		glBindTexture(GL_TEXTURE_2D,texture->GetID());
 		glAlphaFunc(GL_GREATER, (GLclampf)0.0);
-		texture->GetShader()->Use();
-		GLint in_posLocation = texture->GetShader()->Attrib("inpos");
-		GLint in_uvLocation = texture->GetShader()->Attrib("inuv");
-		GLint in_texture = texture->GetShader()->Uniform("tex");
-		GLuint in_color = texture->GetShader()->Attrib("incolor");
-		GLuint in_proj = texture->GetShader()->Uniform("viewMatrix");
+		Shader* shader = texture->GetShader();
+		shader->Use();
+		GLint in_posLocation = shader->Attrib("inpos");
+		GLint in_uvLocation = shader->Attrib("inuv");
+		GLint in_texture = shader->Uniform("tex");
+		GLuint in_color = shader->Attrib("incolor");
+		GLuint in_proj = shader->Uniform("viewMatrix");
+
+		//GLuint in_screen = shader->Attrib("inscreen");
+		//GLuint in_scale = shader->Attrib("inscale");
 
 		glEnableVertexAttribArray(in_posLocation);
 		glEnableVertexAttribArray(in_uvLocation);
@@ -31,8 +35,9 @@ class OGF
 		glVertexAttribPointer(in_posLocation, 2, GL_FLOAT, GL_FALSE, 0, vtx);
 		glVertexAttribPointer(in_uvLocation, 2, GL_FLOAT, GL_FALSE, 0, uv);
 		glVertexAttribPointer(in_color, 4, GL_FLOAT, GL_FALSE, 0, color);
+//		glVertexAttribPointer(in_screen, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 
-//		glBindTexture(GL_TEXTURE_2D, texture->GetID());
+		glBindTexture(GL_TEXTURE_2D, texture->GetID());
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	}
 	static void Rotate(const float radian, GLfloat* matrix)
