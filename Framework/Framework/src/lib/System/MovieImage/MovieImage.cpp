@@ -42,14 +42,15 @@ bool MovieImage::Load(const std::string& filepath, const format& movie, const fo
 	//動画のフレームレートの取得
 	this->videoFramerate = (float)videoCapture.get(CV_CAP_PROP_FPS);
 	//1frame目を行列に渡す
-	videoCapture >> mat;
+	//videoCapture >> mat;
 	//行列データからTextureデータを生成
 	__super::texture = new Texture();
-	__super::texture->Load(mat);
+	__super::texture->Load("./data/image/back.png");
 	//更新速度を指定する
 	fps = new FPS();
 	fps->SetFrameRate(this->videoFramerate);
 	SoundLoad(filepath + s);
+	texture->LoadShader("test");
 	return true;
 }
 void MovieImage::SoundLoad(const std::string& filePath)
@@ -70,7 +71,7 @@ void MovieImage::Update()
 	//フレーム数から更新フレームを計算する
 	if (fps->FrameCheck())
 	{
-		videoCapture >> mat;
+		//videoCapture >> mat;
 		//動画データがあればTextureを生成する
 		if (!mat.empty())
 		{
@@ -92,6 +93,82 @@ void MovieImage::Update()
 			}
 		}
 	}
+}
+void MovieImage::Draw()
+{
+	Box2D draw(Vec2(), Framework::Get()->GetSize(1, 1));
+	GLfloat vtx[] = {
+		draw.x,draw.h,
+		draw.w,draw.h,
+		draw.w,draw.y,
+		draw.x,draw.y,
+	};
+	const GLfloat texuv[] = {
+			0.f,1.f,
+			1.f,1.f,
+			1.f,0.f,
+			0.f,0.f,
+	};
+	const GLfloat texcolor[] = {
+		color->red,
+		color->green,
+		color->blue,
+		color->alpha,
+		color->red,
+		color->green,
+		color->blue,
+		color->alpha,
+		color->red,
+		color->green,
+		color->blue,
+		color->alpha,
+		color->red,
+		color->green,
+		color->blue,
+		color->alpha,
+	};
+
+	GLfloat screen[] = {
+		Framework::Get()->GetSize(1,1).x,
+		Framework::Get()->GetSize(1,1).y,
+		Framework::Get()->GetSize(1,1).x,
+		Framework::Get()->GetSize(1,1).y,
+		Framework::Get()->GetSize(1,1).x,
+		Framework::Get()->GetSize(1,1).y,
+		Framework::Get()->GetSize(1,1).x,
+		Framework::Get()->GetSize(1,1).y,
+	};
+	GLfloat scale[] = {
+		10.0f,10.0f,10.0f,10.0f
+	};
+	glAlphaFunc(GL_GREATER, (GLclampf)0.0);
+	Shader* shader = texture->GetShader();
+	shader->Use();
+	GLint in_posLocation = shader->Attrib("inpos");
+	GLint in_uvLocation = shader->Attrib("inuv");
+	GLint in_texture = shader->Uniform("tex");
+	GLuint in_color = shader->Attrib("incolor");
+	GLuint in_proj = shader->Uniform("viewMatrix");
+
+	GLuint in_screen = shader->Uniform("inscreen");
+	GLuint in_scale = shader->Attrib("inscale");
+
+	glEnableVertexAttribArray(in_posLocation);
+	glEnableVertexAttribArray(in_uvLocation);
+	glEnableVertexAttribArray(in_color);
+	glEnableVertexAttribArray(in_scale);
+
+	glUniform1f(in_texture, 0);
+	glUniformMatrix4fv(in_proj, 1, GL_FALSE, Framework::Get()->GetScene()->GetCamera()->GetProjectionMatrix());
+	glUniform2f(in_screen, screen[0], screen[1]);
+
+	glVertexAttribPointer(in_posLocation, 2, GL_FLOAT, GL_FALSE, 0, vtx);
+	glVertexAttribPointer(in_uvLocation, 2, GL_FLOAT, GL_FALSE, 0, texuv);
+	glVertexAttribPointer(in_color, 4, GL_FLOAT, GL_FALSE, 0, texcolor);
+	glVertexAttribPointer(in_scale, 1, GL_FLOAT, GL_FALSE, 0, scale);
+
+	glBindTexture(GL_TEXTURE_2D, texture->GetID());
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 }
 void MovieImage::EnableLoop(const bool isLoop)
 {

@@ -4,21 +4,16 @@
 
 #version 400
 
+in vec2 inpos;
+in vec4 incolor;
+in vec2 inuv;
+uniform vec2 inscreen;
+in float inscale;
 out vec2 uv;
 out vec2 screen;
 out float scale;
-
-in vec2 inpos;
-
-uniform mat4 viewMatrix;
-
-in vec4 incolor;
-
 out vec4 color;
-
-in vec2 inuv;
-in vec2 inscreen;
-in float inscale;
+uniform mat4 viewMatrix;
 
 void main()
 {

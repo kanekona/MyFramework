@@ -56,6 +56,8 @@ class MovieImage : public Sprite
 	*@brief “o˜^ˆ—
 	*/
 	void Enter() override;
+
+	void Draw() override;
 public:
 	/**
 	*@brief	DefaultConstructor
