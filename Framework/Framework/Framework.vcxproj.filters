@@ -426,9 +426,6 @@
     <None Include="src\lib\doxygen.h">
       <Filter>ヘッダー ファイル</Filter>
     </None>
-    <None Include="data\shader\font.vsh">
-      <Filter>リソース ファイル\shader</Filter>
-    </None>
     <None Include="data\shader\sample.vsh">
       <Filter>リソース ファイル\shader</Filter>
     </None>
@@ -436,6 +433,9 @@
       <Filter>リソース ファイル\shader</Filter>
     </None>
     <None Include="data\shader\test.vsh">
+      <Filter>リソース ファイル\shader</Filter>
+    </None>
+    <None Include="data\shader\font.vsh">
       <Filter>リソース ファイル\shader</Filter>
     </None>
   </ItemGroup>

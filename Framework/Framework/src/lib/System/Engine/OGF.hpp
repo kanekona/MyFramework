@@ -5,6 +5,7 @@
 #include "ResourceManager\ResourceManager.h"
 #include "Engine\Framework.h"
 #include "Font\Font.h"
+#include "Sprite\Sprite.h"
 /**
 *@brief OpenGL Features
 */
@@ -12,33 +13,37 @@ class OGF
 {
 	static void Render(Texture* texture, const GLfloat* vtx, const GLfloat* uv, const GLfloat* color)
 	{
-//		glBindTexture(GL_TEXTURE_2D,texture->GetID());
 		glAlphaFunc(GL_GREATER, (GLclampf)0.0);
 		Shader* shader = texture->GetShader();
 		shader->Use();
-		GLint in_posLocation = shader->Attrib("inpos");
-		GLint in_uvLocation = shader->Attrib("inuv");
-		GLint in_texture = shader->Uniform("tex");
-		GLuint in_color = shader->Attrib("incolor");
-		GLuint in_proj = shader->Uniform("viewMatrix");
 
-		//GLuint in_screen = shader->Attrib("inscreen");
-		//GLuint in_scale = shader->Attrib("inscale");
-
-		glEnableVertexAttribArray(in_posLocation);
-		glEnableVertexAttribArray(in_uvLocation);
-		glEnableVertexAttribArray(in_color);
-
-		glUniform1f(in_texture, 0);
-		glUniformMatrix4fv(in_proj, 1, GL_FALSE, Framework::Get()->GetScene()->GetCamera()->GetProjectionMatrix());
-
-		glVertexAttribPointer(in_posLocation, 2, GL_FLOAT, GL_FALSE, 0, vtx);
-		glVertexAttribPointer(in_uvLocation, 2, GL_FLOAT, GL_FALSE, 0, uv);
-		glVertexAttribPointer(in_color, 4, GL_FLOAT, GL_FALSE, 0, color);
-//		glVertexAttribPointer(in_screen, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+		OGF::SetAttrib(shader, "inpos", vtx, 2, GL_FLOAT, GL_FALSE);
+		OGF::SetAttrib(shader, "inuv", uv, 2, GL_FLOAT, GL_FALSE);
+		OGF::SetUniform1f(shader, "tex", 0);
+		OGF::SetAttrib(shader, "incolor", color, 4, GL_FLOAT, GL_FALSE);
+		OGF::SetUniformMat4f(shader, "viewMatrix", Framework::Get()->GetScene()->GetCamera()->GetProjectionMatrix(), GL_FALSE);
 
 		glBindTexture(GL_TEXTURE_2D, texture->GetID());
 		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	static void Render(Sprite* sprite, const GLfloat* vtx, const GLfloat* uv, const GLfloat* color)
+	{
+		glAlphaFunc(GL_GREATER, (GLclampf)0.0);
+		Shader* shader = sprite->texture->GetShader();
+		shader->Use();
+
+		OGF::SetAttrib(shader, "inpos", vtx, 2, GL_FLOAT, GL_FALSE);
+		OGF::SetAttrib(shader, "inuv", uv, 2, GL_FLOAT, GL_FALSE);
+		OGF::SetUniform1f(shader, "tex", 0);
+		OGF::SetAttrib(shader, "incolor", color, 4, GL_FLOAT, GL_FALSE);
+		OGF::SetUniformMat4f(shader, "viewMatrix", Framework::Get()->GetScene()->GetCamera()->GetProjectionMatrix(), GL_FALSE);
+
+		sprite->SetShaderData(shader);
+
+		glBindTexture(GL_TEXTURE_2D, sprite->texture->GetID());
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 	static void Rotate(const float radian, GLfloat* matrix)
 	{
@@ -215,6 +220,129 @@ public:
 		};
 		Render(texture, vtx, texuv, texcolor);
 	}
+	static void Draw(Sprite* sprite, const Transform* transform)
+	{
+		Box2D draw = GetAbsolute(transform);
+		Draw(sprite, &draw, 0.0f, &Color::one);
+	}
+	static void Draw(Sprite* sprite, const Transform* transform, const float angle)
+	{
+		Box2D draw = GetAbsolute(transform);
+		Draw(sprite, &draw, angle, &Color::one);
+	}
+	static void Draw(Sprite* sprite, const Transform* transform, const Color* color)
+	{
+		Box2D draw = GetAbsolute(transform);
+		Draw(sprite, &draw, 0.0f, color);
+	}
+	static void Draw(Sprite* sprite, const Transform* transform, const float angle, const Color* color)
+	{
+		Box2D draw = GetAbsolute(transform);
+		Draw(sprite, &draw, angle, color);
+	}
+	static void Draw(Sprite* sprite, const Transform* transform, const Box2D* src, const Color* color)
+	{
+		Box2D draw = GetAbsolute(transform);
+		Draw(sprite, &draw, src, transform->angle, color);
+	}
+	static void Draw(Sprite* sprite, const Transform* draw, const Transform* src)
+	{
+		Box2D boxdraw = GetAbsolute(draw);
+		Box2D boxsrc = GetAbsolute(src);
+		Draw(sprite, &boxdraw, &boxsrc, draw->angle, &Color::one);
+	}
+	static void Draw(Sprite* sprite, const Transform* draw, const Transform* src, const Color* color)
+	{
+		Box2D boxdraw = GetAbsolute(draw);
+		Box2D boxsrc = GetAbsolute(src);
+		Draw(sprite, &boxdraw, &boxsrc, draw->angle, color);
+	}
+	static void Draw(Sprite* sprite, const Box2D* draw)
+	{
+		Draw(sprite, draw, 0.0f, &Color::one);
+	}
+	static void Draw(Sprite* sprite, const Box2D* draw, const float angle)
+	{
+		Draw(sprite, draw, angle, &Color::one);
+	}
+	static void Draw(Sprite* sprite, const Box2D* draw, const Color* color)
+	{
+		Draw(sprite, draw, 0.0f, color);
+	}
+	static void Draw(Sprite* sprite, const Box2D* draw, const float angle, const Color* color)
+	{
+		GLfloat vtx[] = {
+			draw->x,draw->h,
+			draw->w,draw->h,
+			draw->w,draw->y,
+			draw->x,draw->y,
+		};
+		Rotate(angle, &vtx[0]);
+		const GLfloat texuv[] = {
+			0.f,1.f,
+			1.f,1.f,
+			1.f,0.f,
+			0.f,0.f,
+		};
+		const GLfloat texcolor[] = {
+			color->red,
+			color->green,
+			color->blue,
+			color->alpha,
+			color->red,
+			color->green,
+			color->blue,
+			color->alpha,
+			color->red,
+			color->green,
+			color->blue,
+			color->alpha,
+			color->red,
+			color->green,
+			color->blue,
+			color->alpha,
+		};
+		Render(sprite, vtx, texuv, texcolor);
+	}
+	static void Draw(Sprite* sprite, const Box2D* draw, const Box2D* src)
+	{
+		Draw(sprite, draw, src, 0.0f, &Color::one);
+	}
+	static void Draw(Sprite* sprite, const Box2D* draw, const Box2D* src, const float angle, const Color* color)
+	{
+		GLfloat vtx[] = {
+		draw->x,draw->h,
+		draw->w,draw->h,
+		draw->w,draw->y,
+		draw->x,draw->y,
+		};
+		Rotate(angle, &vtx[0]);
+		const GLfloat texuv[] = {
+			src->x / sprite->texture->GetSize()->x,src->h / sprite->texture->GetSize()->y,
+			src->w / sprite->texture->GetSize()->x,src->h / sprite->texture->GetSize()->y,
+			src->w / sprite->texture->GetSize()->x,src->y / sprite->texture->GetSize()->y,
+			src->x / sprite->texture->GetSize()->x,src->y / sprite->texture->GetSize()->y,
+		};
+		const GLfloat texcolor[] = {
+			color->red,
+			color->green,
+			color->blue,
+			color->alpha,
+			color->red,
+			color->green,
+			color->blue,
+			color->alpha,
+			color->red,
+			color->green,
+			color->blue,
+			color->alpha,
+			color->red,
+			color->green,
+			color->blue,
+			color->alpha,
+		};
+		Render(sprite, vtx, texuv, texcolor);
+	}
 	static void Draw(Font* font, const Vec2* pos)
 	{
 		OGF::Draw(font, pos, &Color::one);
@@ -231,5 +359,26 @@ public:
 			draw.OffsetSize();
 			OGF::Draw(d.texture, &draw, color);
 		}
+	}
+	static void SetAttrib(Shader* shader, const std::string& name, const GLfloat* mat, const GLint& size, GLenum type, GLboolean flag)
+	{
+		GLuint id = shader->Attrib(name);
+		glEnableVertexAttribArray(id);
+		glVertexAttribPointer(id, size, type, flag, 0, mat);
+	}
+	static void SetUniform1f(Shader* shader, const std::string& name,const GLfloat v0)
+	{
+		GLint id = shader->Uniform(name);
+		glUniform1f(id, v0);
+	}
+	static void SetUniform2f(Shader* shader, const std::string& name, const GLfloat* mat)
+	{
+		GLuint id = shader->Uniform(name);
+		glUniform2f(id, mat[0], mat[1]);
+	}
+	static void SetUniformMat4f(Shader* shader, const std::string& name, const GLfloat* mat, GLboolean normalize)
+	{
+		GLuint id = shader->Uniform(name);
+		glUniformMatrix4fv(id, 1, normalize, mat);
 	}
 };

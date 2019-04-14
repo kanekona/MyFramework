@@ -51,7 +51,11 @@ void Sprite::Register()
 }
 void Sprite::Draw()
 {
-	OGF::Draw(texture, transform, color);
+	OGF::Draw(this, transform, color);
+}
+void Sprite::SetShaderData(Shader* shader)
+{
+
 }
 void Sprite::SetDrawOrder(const unsigned int o)
 {

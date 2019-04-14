@@ -51,4 +51,8 @@ public:
 	*@return GLuint ShaderID
 	*/
 	GLuint GetID() const;
+	/**
+	*@brief	constructor
+	*/
+	explicit Shader();
 };

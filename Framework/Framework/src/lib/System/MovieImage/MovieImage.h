@@ -20,6 +20,7 @@ public:
 	//! WAV
 	const static format WAV;
 };
+
 /**
 *@brief 童画の読み込みと再生と保存を行うclass
 */
@@ -43,6 +44,9 @@ class MovieImage : public Sprite
 	bool enablePlay;
 	//! 再生の前状態
 	bool preEnablePlay;
+	//! ShaderValue
+	GLfloat* screen;
+	GLfloat* scale;
 	/**
 	*@brief 固定初期化
 	*/
@@ -56,8 +60,10 @@ class MovieImage : public Sprite
 	*@brief 登録時処理
 	*/
 	void Enter() override;
-
-	void Draw() override;
+	/**
+	*@brief	シェーダへ専用変数を送る
+	*/
+	void SetShaderData(Shader* shader) override;
 public:
 	/**
 	*@brief	DefaultConstructor

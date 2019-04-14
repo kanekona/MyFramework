@@ -33,10 +33,15 @@ public:
 	*/
 	virtual void Draw();
 	/**
+	*@brief	SetShaderValue
+	*@param[in] Shader* shader Use Shader
+	*/
+	virtual void SetShaderData(Shader* shader);
+	/**
 	*@brief Set Draw Order
 	*@param[in] unsigned int order Order
 	*/
-	void SetDrawOrder(const unsigned int order);
+	virtual void SetDrawOrder(const unsigned int order);
 	/**
 	*@brief	Sprite Draw Order Comparsion
 	*@param[in] Sprite* first Sprite

@@ -128,3 +128,6 @@ GLuint Shader::GetID() const
 {
 	return this->id;
 }
+Shader::Shader()
+{
+}
