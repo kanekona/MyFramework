@@ -44,9 +44,6 @@ class MovieImage : public Sprite
 	bool enablePlay;
 	//! 再生の前状態
 	bool preEnablePlay;
-	//! ShaderValue
-	GLfloat* screen;
-	GLfloat* scale;
 	/**
 	*@brief 固定初期化
 	*/
@@ -60,10 +57,6 @@ class MovieImage : public Sprite
 	*@brief 登録時処理
 	*/
 	void Enter() override;
-	/**
-	*@brief	シェーダへ専用変数を送る
-	*/
-	void SetShaderData(Shader* shader) override;
 public:
 	/**
 	*@brief	DefaultConstructor

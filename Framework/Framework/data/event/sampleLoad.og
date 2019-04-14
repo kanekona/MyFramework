@@ -1,6 +1,6 @@
 Shader>sample,simple
 Shader>font,font
-Shader>test,test
+Shader>mosaic,mosaic
 Texture>./data/image/back.png,back
 Texture>./data/image/Collision.png,collision
 Texture>./data/image/Button.png,button

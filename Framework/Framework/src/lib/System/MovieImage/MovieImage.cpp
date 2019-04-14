@@ -21,8 +21,6 @@ MovieImage::~MovieImage()
 		delete fps;
 	}
 	delete transform;
-	delete[] screen;
-	delete[] scale;
 }
 void MovieImage::Init()
 {
@@ -33,14 +31,6 @@ void MovieImage::Init()
 	transform->scale = Framework::Get()->GetSize(1, 1);
 	color = &Color::one;
 	magnification = 1.0f;
-	screen = new GLfloat[2];
-	screen[0] = Framework::Get()->GetSize(1, 1).x;
-	screen[1] = Framework::Get()->GetSize(1, 1).y;
-	scale = new GLfloat[4];
-	scale[0] = 10.0f;
-	scale[1] = 10.0f;
-	scale[2] = 10.0f;
-	scale[3] = 10.0f;
 }
 bool MovieImage::Load(const std::string& filepath, const format& movie, const format& s)
 {
@@ -57,7 +47,6 @@ bool MovieImage::Load(const std::string& filepath, const format& movie, const fo
 	//行列データからTextureデータを生成
 	__super::texture = new Texture();
 	__super::texture->Load(mat);
-	__super::texture->LoadShader("test");
 	//更新速度を指定する
 	fps = new FPS();
 	fps->SetFrameRate(this->videoFramerate);
@@ -72,11 +61,6 @@ void MovieImage::SoundLoad(const std::string& filePath)
 void MovieImage::Enter()
 {
 	sound->Play();
-}
-void MovieImage::SetShaderData(Shader* shader)
-{
-	OGF::SetAttrib(shader, "inscale", scale, 1, GL_FLOAT, GL_FALSE);
-	OGF::SetUniform2f(shader, "inscreen", screen);
 }
 void MovieImage::Update()
 {
