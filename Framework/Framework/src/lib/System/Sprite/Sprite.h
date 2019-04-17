@@ -49,6 +49,14 @@ public:
 	*@return bool true if second is freater than first
 	*/
 	static bool Comparison(const Sprite* first, const Sprite* second);
+	/**
+	*@brief New 3 Member
+	*/
+	void CreateData();
+	/**
+	*@brief	Delete 3 Member
+	*/
+	void DeleteData();
 
 	const static int REGISTERD_CANVAS = 0x01;
 	const static int REGISTERD_UI = 0x02;

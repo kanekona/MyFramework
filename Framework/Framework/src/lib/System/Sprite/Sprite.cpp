@@ -61,6 +61,18 @@ void Sprite::SetDrawOrder(const unsigned int o)
 {
 	order = o;
 }
+void Sprite::CreateData()
+{
+	texture = new Texture();
+	transform = new Transform();
+	color = new Color();
+}
+void Sprite::DeleteData()
+{
+	delete texture;
+	delete transform;
+	delete color;
+}
 bool Sprite::Comparison(const Sprite* first, const Sprite* second)
 {
 	return first->order < second->order;

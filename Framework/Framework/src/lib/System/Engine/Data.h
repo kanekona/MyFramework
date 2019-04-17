@@ -198,6 +198,8 @@ public:
 	Vec2 position;
 	Vec2 scale;
 	float angle;
+	void operator+=(const Transform& t);
+	Transform operator+(const Transform& t);
 };
 
 /**

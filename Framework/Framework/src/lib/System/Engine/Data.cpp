@@ -307,6 +307,8 @@ Transform::Transform(const Vec2& pos, const Vec2& s,const float a)
 	scale = s;
 	angle = a;
 }
+void Transform::operator+=(const Transform& t) { this->position += t.position; this->scale += t.scale; this->angle += t.angle; }
+Transform Transform::operator+(const Transform& t) { return Transform(position + t.position, scale + t.scale, angle + t.angle); }
 
 float KL::ToRadian(const  float  degree_)
 {
