@@ -1,4 +1,6 @@
 #include "System.h"
+#include <cctype>
+#include <algorithm>
 namespace KL {
 	void MulitMatrixf(GLfloat*src1, GLfloat*src2, GLfloat*dst) {
 		for (int y = 0; y < 4; y++) {
@@ -323,4 +325,8 @@ void KL::FileCreate(const std::string& path, std::vector<std::string>& data)
 		ofs << data[i] << "\n";
 	}
 	ofs.close();
+}
+bool KL::StringisNumber(const std::string& str)
+{
+	return std::all_of(str.cbegin(), str.cend(), std::isdigit);
 }

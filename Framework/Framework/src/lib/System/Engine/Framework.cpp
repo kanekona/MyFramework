@@ -82,10 +82,10 @@ Vec2Int Framework::GetSize(const unsigned int x, const unsigned int y)
 	size.y /= y;
 	return size;
 }
-float* Framework::GetSize()
+void Framework::GetSize(float* out)
 {
-	float size[] = { window->GetSize().x,window->GetSize().y };
-	return size;
+	out[0] = (float)window->GetSize().x;
+	out[1] = (float)window->GetSize().y;
 }
 float Framework::DeltaTime() const
 {

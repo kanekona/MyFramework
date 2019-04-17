@@ -104,4 +104,5 @@ namespace KL
 	void DataClear(const std::string& path);
 	bool CheckText(std::string* first, std::string* second);
 	void FileCreate(const std::string& path, std::vector<std::string>& data);
+	bool StringisNumber(const std::string& str);
 }

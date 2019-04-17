@@ -92,9 +92,9 @@ public:
 	Vec2Int GetSize(const unsigned int x, const unsigned int y);
 	/**
 	*@brief Get Size In The Window
-	*@return float* In The Window Size
+	*@param[out] float* out float[2]
 	*/
-	float* GetSize();
+	void GetSize(float* out);
 	/**
 	*@brief	Get DeltaTime
 	*@return float deltaTime
