@@ -2,10 +2,12 @@
 #include <sstream>
 #include <fstream>
 #include <string>
-
+typedef int FileFormat;
 class File final
 {
 public:
+	static const FileFormat KL_MALLOC;
+	static const FileFormat KL_NEW;
 	// Reading files
 	static std::string Load(std::ifstream& ifs)
 	{
@@ -14,7 +16,7 @@ public:
 		return std::string(begin, end);
 	}
 	// Reading files
-	static std::string Load(const std::string path)
+	static std::string Load(const std::string& path)
 	{
 		std::ifstream ifs(path, std::ios::in | std::ios::binary);
 		return File::Load(ifs);
@@ -82,5 +84,40 @@ public:
 			}
 		}
 		return std::string();
+	}
+	// Specified character count
+	static unsigned int Count(const std::string& str, const char c)
+	{
+		return std::count(str.cbegin(), str.cend(), c);
+	}
+	// One line String Attay
+	static std::string* Load(const std::string& path, const unsigned int count, const FileFormat config)
+	{
+		std::ifstream ifs(path, std::ios::in);
+		if (!ifs)
+		{
+			return nullptr;
+		}
+		std::string* texts = nullptr;
+		switch (config)
+		{
+		case 0x00:
+			texts = (std::string*)malloc(count);
+			break;
+		case 0x01:
+			texts = new std::string[count];
+			break;
+		default:
+			return nullptr;
+			break;
+		}
+		static std::string line;
+		unsigned int i = 0;
+		while (std::getline(ifs, line))
+		{
+			texts[i] = line;
+			++i;
+		}
+		return texts;
 	}
 };

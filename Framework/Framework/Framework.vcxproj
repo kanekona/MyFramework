@@ -187,6 +187,7 @@
     <ClCompile Include="src\lib\System\Engine\Framework.cpp" />
     <ClCompile Include="src\lib\System\Engine\Initializer.cpp" />
     <ClCompile Include="src\lib\System\Entity\Entity.cpp" />
+    <ClCompile Include="src\lib\System\File\File.cpp" />
     <ClCompile Include="src\lib\System\Font\Font.cpp" />
     <ClCompile Include="src\lib\System\FPS\FPS.cpp" />
     <ClCompile Include="src\lib\System\Input\Input.cpp" />

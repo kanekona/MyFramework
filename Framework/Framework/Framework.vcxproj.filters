@@ -398,6 +398,9 @@
     <ClCompile Include="src\Scene\TestScene\Entity\TestEntity.cpp">
       <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="src\lib\System\File\File.cpp">
+      <Filter>ソース ファイル\Library\System\File</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="src\lib\System\Icon\Resource.rc">
