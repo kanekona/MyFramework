@@ -88,10 +88,15 @@ public:
 	// Specified character count
 	static unsigned int Count(const std::string& str, const char c)
 	{
-		return std::count(str.cbegin(), str.cend(), c);
+		return static_cast<unsigned int>(std::count(str.cbegin(), str.cend(), c));
+	}
+	static unsigned int Count(const std::string& path)
+	{
+		std::string str = File::Load(path);
+		return Count(str, '\n');
 	}
 	// One line String Attay
-	static std::string* Load(const std::string& path, const unsigned int count, const FileFormat config)
+	static std::string* LoadStrings(const std::string& path, const unsigned int count, const FileFormat config = KL_NEW)
 	{
 		std::ifstream ifs(path, std::ios::in);
 		if (!ifs)
@@ -119,5 +124,14 @@ public:
 			++i;
 		}
 		return texts;
+	}
+	static std::string* LoadStrings(const std::string& path, const FileFormat config = KL_NEW)
+	{
+		return LoadStrings(path, Count(path) + 1, config);
+	}
+	static std::string* LoadStrings(const std::string& path, unsigned int * out, const FileFormat config = KL_NEW)
+	{
+		*out = Count(path) + 1;
+		return LoadStrings(path, *out, config);
 	}
 };

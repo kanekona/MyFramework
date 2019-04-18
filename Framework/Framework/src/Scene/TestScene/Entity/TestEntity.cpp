@@ -1,5 +1,6 @@
 #include "TestEntity.h"
 #include "MovieImage\MovieImage.h"
+#include "File\File.hpp"
 TestEntity::TestEntity()
 {
 	tag = "TestEntity";
