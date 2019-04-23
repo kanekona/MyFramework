@@ -105,4 +105,6 @@ namespace KL
 	bool CheckText(std::string* first, std::string* second);
 	void FileCreate(const std::string& path, std::vector<std::string>& data);
 	bool StringisNumber(const std::string& str);
+	unsigned int Count(const std::string& str, const char c);
+	std::string* SplitString(const std::string& text, const char c, int* out);
 }

@@ -330,3 +330,24 @@ bool KL::StringisNumber(const std::string& str)
 {
 	return std::all_of(str.cbegin(), str.cend(), std::isdigit);
 }
+unsigned int KL::Count(const std::string& str, const char c)
+{
+	return static_cast<unsigned int>(std::count(str.cbegin(), str.cend(), c));
+}
+std::string* KL::SplitString(const std::string& text, const char c, int* out)
+{
+	*out = KL::Count(text, c) + 1;
+	std::string* str = new std::string[*out];
+	//string‚Ígetline‚É”ñ‘Î‰‚È‚Ì‚Å‘Î‰‚µ‚Ä‚¢‚éstrigstream‚É•¶š—ñ‚ğˆê“x“n‚µ‚Ä‚â‚é•K—v‚ª‚ ‚é
+	std::stringstream ss(text);
+	//•ªŠ„‚µ‚½•¶š—ñ‚ğŠi”[‚·‚éstring•Ï”
+	std::string line;
+	int count = 0;
+	//getline‚Å‘æOˆø”(char)‚²‚Æ‚É•ªŠ„‚·‚é
+	while (std::getline(ss, line, c))
+	{
+		str[count] = line;
+		++count;
+	}
+	return str;
+}

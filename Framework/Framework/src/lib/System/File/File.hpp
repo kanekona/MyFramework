@@ -2,6 +2,7 @@
 #include <sstream>
 #include <fstream>
 #include <string>
+#include "System\System.h"
 typedef int FileFormat;
 class File final
 {
@@ -86,14 +87,11 @@ public:
 		return std::string();
 	}
 	// Specified character count
-	static unsigned int Count(const std::string& str, const char c)
-	{
-		return static_cast<unsigned int>(std::count(str.cbegin(), str.cend(), c));
-	}
+	
 	static unsigned int Count(const std::string& path)
 	{
 		std::string str = File::Load(path);
-		return Count(str, '\n');
+		return KL::Count(str, '\n');
 	}
 	// One line String Attay
 	static std::string* LoadStrings(const std::string& path, const unsigned int count, const FileFormat config = KL_NEW)
@@ -116,7 +114,7 @@ public:
 			return nullptr;
 			break;
 		}
-		static std::string line;
+		std::string line;
 		unsigned int i = 0;
 		while (std::getline(ifs, line))
 		{

@@ -15,6 +15,13 @@ void TestEntity::Enter()
 	movie->Load("./data/not/videos/TestMovie", MovieFormat::MP4, MovieFormat::WAV);
 	//movie->texture->SetShader(nullptr);
 	SetChildren(movie);
+	int count;
+	std::string* str = KL::SplitString("abc def fhi  k", ' ', &count);
+	for (int i = 0; i < count; ++i)
+	{
+		std::cout << i << ":" << str[i] << std::endl;
+	}
+	delete[] str;
 }
 void TestEntity::Update()
 {
