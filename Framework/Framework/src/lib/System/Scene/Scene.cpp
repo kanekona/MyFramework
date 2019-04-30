@@ -8,13 +8,11 @@ Scene::~Scene()
 {
 	for (auto id : entitys)
 	{
-		//KL::Destroy<Entity>(id);
 		delete id;
 	}
 	entitys.clear();
 	for (auto id : plansEntity)
 	{
-		//KL::Destroy<Entity>(id);
 		delete id;
 	}
 	plansEntity.clear();
@@ -30,14 +28,12 @@ void Scene::SetEntity(Entity* entity)
 }
 void Scene::RegisterEntity()
 {
-	for (auto id : plansEntity)
+	for (auto it = plansEntity.begin(); it != plansEntity.end();)
 	{
-		//“o˜^—\’è‚ð“o˜^‚·‚é
-		entitys.emplace_back(id);
-		Entity::Enter(id);
+		entitys.emplace_back(*it);
+		Entity::Enter(*it);
+		it = plansEntity.erase(it);
 	}
-	//“o˜^—\’è—“‚ðƒŠƒZƒbƒg
-	plansEntity.clear();
 }
 void Scene::KillEntity()
 {

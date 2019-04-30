@@ -37,14 +37,21 @@ bool Entity::GetActive() const
 }
 void Entity::RegisterChildren()
 {
-	for (auto id : plansChilds)
+	/*for (auto id : plansChilds)
 	{
 		childs.emplace_back(id);
 		id->Enter();
 
 		id->RegisterChildren();
 	}
-	plansChilds.clear();
+	plansChilds.clear();*/
+	for (auto it = plansChilds.begin(); it != plansChilds.end();)
+	{
+		childs.emplace_back(*it);
+		(*it)->Enter();
+		(*it)->RegisterChildren();
+		it = plansChilds.erase(it);
+	}
 }
 void Entity::KillChildren()
 {
