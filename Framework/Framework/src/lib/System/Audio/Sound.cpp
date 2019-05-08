@@ -3,6 +3,7 @@
 //@:Soundclass
 //---------------------------------
 Sound::Sound()
+	:source(std::make_shared<Source>())
 {
 
 };
@@ -74,4 +75,8 @@ void Sound::SetVolume(float maxVolume_)
 float Sound::GetVolume() const
 {
 	return this->volume_;
+}
+Buffer* Sound::GetBuffer() const
+{
+	return &*buffer;
 }

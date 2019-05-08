@@ -91,4 +91,8 @@ public:
 	*@return float Å‘å‰¹—Ê
 	*/
 	float GetVolume() const;
+	/**
+	*@brief Get Buffer
+	*/
+	Buffer* GetBuffer() const;
 };

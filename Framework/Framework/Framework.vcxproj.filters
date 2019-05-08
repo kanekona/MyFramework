@@ -279,6 +279,9 @@
     <ClInclude Include="src\lib\System\File\File.hpp">
       <Filter>ソース ファイル\Library\System\File</Filter>
     </ClInclude>
+    <ClInclude Include="src\lib\System\MovieImage\MediaPlayer.h">
+      <Filter>ソース ファイル\Library\System\MovieImage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Win\WinMain.cpp">
@@ -400,6 +403,9 @@
     </ClCompile>
     <ClCompile Include="src\lib\System\File\File.cpp">
       <Filter>ソース ファイル\Library\System\File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\MovieImage\MediaPlayer.cpp">
+      <Filter>ソース ファイル\Library\System\MovieImage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -52,6 +52,8 @@ Buffer::Buffer(const std::string& path_)
 	this->nowTime = wav_data.time();
 	// 波形データをバッファにセット
 	alBufferData(id_, wav_data.isStereo() ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, wav_data.data(), wav_data.size(), wav_data.sampleRate());
+	waveformData = wav_data.Getdata();
+	sampleRate = wav_data.sampleRate();
 }
 Buffer::~Buffer()
 {
@@ -317,6 +319,10 @@ bool Wav::analyzeWavFile(Info& info, std::ifstream& fstr)
 	}
 	info.size = Wav::getChunkSize(fstr);
 	return true;
+}
+std::vector<char> Wav::Getdata()
+{
+	return this->data_;
 }
 //---------------------------------
 //@:StreamWavclass

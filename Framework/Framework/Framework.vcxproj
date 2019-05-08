@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\lib\System\File\File.hpp" />
+    <ClInclude Include="src\lib\System\MovieImage\MediaPlayer.h" />
     <ClInclude Include="src\Scene\TestScene\Entity\TestEntity.h" />
     <ClInclude Include="src\Scene\TestScene\TestScene.h" />
     <None Include="data\shader\mosaic.fsh" />
@@ -191,6 +192,7 @@
     <ClCompile Include="src\lib\System\Font\Font.cpp" />
     <ClCompile Include="src\lib\System\FPS\FPS.cpp" />
     <ClCompile Include="src\lib\System\Input\Input.cpp" />
+    <ClCompile Include="src\lib\System\MovieImage\MediaPlayer.cpp" />
     <ClCompile Include="src\lib\System\MovieImage\MovieImage.cpp" />
     <ClCompile Include="src\lib\System\Order\Order.cpp" />
     <ClCompile Include="src\lib\System\Random\Random.cpp" />

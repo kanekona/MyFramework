@@ -26,6 +26,8 @@ public:
 	float GetTime() const;
 	ALuint GetID() const;
 	void Bind(const bool stereo, const void* data, const u_int size, const u_int rate) const;
+	std::vector<char> waveformData;
+	u_int sampleRate;
 };
 /**
 *@brief	SoundDataのSourceDataを扱う
@@ -79,6 +81,8 @@ public:
 	const char* data() const;
 	//wavの情報を取得
 	static bool analyzeWavFile(Info& info, std::ifstream& fstr);
+	//波形データを取得する
+	std::vector<char> Getdata();
 private:
 	Info info;
 	float time_;

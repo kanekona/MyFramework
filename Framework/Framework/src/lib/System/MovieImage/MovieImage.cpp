@@ -1,6 +1,7 @@
 #include "MovieImage.h"
 #include "Engine\Framework.h"
 #include "Engine\OGF.hpp"
+#include "Audio\StreamingSound.h"
 MovieImage::MovieImage()
 	:Sprite(true)
 {
@@ -57,6 +58,16 @@ void MovieImage::SoundLoad(const std::string& filePath)
 {
 	sound = new Sound();
 	this->sound->Create(filePath);
+	//std::cout << "=====SoundData=====\n";
+	//Buffer* buffer = sound->GetBuffer();
+	///*for (auto it = buffer->waveformData.begin(); it != buffer->waveformData.end(); ++it)
+	//{
+	//	std::cout << +*it << std::endl;
+	//}*/
+	//std::cout << "=====END=====\n";
+	//StreamingSound ss;
+	//ss.createSound(filePath);
+	//ss.play();
 }
 void MovieImage::Enter()
 {
