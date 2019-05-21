@@ -22,14 +22,28 @@ class FPS : private NonCopyable
 	//! FrameCount
 	unsigned int frameCount;
 	//! StartDeltaTime
-	const float startDeltaTime;
+	float startDeltaTime;
 	//! DeltaTime
 	float delta;
+	/**
+	*@brief Reset Data
+	*/
+	void Reset();
+	/**
+	*@brief Initialize
+	*@param[in] float rate Framerate
+	*/
+	void Init(const float rate);
 public:
 	/**
 	*@brief	constructor
 	*/
-	explicit FPS();				
+	explicit FPS();			
+	/**
+	*@brief constructor
+	*@param[in] float rate Framerate
+	*/
+	explicit FPS(const float rate);
 	/**
 	*@brief	destructor
 	*/

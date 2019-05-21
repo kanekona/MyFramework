@@ -17,6 +17,12 @@ private:
 	bool isloop_;
 	//! 音量
 	float volume_;
+	//! 1秒の波形データ量
+	unsigned int oneSecondWaveformData;
+	//! 全波形データ量
+	unsigned int allWaveformData;
+	//! 現在のファイルパス
+	std::string path;
 public:
 	/**
 	*@brief	constructor
@@ -95,4 +101,10 @@ public:
 	*@brief Get Buffer
 	*/
 	Buffer* GetBuffer() const;
+	/*
+	*@brief	指定フレームへスキップする
+	*@param[in] time スキップする再生時間
+	*未完成
+	*/
+	void Skip(const float time);
 };

@@ -1,18 +1,21 @@
 #include "FPS.h"
 FPS::FPS()
-	:startDeltaTime((float)glfwGetTime())
 {
+	Init(60.0f);
+}
+FPS::FPS(const float rate)
+{
+	Init(rate);
+}
+void FPS::Init(const float rate)
+{
+	//出力用値
 	this->fps = 0.f;
-	//glfw内のTimeを初期化
-	//glfwSetTime(0.0);
-	this->count = 0;
 	//fps計測用
 	this->lastTime = (float)glfwGetTime();
-	this->framerate = 60;
-	this->oneFrameTime = (float)glfwGetTime();
-	this->frameCount = 1;
 	KL::DataClear("./data/debug/fpsrate.og");
 	delta = 0.0f;
+	SetFrameRate(rate);
 }
 void FPS::Update() 
 {
@@ -30,9 +33,17 @@ FPS::~FPS()
 {
 
 }
+void FPS::Reset()
+{
+	startDeltaTime = static_cast<float>(glfwGetTime());
+	oneFrameTime = static_cast<float>(glfwGetTime());
+	frameCount = 1;
+	count = 0;
+}
 void FPS::SetFrameRate(const int rate)
 {
 	this->framerate = rate;
+	Reset();
 }
 bool FPS::FrameCheck()
 {
@@ -42,8 +53,10 @@ bool FPS::FrameCheck()
 	if ((float)glfwGetTime() - this->startDeltaTime >= (1.f / (float)this->framerate) * this->frameCount)
 	{
 		//this->oneFrameTime = (float)glfwGetTime();
+		//デルタタイムを計算する処理
 		delta = (float)glfwGetTime() - oneFrameTime;
 		oneFrameTime = (float)glfwGetTime();
+
 		++frameCount;
 		return true;
 	}

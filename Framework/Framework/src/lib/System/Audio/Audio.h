@@ -20,12 +20,15 @@ class Buffer
 public:
 	explicit Buffer();
 	explicit Buffer(const std::string& path_);
+	explicit Buffer(const std::string& path_, const size_t& time);
 	virtual ~Buffer();
+	std::string path;
 	ALuint id_;
 	float nowTime;
 	float GetTime() const;
 	ALuint GetID() const;
 	void Bind(const bool stereo, const void* data, const u_int size, const u_int rate) const;
+	void SetFrameBuffer(const size_t& num);
 	std::vector<char> waveformData;
 	u_int sampleRate;
 };
@@ -47,11 +50,12 @@ public:
 	void Volume(const float volume_) const;
 	void Pitch(const float value_) const;
 	void Looping(const bool loop_) const;
-	bool isPlay() const;
-	float currenttime() const;
-	void queueBuffer(const Buffer& buffer_) const;
+	void SetTime(const float time) const;
+	bool IsPlay() const;
+	float CurrentTime() const;
+	void QueueBuffer(const Buffer& buffer_) const;
 	ALuint UnqueueBuffer() const;
-	int processed() const;
+	int Processed() const;
 };
 /**
 *@brief	Wavファイルのデータを扱う
@@ -79,10 +83,14 @@ public:
 	float time() const;
 	//波形データを返す
 	const char* data() const;
+	//指定箇所の波形データを返す
+	const char* data(const size_t& number) const;
 	//wavの情報を取得
 	static bool analyzeWavFile(Info& info, std::ifstream& fstr);
 	//波形データを取得する
 	std::vector<char> Getdata();
+	//波形データに倍率をかける
+	void TestFunction(const float value);
 private:
 	Info info;
 	float time_;

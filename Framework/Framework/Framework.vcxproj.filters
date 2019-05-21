@@ -201,9 +201,6 @@
     <ClInclude Include="src\lib\System\Input\Input.h">
       <Filter>ソース ファイル\Library\System\Input</Filter>
     </ClInclude>
-    <ClInclude Include="src\lib\System\MovieImage\MovieImage.h">
-      <Filter>ソース ファイル\Library\System\MovieImage</Filter>
-    </ClInclude>
     <ClInclude Include="src\lib\System\Window\Window.h">
       <Filter>ソース ファイル\Library\System\Window</Filter>
     </ClInclude>
@@ -279,7 +276,13 @@
     <ClInclude Include="src\lib\System\File\File.hpp">
       <Filter>ソース ファイル\Library\System\File</Filter>
     </ClInclude>
-    <ClInclude Include="src\lib\System\MovieImage\MediaPlayer.h">
+    <ClInclude Include="src\lib\System\MovieImage\Video.h">
+      <Filter>ソース ファイル\Library\System\MovieImage</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\MovieImage\Images.h">
+      <Filter>ソース ファイル\Library\System\MovieImage</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\MovieImage\MovieImage.h">
       <Filter>ソース ファイル\Library\System\MovieImage</Filter>
     </ClInclude>
   </ItemGroup>
@@ -331,9 +334,6 @@
     </ClCompile>
     <ClCompile Include="src\lib\System\Input\Input.cpp">
       <Filter>ソース ファイル\Library\System\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="src\lib\System\MovieImage\MovieImage.cpp">
-      <Filter>ソース ファイル\Library\System\MovieImage</Filter>
     </ClCompile>
     <ClCompile Include="src\lib\System\Window\Window.cpp">
       <Filter>ソース ファイル\Library\System\Window</Filter>
@@ -404,7 +404,13 @@
     <ClCompile Include="src\lib\System\File\File.cpp">
       <Filter>ソース ファイル\Library\System\File</Filter>
     </ClCompile>
-    <ClCompile Include="src\lib\System\MovieImage\MediaPlayer.cpp">
+    <ClCompile Include="src\lib\System\MovieImage\Video.cpp">
+      <Filter>ソース ファイル\Library\System\MovieImage</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\MovieImage\Images.cpp">
+      <Filter>ソース ファイル\Library\System\MovieImage</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\MovieImage\MovieImage.cpp">
       <Filter>ソース ファイル\Library\System\MovieImage</Filter>
     </ClCompile>
   </ItemGroup>

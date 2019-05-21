@@ -43,6 +43,7 @@ Buffer::Buffer()
 	this->nowTime = 0.f;
 }
 Buffer::Buffer(const std::string& path_)
+	:path(path_)
 {
 	//バッファを１つ生成
 	alGenBuffers(1, &this->id_);
@@ -51,7 +52,24 @@ Buffer::Buffer(const std::string& path_)
 	//経過時間を確認
 	this->nowTime = wav_data.time();
 	// 波形データをバッファにセット
-	alBufferData(id_, wav_data.isStereo() ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, wav_data.data(), wav_data.size(), wav_data.sampleRate());
+	//BufferID,Format,波形データ,サイズ,サンプリングレート
+	Bind(wav_data.isStereo(), wav_data.data(), wav_data.size(), wav_data.sampleRate());
+	waveformData = wav_data.Getdata();
+	sampleRate = wav_data.sampleRate();
+}
+Buffer::Buffer(const std::string& path_, const size_t& time)
+	:path(path_)
+{
+	//バッファを１つ生成
+	alGenBuffers(1, &this->id_);
+	//Wavファイルの読み込み
+	Wav wav_data(path_);
+	//経過時間を確認
+	this->nowTime = wav_data.time();
+	size_t num = time * wav_data.sampleRate()* wav_data.channel() * sizeof(uint16_t);
+	// 波形データをバッファにセット
+	//BufferID,Format,波形データ,サイズ,サンプリングレート
+	Bind(wav_data.isStereo(), wav_data.data(num), wav_data.size() - (u_int)num, wav_data.sampleRate());
 	waveformData = wav_data.Getdata();
 	sampleRate = wav_data.sampleRate();
 }
@@ -74,6 +92,11 @@ void Buffer::Bind(const bool stereo, const void* data, const u_int size, const u
 {
 	//波形データをバッファにセット
 	alBufferData(this->id_, stereo ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data, size, rate);
+}
+void Buffer::SetFrameBuffer(const size_t& num)
+{
+	Wav wav_data(path);
+	Bind(wav_data.isStereo(), wav_data.data(num), wav_data.size() - (u_int)num, wav_data.sampleRate());
 }
 //---------------------------------
 //@:Sourceclass
@@ -135,21 +158,25 @@ void Source::Looping(const bool loop_) const
 	//TRUEで終了時最初の位置に戻る
 	alSourcei(this->id_, AL_LOOPING, loop_ ? AL_TRUE : AL_FALSE);
 }
-bool Source::isPlay() const
+bool Source::IsPlay() const
 {
 	//現在の状態を返す
 	ALint state;
 	alGetSourcei(this->id_, AL_SOURCE_STATE, &state);
 	return state == AL_PLAYING;
 }
-float Source::currenttime() const
+float Source::CurrentTime() const
 {
 	//現在の再生時間を返す
 	ALfloat nowtime;
 	alGetSourcef(this->id_, AL_SEC_OFFSET, &nowtime);
 	return nowtime;
 }
-void Source::queueBuffer(const Buffer& buffer_) const
+void Source::SetTime(const float time) const
+{
+	alSourcef(this->id_, AL_SEC_OFFSET, time);
+}
+void Source::QueueBuffer(const Buffer& buffer_) const
 {
 	ALuint buffers = buffer_.GetID();
 	//バッファネームのキューを作成
@@ -162,7 +189,7 @@ ALuint Source::UnqueueBuffer() const
 	alSourceUnqueueBuffers(this->id_, 1, &buffers);
 	return buffers;
 }
-int Source::processed() const
+int Source::Processed() const
 {
 	int pro_;
 	//再生済みのバッファ数を返す
@@ -223,6 +250,10 @@ float Wav::time() const
 const char* Wav::data() const
 {
 	return &this->data_[0];
+}
+const char* Wav::data(const size_t& number) const
+{
+	return &this->data_[number];
 }
 u_int Wav::getValue(const char* ptr, const u_int num)
 {
@@ -323,6 +354,13 @@ bool Wav::analyzeWavFile(Info& info, std::ifstream& fstr)
 std::vector<char> Wav::Getdata()
 {
 	return this->data_;
+}
+void Wav::TestFunction(const float value)
+{
+	for (auto it : data_)
+	{
+		it *= value;
+	}
 }
 //---------------------------------
 //@:StreamWavclass

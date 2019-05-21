@@ -3,19 +3,21 @@
 //@:Soundclass
 //---------------------------------
 Sound::Sound()
-	:source(std::make_shared<Source>())
 {
 
 };
 Sound::Sound(const std::string& path_, const bool loop) :
 	buffer(std::make_shared<Buffer>(path_)),
-	source(std::make_shared<Source>())
+	source(std::make_shared<Source>()),
+	path(path_)
 {
 	this->source->BindBuffer(*this->buffer);
 	this->Looping(loop);
 	this->Pitch(1.0f);
 	this->volume_ = 1.0f;
 	this->Volume(this->volume_);
+	this->oneSecondWaveformData = buffer->sampleRate;
+	this->allWaveformData = (unsigned int)buffer->waveformData.size();
 }
 Sound::~Sound()
 {
@@ -25,11 +27,14 @@ bool Sound::Create(const std::string& path_, const bool loop)
 {
 	this->buffer = std::make_shared<Buffer>(path_);
 	this->source = std::make_shared<Source>();
+	path = path_;
 	this->source->BindBuffer(*this->buffer);
 	this->Looping(loop);
 	this->Pitch(1.0f);
 	this->volume_ = 1.0f;
 	this->Volume(this->volume_);
+	this->oneSecondWaveformData = buffer->sampleRate;
+	this->allWaveformData = (unsigned int)buffer->waveformData.size();
 	return true;
 }
 void Sound::Play() const
@@ -58,11 +63,11 @@ void Sound::Looping(const bool loop_) const
 }
 bool Sound::IsPlay() const
 {
-	return this->source->isPlay();
+	return this->source->IsPlay();
 }
 float Sound::CurrentTime() const
 {
-	return this->source->currenttime();
+	return this->source->CurrentTime();
 }
 float Sound::Duration() const
 {
@@ -79,4 +84,8 @@ float Sound::GetVolume() const
 Buffer* Sound::GetBuffer() const
 {
 	return &*buffer;
+}
+void Sound::Skip(const float time)
+{
+	source->SetTime(time);
 }

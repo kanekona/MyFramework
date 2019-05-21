@@ -6,7 +6,7 @@ void StreamingSound::queueStream(StreamWav& stream, Source& source, Buffer& buff
 {
 	size_t length = stream.read(sound_buffer);
 	buffer.Bind(stream.isStereo(), &sound_buffer[0], static_cast<u_int>(length), stream.sampleRate());
-	source.queueBuffer(buffer);
+	source.QueueBuffer(buffer);
 }
 void StreamingSound::streamProc(const std::string& path, const bool loop, std::shared_ptr<Source>& source, std::shared_ptr<Param>& param)
 {
@@ -32,7 +32,7 @@ void StreamingSound::streamProc(const std::string& path, const bool loop, std::s
 		param->mutex.unlock();
 		if (stopped) { break; }
 	//	stream.BackSound = back;
-		if (source->processed() > 0)
+		if (source->Processed() > 0)
 		{
 			ALuint buffer_id = source->UnqueueBuffer();
 			for (u_int i = 0; i < BUFFER_NUM; ++i)
@@ -115,7 +115,7 @@ bool StreamingSound::isPlaying()
 	bool stopped = this->param_->stopped;
 	this->param_->mutex.unlock();
 	if (stopped) return false;
-	return this->source_->isPlay();
+	return this->source_->IsPlay();
 }
 void StreamingSound::play()
 {
@@ -141,7 +141,7 @@ void StreamingSound::DeleteSound()
 float StreamingSound::GetTime() const
 {
 	//Œ»Ý‚ÌŽžŠÔ‚ð•Ô‚·‚¯‚Çstreaming‚¾‚©‚ç1•b‚²‚Æ‚É“Ç‚Ýž‚Ý’¼‚·‚©‚ç0~1‚­‚ç‚¢‚µ‚©•Ô‚ç‚È‚¢‚æ
-	return this->source_->currenttime();
+	return this->source_->CurrentTime();
 }
 void StreamingSound::debugUpdata()
 {

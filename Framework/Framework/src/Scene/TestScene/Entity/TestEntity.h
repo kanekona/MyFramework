@@ -1,6 +1,6 @@
 #pragma once
 #include "Entity\Entity.h"
-
+#include "Audio\Sound.h"
 class TestEntity : public Entity
 {
 	void Update() override;

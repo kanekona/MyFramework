@@ -1,5 +1,5 @@
 #pragma once
-#include "MovieImage\MovieImage.h"
+#include "MovieImage\Video.h"
 #include "Entity\Entity.h"
 
 /**
@@ -26,7 +26,7 @@ namespace Sample
 		void Enter() override
 		{
 			//¶¬
-			MovieImage* movie = new MovieImage;
+			Video* movie = new Video;
 			//“Ç‚Ýž‚Ý,MP4,WAV
 			movie->Load("./data/not/videos/TestMovie", MovieFormat::MP4, MovieFormat::WAV);
 			//Žq‚É“o˜^‚·‚é
