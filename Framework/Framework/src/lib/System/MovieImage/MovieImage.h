@@ -20,6 +20,7 @@ public:
 
 class MovieImage : public Sprite
 {
+protected:
 	//! OpenCV行列
 	cv::Mat	mat;
 	//! キャプチャを行う
@@ -38,6 +39,32 @@ class MovieImage : public Sprite
 	*@brief OpenCV Open
 	*/
 	void CV_Open(const std::string& path);
+	/**
+	*@brief OpenCV Video Set Frame
+	*@param[in] float frame Video Frame
+	*/
+	void CV_SetFrame(const float frame);
+	/**
+	*@brief Set OpenCV Mat to Texture
+	*@return bool Mat Empty
+	*/
+	bool SetMatToTexture();
+	/**
+	*@brief Initializer
+	*/
+	virtual void Init();
+	/**
+	*@brief Delete This Class
+	*/
+	virtual void Delete();
+	/**
+	*@brief Play Video
+	*/
+	virtual void Play();
+	/**
+	*@brief Pause Video
+	*/
+	virtual void Pause();
 public:
 	/**
 	*@brief constructor
@@ -47,5 +74,29 @@ public:
 	*@brief destructor
 	*/
 	virtual ~MovieImage();
-protected:
+	/**
+	*@brief Set Play Video
+	*@param[in] bool isPlay enable video play
+	*/
+	virtual void SetPlay(const bool isPlay);
+	/**
+	*@brief Set Speed
+	*@param[in] float speed Video Speed
+	*/
+	virtual void SetSpeed(const float speed);
+	/**
+	*@brief Set Video Time
+	*@param[in] float time Video Time
+	*/
+	virtual void SetTime(const float time);
+	/**
+	*@brief Set Lopping
+	*@param[in] bool isLoop Video Looping
+	*/
+	virtual void EnableLoop(const bool isLoop);
+	/**
+	*@brief Get Speed
+	*@return float Video Speed
+	*/
+	float GetSpeed() const;
 };
