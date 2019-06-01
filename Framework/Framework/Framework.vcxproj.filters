@@ -285,6 +285,9 @@
     <ClInclude Include="src\lib\System\MovieImage\MovieImage.h">
       <Filter>ソース ファイル\Library\System\MovieImage</Filter>
     </ClInclude>
+    <ClInclude Include="src\Scene\TestScene\Entity\SoundTestEntity.h">
+      <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Win\WinMain.cpp">
@@ -412,6 +415,9 @@
     </ClCompile>
     <ClCompile Include="src\lib\System\MovieImage\MovieImage.cpp">
       <Filter>ソース ファイル\Library\System\MovieImage</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\TestScene\Entity\SoundTestEntity.cpp">
+      <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

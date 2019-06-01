@@ -225,15 +225,19 @@ int KL::mbclen(const char* c)
 }
 void KL::cout(const Box2D& b)
 {
-	std::cout << "x " << b.x << ":y " << b.y << ":w " << b.w << ":h " << b.h << "\n";
+	std::cout << "x " << b.x << ":y " << b.y << ":w " << b.w << ":h " << b.h;
 }
 void KL::cout(const Vec2& v)
 {
-	std::cout << "x " << v.x << ":y " << v.y << "\n";
+	std::cout << "x " << v.x << ":y " << v.y;
 }
 void KL::cout(const Color& c)
 {
-	std::cout << "red " << c.red << ":green " << c.green << ":blue " << c.blue << ":alpha " << c.alpha << "\n";
+	std::cout << "red " << c.red << ":green " << c.green << ":blue " << c.blue << ":alpha " << c.alpha;
+}
+void KL::cout(const Vec3& v)
+{
+	std::cout << "x " << v.x << ":y " << v.y << ":z " << v.z;
 }
 bool KL::Data_Cipher(const std::string& in_path, const std::string& out_path)
 {

@@ -28,12 +28,18 @@ void Scene::SetEntity(Entity* entity)
 }
 void Scene::RegisterEntity()
 {
-	for (auto it = plansEntity.begin(); it != plansEntity.end();)
+	/*for (auto it = plansEntity.begin(); it != plansEntity.end();)
 	{
 		entitys.emplace_back(*it);
 		Entity::Enter(*it);
 		it = plansEntity.erase(it);
+	}*/
+	for (auto it : plansEntity)
+	{
+		entitys.emplace_back(it);
+		Entity::Enter(it);
 	}
+	plansEntity.clear();
 }
 void Scene::KillEntity()
 {

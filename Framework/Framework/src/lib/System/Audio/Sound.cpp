@@ -51,23 +51,23 @@ void Sound::Pause() const
 }
 void Sound::Volume(const float value_) const
 {
-	this->source->Volume(value_);
+	this->source->SetVolume(value_);
 }
 void Sound::Pitch(const float value_) const
 {
-	this->source->Pitch(value_);
+	this->source->SetPitch(value_);
 }
 void Sound::Looping(const bool loop_) const
 {
-	this->source->Looping(loop_);
+	this->source->SetLoop(loop_);
 }
 bool Sound::IsPlay() const
 {
-	return this->source->IsPlay();
+	return source && source->IsPlay();
 }
 float Sound::CurrentTime() const
 {
-	return this->source->CurrentTime();
+	return this->source->GetTime();
 }
 float Sound::Duration() const
 {

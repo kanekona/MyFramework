@@ -9,10 +9,6 @@
 class Sound
 {
 private:
-	//! bufferData
-	std::shared_ptr<Buffer> buffer;
-	//! sourceData
-	std::shared_ptr<Source> source;
 	//! ループ再生
 	bool isloop_;
 	//! 音量
@@ -24,6 +20,10 @@ private:
 	//! 現在のファイルパス
 	std::string path;
 public:
+	//! bufferData
+	std::shared_ptr<Buffer> buffer;
+	//! sourceData
+	std::shared_ptr<Source> source;
 	/**
 	*@brief	constructor
 	*/

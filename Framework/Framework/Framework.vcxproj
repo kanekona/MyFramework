@@ -126,6 +126,7 @@
     <ClInclude Include="src\lib\System\File\File.hpp" />
     <ClInclude Include="src\lib\System\MovieImage\Images.h" />
     <ClInclude Include="src\lib\System\MovieImage\MovieImage.h" />
+    <ClInclude Include="src\Scene\TestScene\Entity\SoundTestEntity.h" />
     <ClInclude Include="src\Scene\TestScene\Entity\TestEntity.h" />
     <ClInclude Include="src\Scene\TestScene\TestScene.h" />
     <None Include="data\shader\mosaic.fsh" />
@@ -212,6 +213,7 @@
     <ClCompile Include="src\lib\WinConfig\StartScene.cpp" />
     <ClCompile Include="src\lib\WinConfig\WinConfig.cpp" />
     <ClCompile Include="src\Object\State\State.cpp" />
+    <ClCompile Include="src\Scene\TestScene\Entity\SoundTestEntity.cpp" />
     <ClCompile Include="src\Scene\TestScene\Entity\TestEntity.cpp" />
     <ClCompile Include="src\Scene\TestScene\TestScene.cpp" />
     <ClCompile Include="src\Win\WinMain.cpp" />

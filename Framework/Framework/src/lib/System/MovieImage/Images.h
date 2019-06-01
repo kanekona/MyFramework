@@ -6,6 +6,7 @@
 */
 class Images : public MovieImage
 {
+	float preTime;
 	//! Movie Time
 	Time time;
 	/**
@@ -50,6 +51,11 @@ public:
 	*@param[in] float time Movie Time
 	*/
 	void SetTime(const float time) override;
+	/**
+	*@brief Set Movie Speed
+	*@param[in] float speed Movie Speed
+	*/
+	void SetSpeed(const float speed) override;
 	/**
 	*@brief Get Movie Time
 	*@return float Movie Time

@@ -19,6 +19,14 @@ class Time : private NonCopyable
 	bool isPlay;
 	//! 動作中判定
 	bool behavior;
+	/**
+	*@brief 初期化
+	*/
+	void Init();
+	/**
+	*@brief 数値の初期化
+	*/
+	void InitNumber();
 public:
 	/**
 	*@brief	constructor
@@ -38,8 +46,9 @@ public:
 	void Stop();
 	/**
 	*@brief	一時停止
+	*@param[in] bool isPlay Time Pause
 	*/
-	void Pause();
+	void Pause(const bool isPause);
 	/**
 	*@brief	現在タイムを返す
 	*@return float 現在のタイム
@@ -55,4 +64,8 @@ public:
 	*@return bool 計測を行っているか調べる
 	*/
 	bool IsPlay() const;
+	/**
+	*@brief タイムのリセット
+	*/
+	void Reset(const float time = 0.0f);
 };

@@ -98,6 +98,7 @@ namespace KL
 	void cout(const Box2D&);
 	void cout(const Vec2&);
 	void cout(const Color&);
+	void cout(const Vec3&);
 	bool Data_Cipher(const std::string& in_path, const std::string& out_path);
 	std::string Data_Composite(std::ifstream& ifs);
 	void OutDebugData(const std::string& out_path, const std::string& text);

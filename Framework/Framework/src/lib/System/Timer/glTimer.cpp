@@ -2,17 +2,27 @@
 
 Time::Time()
 {
-	this->initTime = 0.0f;
-	this->nowTime = 0.0f;
-	this->saveTime = 0.0f;
-	this->addTime = 0.0f;
-	this->isPlay = false;
-	this->behavior = false;
+	Init();
 }
 
 Time::~Time()
 {
 
+}
+
+void Time::Init()
+{
+	InitNumber();
+	this->isPlay = false;
+	this->behavior = false;
+}
+
+void  Time::InitNumber()
+{
+	this->initTime = 0.0f;
+	this->nowTime = 0.0f;
+	this->saveTime = 0.0f;
+	this->addTime = 0.0f;
 }
 
 void Time::Start()
@@ -27,32 +37,29 @@ void Time::Start()
 void Time::Stop()
 {
 	if (this->isPlay && this->behavior) {
-		this->initTime = 0.0f;
-		this->nowTime = 0.0f;
-		this->saveTime = 0.0f;
-		this->addTime = 0.0f;
-		this->isPlay = false;
-		this->behavior = false;
+		Init();
 	}
 }
 
-void Time::Pause()
+void Time::Pause(const bool isPause)
 {
 	if (this->behavior) {
-		if (this->isPlay)
+		if (isPlay != isPause)
 		{
-			//一時停止
-			this->nowTime = (float)glfwGetTime() - this->initTime;
-			this->saveTime = this->nowTime;
-			this->isPlay = false;
+			if (isPause)
+			{
+				//一時停止
+				this->nowTime = (float)glfwGetTime() - this->initTime;
+				this->saveTime = this->nowTime;
+			}
+			else
+			{
+				//元の位置から再び開始
+				this->initTime = (float)glfwGetTime() - this->saveTime;
+				this->saveTime = 0.0f;
+			}
 		}
-		else
-		{
-			//元の位置から再び開始
-			this->initTime = (float)glfwGetTime() - this->saveTime;
-			this->saveTime = 0.0f;
-			this->isPlay = true;
-		}
+		isPlay = !isPause;
 	}
 }
 
@@ -73,4 +80,10 @@ void Time::InitTime(const float time_)
 bool Time::IsPlay() const
 {
 	return this->isPlay;
+}
+
+void Time::Reset(const float time)
+{
+	InitNumber();
+	InitTime(time);
 }

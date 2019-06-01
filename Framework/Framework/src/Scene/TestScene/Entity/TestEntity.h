@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity\Entity.h"
 #include "Audio\Sound.h"
+#include "Timer\glTimer.h"
 class TestEntity : public Entity
 {
 	void Update() override;

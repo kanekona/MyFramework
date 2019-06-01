@@ -104,97 +104,233 @@ void Buffer::SetFrameBuffer(const size_t& num)
 Source::Source()
 {
 	//ソースを１つ生成する
-	alGenSources(1, &this->id_);
+	alGenSources(1, &this->id);
 }
 Source::~Source()
 {
 	//波形データを解除する
 	this->UnBindBuffer();
 	//ソースを削除する
-	alDeleteSources(1, &this->id_);
+	alDeleteSources(1, &this->id);
 }
-void Source::BindBuffer(const Buffer& burrer_)
+void Source::BindBuffer(const Buffer& burrer)
 {
 	//ソースにバッファを指定する
-	alSourcei(this->id_, AL_BUFFER, burrer_.GetID());
+	alSourcei(this->id, AL_BUFFER, burrer.GetID());
 }
 void Source::UnBindBuffer() const
 {
 	//ソースのバッファを解除する
-	alSourcei(this->id_, AL_BUFFER, 0);
+	alSourcei(this->id, AL_BUFFER, 0);
+}
+int Source::GetBufferID() const
+{
+	int bufferID;
+	alGetSourcei(this->id, AL_BUFFER, &bufferID);
+	return bufferID;
 }
 ALuint Source::GetID() const
 {
 	//ソースのIDを返す
-	return this->id_;
+	return this->id;
 }
 void Source::Play() const
 {
 	//再生する
-	alSourcePlay(this->id_);
+	alSourcePlay(this->id);
 }
 void Source::Stop() const
 {
 	//止める
-	alSourceStop(this->id_);
+	alSourceStop(this->id);
 }
 void Source::Pause() const
 {
 	//一時停止する
-	alSourcePause(this->id_);
+	alSourcePause(this->id);
 }
-void Source::Volume(const float volume_) const
+void Source::SetSourceRelative(const bool relative) const
+{
+	alSourcei(this->id, AL_SOURCE_RELATIVE, relative ? AL_TRUE : AL_FALSE);
+}
+int Source::GetSourceRelative() const
+{
+	int relative;
+	alGetSourcei(this->id, AL_SOURCE_RELATIVE, &relative);
+	return relative;
+}
+void Source::SetVolume(const float volume) const
 {
 	//音量の変更
-	alSourcef(this->id_, AL_GAIN, volume_);
+	alSourcef(this->id, AL_GAIN, volume);
 }
-void Source::Pitch(const float value_) const
+void Source::SetPitch(const float value) const
 {
 	//ピッチの変更
-	alSourcef(this->id_, AL_PITCH, value_);
+	alSourcef(this->id, AL_PITCH, value);
 }
-void Source::Looping(const bool loop_) const
+void Source::SetLoop(const bool loop) const
 {
 	//TRUEで終了時最初の位置に戻る
-	alSourcei(this->id_, AL_LOOPING, loop_ ? AL_TRUE : AL_FALSE);
+	alSourcei(this->id, AL_LOOPING, loop ? AL_TRUE : AL_FALSE);
 }
 bool Source::IsPlay() const
 {
 	//現在の状態を返す
 	ALint state;
-	alGetSourcei(this->id_, AL_SOURCE_STATE, &state);
+	alGetSourcei(this->id, AL_SOURCE_STATE, &state);
 	return state == AL_PLAYING;
 }
-float Source::CurrentTime() const
+float Source::GetTime() const
 {
 	//現在の再生時間を返す
 	ALfloat nowtime;
-	alGetSourcef(this->id_, AL_SEC_OFFSET, &nowtime);
+	alGetSourcef(this->id, AL_SEC_OFFSET, &nowtime);
 	return nowtime;
 }
 void Source::SetTime(const float time) const
 {
-	alSourcef(this->id_, AL_SEC_OFFSET, time);
+	alSourcef(this->id, AL_SEC_OFFSET, time);
 }
-void Source::QueueBuffer(const Buffer& buffer_) const
+void Source::QueueBuffer(const Buffer& buffer) const
 {
-	ALuint buffers = buffer_.GetID();
+	ALuint buffers = buffer.GetID();
 	//バッファネームのキューを作成
-	alSourceQueueBuffers(this->id_, 1, &buffers);
+	alSourceQueueBuffers(this->id, 1, &buffers);
 }
 ALuint Source::UnqueueBuffer() const
 {
 	ALuint buffers;
 	//キューからバッファを除去する
-	alSourceUnqueueBuffers(this->id_, 1, &buffers);
+	alSourceUnqueueBuffers(this->id, 1, &buffers);
 	return buffers;
 }
-int Source::Processed() const
+int Source::GetProcessed() const
 {
 	int pro_;
 	//再生済みのバッファ数を返す
-	alGetSourcei(this->id_, AL_BUFFERS_PROCESSED, &pro_);
+	alGetSourcei(this->id, AL_BUFFERS_PROCESSED, &pro_);
 	return pro_;
+}
+int Source::GetQueued() const
+{
+	int queued;
+	alGetSourcei(this->id, AL_BUFFERS_QUEUED, &queued);
+	return queued;
+}
+float Source::GetPitch() const
+{
+	float pitch;
+	alGetSourcef(this->id, AL_PITCH, &pitch);
+	return pitch;
+}
+float Source::GetVolume() const
+{
+	float volume;
+	alGetSourcef(this->id, AL_GAIN, &volume);
+	return volume;
+}
+int Source::GetLoop() const
+{
+	int loop;
+	alGetSourcei(this->id, AL_LOOPING, &loop);
+	return loop;
+}
+int Source::GetSourceType() const
+{
+	int type;
+	alGetSourcei(this->id, AL_SOURCE_TYPE, &type);
+	return type;
+}
+void Source::SetReferenceDistance(const float distance) const
+{
+	alSourcef(this->id, AL_REFERENCE_DISTANCE, distance);
+}
+float Source::GetReferenceDistance() const
+{
+	float distance;
+	alGetSourcef(this->id, AL_REFERENCE_DISTANCE, &distance);
+	return distance;
+}
+void Source::SetRolloffFactor(const float factor) const
+{
+	alSourcef(this->id, AL_ROLLOFF_FACTOR, factor);
+}
+float Source::GetRolloffFactor() const
+{
+	float factor;
+	alGetSourcef(this->id, AL_ROLLOFF_FACTOR, &factor);
+	return factor;
+}
+void Source::SetPosition(const Vec3& position) const
+{
+	alSource3f(this->id, AL_POSITION, position.x, position.y, position.z);
+}
+Vec3 Source::GetPosition() const
+{
+	Vec3 position;
+	alGetSource3f(this->id, AL_POSITION, &position.x, &position.y, &position.z);
+	return position;
+}
+void Source::SetVelocity(const Vec3& velocity) const
+{
+	alSource3f(this->id, AL_VELOCITY, velocity.x, velocity.y, velocity.z);
+}
+Vec3 Source::GetVelocity() const
+{
+	Vec3 velocity;
+	alGetSource3f(this->id, AL_VELOCITY, &velocity.x, &velocity.y, &velocity.z);
+	return velocity;
+}
+void Source::SetDirection(const Vec3& direction) const
+{
+	alSource3f(this->id, AL_DIRECTION, direction.x, direction.y, direction.z);
+}
+Vec3 Source::GetDirection() const
+{
+	Vec3 direction;
+	alGetSource3f(this->id, AL_DIRECTION, &direction.x, &direction.y, &direction.z);
+	return direction;
+}
+void Source::SetConeInnerAngle(const float angle) const
+{
+	alSourcef(this->id, AL_CONE_INNER_ANGLE, angle);
+}
+float Source::GetConeInnerAngle() const
+{
+	float angle;
+	alGetSourcef(this->id, AL_CONE_INNER_ANGLE, &angle);
+	return angle;
+}
+void Source::SetConeOuterAngle(const float angle) const
+{
+	alSourcef(this->id, AL_CONE_OUTER_ANGLE, angle);
+}
+float Source::GetConeOuterAngle() const
+{
+	float angle;
+	alGetSourcef(this->id, AL_CONE_OUTER_ANGLE, &angle);
+	return angle;
+}
+void Source::SetConeOuterGain(const float volume) const
+{
+	alSourcef(this->id, AL_CONE_OUTER_GAIN, volume);
+}
+float Source::GetConeOuterGain() const
+{
+	float gain;
+	alGetSourcef(this->id, AL_CONE_OUTER_GAIN, &gain);
+	return gain;
+}
+void Source::SetOrientation(const float* orientation) const
+{
+	alSourcefv(this->id, AL_ORIENTATION, orientation);
+}
+float* Source::GetOrientation() const
+{
+	float orientation[6];
+	alGetSourcefv(this->id, AL_ORIENTATION, orientation);
+	return orientation;	
 }
 //---------------------------------
 //@:Wavclass

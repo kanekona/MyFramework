@@ -2,10 +2,11 @@
 
 Images::Images()
 {
-
+	preTime = 0.0f;
 }
 Images::Images(const std::string& path, const format& movie)
 {
+	preTime = 0.0f;
 	Load(path, movie);
 }
 Images::~Images()
@@ -27,16 +28,16 @@ void Images::Update()
 	{
 		return;
 	}
-	CV_SetFrame(videoFramerate*time.GetTime() * magnification);
+	CV_SetFrame(videoFramerate*GetTime());
 	SetMatToTexture();
 }
 void Images::Play()
 {
-	time.Pause();
+	time.Pause(false);
 }
 void Images::Pause()
 {
-	time.Pause();
+	time.Pause(true);
 }
 void Images::SetTime(const float t)
 {
@@ -45,5 +46,11 @@ void Images::SetTime(const float t)
 }
 float Images::GetTime()
 {
-	return time.GetTime() * magnification;
+	return preTime + (time.GetTime() * magnification);
+}
+void Images::SetSpeed(const float speed)
+{
+	preTime += time.GetTime()*magnification;
+	__super::SetSpeed(speed);
+	time.Reset();
 }
