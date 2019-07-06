@@ -1,6 +1,6 @@
 #pragma once
 
-enum class Layer : unsigned int
+enum class Layer : unsigned short
 {
 	Default = 0,
 	Button = 1,

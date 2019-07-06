@@ -4,6 +4,7 @@
 #include "Engine\Framework.h"
 #include "StartScene.h"
 #include "Scene\TestScene\TestScene.h"
+#include "Window\Window.h"
 ConfigButton::ConfigButton(const Transform& transform,const bool enableFullscreen)
 	:Button(transform)
 {

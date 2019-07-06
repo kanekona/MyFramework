@@ -145,6 +145,12 @@
     <Filter Include="ソース ファイル\Library\System\GUI">
       <UniqueIdentifier>{068d712f-c11d-4bc7-b600-d4dee7584a09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Library\Event\ConfigInput">
+      <UniqueIdentifier>{ca9f69da-1020-4f68-9b70-93dda0c48eb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\StrID">
+      <UniqueIdentifier>{4fed88e5-ef39-45b7-9eff-31302741d600}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\lib\System\randmais.h">
@@ -288,6 +294,15 @@
     <ClInclude Include="src\Scene\TestScene\Entity\SoundTestEntity.h">
       <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
     </ClInclude>
+    <ClInclude Include="src\lib\System\StrID\StrID.h">
+      <Filter>ソース ファイル\Library\System\StrID</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\Event\ConfigInput\ConfigInputEvent.h">
+      <Filter>ソース ファイル\Library\Event\ConfigInput</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\TestScene\Entity\InputTest.h">
+      <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Win\WinMain.cpp">
@@ -419,6 +434,18 @@
     <ClCompile Include="src\Scene\TestScene\Entity\SoundTestEntity.cpp">
       <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="src\lib\System\Engine\EngineMacro.h">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\StrID\StrID.cpp">
+      <Filter>ソース ファイル\Library\System\StrID</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\Event\ConfigInput\ConfigInputEvent.cpp">
+      <Filter>ソース ファイル\Library\Event\ConfigInput</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\TestScene\Entity\InputTest.cpp">
+      <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="src\lib\System\Icon\Resource.rc">
@@ -458,6 +485,9 @@
     </None>
     <None Include="data\shader\mosaic.vsh">
       <Filter>リソース ファイル\shader</Filter>
+    </None>
+    <None Include="data\event\KeyConfig.ini">
+      <Filter>リソース ファイル\event</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

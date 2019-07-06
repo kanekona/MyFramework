@@ -36,7 +36,9 @@ public:
 	void DeleteSound();
 	bool isPlaying();
 	float GetTime() const;
+#ifdef KL_DEBUG
 	void debugUpdata();
+#endif
 	void createSound(const std::string& path, bool loop = false);
 private:
 	static void queueStream(StreamWav& stream, Source &source, Buffer& buffer, std::vector<char>& sound_buffer);

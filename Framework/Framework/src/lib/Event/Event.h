@@ -8,7 +8,10 @@ enum class Event
 {
 	//! リソース読み込みイベント
 	RESOURCE_LOAD,
+	WINDOW_CHANGE,
+	INPUT_CONFIG
 };
+
 /**
 *@brief	イベントタスク
 */

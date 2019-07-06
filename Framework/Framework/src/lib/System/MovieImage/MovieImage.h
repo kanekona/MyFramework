@@ -1,5 +1,6 @@
 #pragma once
 #include "Sprite\Sprite.h"
+#include "System\System.h"
 
 typedef std::string format;
 /**

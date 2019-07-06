@@ -2,7 +2,6 @@
 #include "Entity\Entity.h"
 #include "Sprite\Sprite.h"
 #include "Font\Font.h"
-#include "Collision\Collision.h"
 /**
 *@file Button.h
 *@brief Button Class
@@ -10,6 +9,8 @@
 *@data 2019/03/11
 *@details
 */
+
+class Collider;
 
 /**
 *@brief Button Class

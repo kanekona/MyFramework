@@ -11,7 +11,7 @@ GLuint Shader::Compile(GLuint type, const std::string &text)
 	glShaderSource(shader, 1, &text_ptr, 0);
 	//コンパイル
 	glCompileShader(shader);
-#ifdef _DEBUG
+#ifdef KL_DEBUG
 	//コンパイルエラーチェック
 	GLint compiled;
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
@@ -34,7 +34,9 @@ void Shader::Setup(const GLuint program, const std::string &v_source, const std:
 	GLuint vertex_shader = Compile(GL_VERTEX_SHADER, v_source);
 	glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &status);
 	if (status != GL_TRUE) {
+#ifdef KL_DEBUG
 		std::cout << "VertexShader Compile is Failed " << std::endl;
+#endif
 		system("pause");
 
 		return;
@@ -43,7 +45,9 @@ void Shader::Setup(const GLuint program, const std::string &v_source, const std:
 	GLuint fragment_shader = Compile(GL_FRAGMENT_SHADER, f_source);
 	glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &status);
 	if (status != GL_TRUE) {
+#ifdef KL_DEBUG
 		std::cout << "FragmentShader Compile is Failed " << std::endl;
+#endif
 		system("pause");
 
 		return;
@@ -55,7 +59,7 @@ void Shader::Setup(const GLuint program, const std::string &v_source, const std:
 	//シェーダーのリンク
 	glLinkProgram(program);
 
-#ifdef _DEBUG
+#ifdef KL_DEBUG
 	//リンクエラーチェック
 	//GLint status;
 	glGetProgramiv(program, GL_LINK_STATUS, &status);

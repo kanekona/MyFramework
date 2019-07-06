@@ -1,12 +1,8 @@
-#include "ResourceManager\ResourceManager.h"
-#include "Input\Input.h"
+#include "System\System.h"
 #include "Engine\Engine.h"
-#if !defined (_DEBUG)
-// Degub版のみコンソールを表示する設定
-#pragma comment(linker, "/subsystem:windows /entry:mainCRTStartup")
-#endif
+#include "StrID\StrID.h"
 //メモリリーク検知
-#if (_DEBUG)
+#if (DEBUG_ENABLE)
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
@@ -18,7 +14,8 @@
 int main() {
 	//メモリリーク検知
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//Declaration Engine 
+	StrIDSystem::Create();
+	//Declaration Engine
 	Engine* engine = nullptr;
 	try
 	{
@@ -28,7 +25,11 @@ int main() {
 	catch (int errorcode)
 	{
 		//Error Check
+#if DEBUG_ENABLE
 		std::cout << errorcode << std::endl;
+#endif
+		delete engine;
+		return errorcode;
 	}
 	//Main Loop
 	while (engine->SystemUpdate())
@@ -37,4 +38,5 @@ int main() {
 	}
 	//Delete Engine
 	delete engine;
+	StrIDSystem::Delete();
 }

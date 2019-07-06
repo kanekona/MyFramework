@@ -30,7 +30,9 @@ std::string Random::GetRand(const std::string& text, const std::size_t size)
 {
 	if (text.empty())
 	{
+#ifdef KL_DEBUG
 		std::cout << "生成に使用する文字列データが存在しません" << std::endl;
+#endif
 		return "";
 	}
 	//textデータの0番目から最後の１つ手前(\0の前まで)で乱数を生成

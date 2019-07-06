@@ -1,8 +1,11 @@
 #pragma once
-#include "Scene\SceneManager.h"
 #include "NonCopyable\NonCopyable.hpp"
-#include "Window\Window.h"
 #include "Timer\glTimer.h"
+
+class SceneManager;
+class Scene;
+class Window;
+
 /**
 *@brief Game Framework
 */

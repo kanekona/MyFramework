@@ -6,6 +6,8 @@
 #include "Engine\Framework.h"
 #include "Font\Font.h"
 #include "Sprite\Sprite.h"
+#include "Window\Window.h"
+#include "Scene\Scene.h"
 /**
 *@brief OpenGL Features
 */

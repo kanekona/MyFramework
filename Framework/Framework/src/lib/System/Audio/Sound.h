@@ -19,11 +19,11 @@ private:
 	unsigned int allWaveformData;
 	//! 現在のファイルパス
 	std::string path;
-public:
 	//! bufferData
 	std::shared_ptr<Buffer> buffer;
 	//! sourceData
 	std::shared_ptr<Source> source;
+public:
 	/**
 	*@brief	constructor
 	*/
@@ -99,12 +99,20 @@ public:
 	float GetVolume() const;
 	/**
 	*@brief Get Buffer
+	*@return Buffer* BufferPtr
 	*/
 	Buffer* GetBuffer() const;
+	/**
+	*@brief Get Source
+	*@return Source* SourcePtr
+	*/
+	Source* GetSource() const;
 	/*
 	*@brief	指定フレームへスキップする
 	*@param[in] time スキップする再生時間
-	*未完成
 	*/
 	void Skip(const float time);
+#if ENGINE_DEBUG
+	void Test();
+#endif //ENGINE_DEBUG
 };

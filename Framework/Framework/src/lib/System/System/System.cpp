@@ -334,6 +334,30 @@ bool KL::StringisNumber(const std::string& str)
 {
 	return std::all_of(str.cbegin(), str.cend(), std::isdigit);
 }
+bool KL::StringFromNumber(const std::string & str, float * out)
+{
+	if (!StringisNumber(str))
+	{
+		return false;
+	}
+	*out = std::stof(str);
+	return true;
+}
+bool KL::StringFromNumber(const std::string & str, int * out)
+{
+	if (!StringisNumber(str))
+	{
+		return false;
+	}
+	*out = std::stoi(str);
+	return true;
+}
+bool KL::StringFromStrID(const std::string& str, StrID* out)
+{
+	StrID id(str);
+	*out = id;
+	return true;
+}
 unsigned int KL::Count(const std::string& str, const char c)
 {
 	return static_cast<unsigned int>(std::count(str.cbegin(), str.cend(), c));
@@ -354,4 +378,57 @@ std::string* KL::SplitString(const std::string& text, const char c, int* out)
 		++count;
 	}
 	return str;
+}
+
+void KL::SplitString(std::vector<std::string>* out, const std::string& text, const char c)
+{
+	std::stringstream ss(text);
+	std::string line;
+	out->clear();
+	while (std::getline(ss, line, c))
+	{
+		out->emplace_back(line);
+	}
+}
+
+void KL::Trim(std::string* str, const char c)
+{
+	size_t size = 0;
+	while ((size = str->find_first_of(c)) != std::string::npos)
+	{
+		str->erase(size, 1);
+	}
+}
+
+void KL::Trim(std::string* str, const std::string& trim)
+{
+	size_t size = 0;
+	while ((size = str->find_first_of(trim)) != std::string::npos)
+	{
+		str->erase(size, 1);
+	}
+}
+
+bool KL::Split(const std::string& text,const std::string& find, std::string* outLeft, std::string* outRigth)
+{
+	std::string::size_type size = text.find_first_of(find);
+	if (size == std::string::npos)
+	{
+		return false;
+	}
+	*outLeft = text.substr(0, size);
+	*outRigth = text.substr(size + 1);
+	return true;
+}
+
+bool KL::Split(const std::string & text, const char find, std::string * outLeft, std::string * outRigth)
+{
+	std::string::size_type size = text.find_first_of(find);
+	if (size == std::string::npos)
+	{
+		return false;
+	}
+	*outLeft = text.substr(0, size);
+	*outRigth = text.substr(size + 1);
+	return true;
 }

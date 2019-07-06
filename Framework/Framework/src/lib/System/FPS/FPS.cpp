@@ -19,6 +19,7 @@ void FPS::Init(const float rate)
 }
 void FPS::Update() 
 {
+#ifdef KL_DEBUG
 	//60‰ñ“®ì‚µ‚½‚ç‚»‚ÌŽž‚ÌŽžŠÔ‚Æ‘O‚ÌŽžŠÔ‚©‚çfps‚ð‹‚ß‚é
 	if (this->count == this->framerate) {
 		this->fps = this->count / ((float)glfwGetTime() - this->lastTime);
@@ -28,6 +29,7 @@ void FPS::Update()
 		this->lastTime = (float)glfwGetTime();
 	}
 	this->count++;
+#endif
 }
 FPS::~FPS()
 {

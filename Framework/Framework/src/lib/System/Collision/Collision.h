@@ -1,6 +1,6 @@
 #pragma once
 #include "System\System.h"
-#include "Engine\Data.h"
+
 class Collider;
 class BoxCollider;
 class CircleCollider;

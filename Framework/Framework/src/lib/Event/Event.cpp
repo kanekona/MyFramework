@@ -1,6 +1,7 @@
 #include "Event.h"
 #include "ResourceLoad\ResourceLoad.h"
 #include "WindowEvent\WindowEvent.h"
+#include "ConfigInput\ConfigInputEvent.h"
 EventTask::EventTask()
 {
 
@@ -31,6 +32,18 @@ bool EventTask::Load(const Event& eventType, const std::string& path)
 		//constructor‚Åˆ—‚ªI‚í‚é‚Ì‚Å¶¬‚µ‚Ädelete‚·‚é
 		ResourceLoad* rl = new ResourceLoad(this->ifs);
 		delete rl;
+	}
+	break;
+	case Event::WINDOW_CHANGE:
+	{
+		WindowEvent* we = new WindowEvent(ifs);
+		delete we;
+	}
+	break;
+	case Event::INPUT_CONFIG:
+	{
+		ConfigInputEvent* ci = new ConfigInputEvent(ifs);
+		delete ci;
 	}
 	break;
 		break;

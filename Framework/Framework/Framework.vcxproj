@@ -5,6 +5,22 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="EngineDeveloperDebug|Win32">
+      <Configuration>EngineDeveloperDebug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="EngineDeveloperDebug|x64">
+      <Configuration>EngineDeveloperDebug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="EngineDeveloperRelease|Win32">
+      <Configuration>EngineDeveloperRelease</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="EngineDeveloperRelease|x64">
+      <Configuration>EngineDeveloperRelease</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -31,7 +47,20 @@
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='EngineDeveloperDebug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='EngineDeveloperRelease|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
@@ -44,7 +73,20 @@
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='EngineDeveloperDebug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='EngineDeveloperRelease|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
@@ -59,18 +101,37 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='EngineDeveloperDebug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='EngineDeveloperRelease|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='EngineDeveloperDebug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='EngineDeveloperRelease|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='EngineDeveloperDebug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
@@ -84,8 +145,22 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>Windows\include;src;src\lib;src\lib\System</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Windows\include;src;src\lib;src\lib\System;Windows\include\freetype2</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>KL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>Windows\lib\Debug</AdditionalLibraryDirectories>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='EngineDeveloperDebug|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>false</ConformanceMode>
+      <AdditionalIncludeDirectories>Windows\include;src;src\lib;src\lib\System;Windows\include\freetype2</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>ENGINE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>Windows\lib\Debug</AdditionalLibraryDirectories>
@@ -93,6 +168,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='EngineDeveloperRelease|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
@@ -114,21 +203,44 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>include;Windows\include;src;src\lib;src\lib\System</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include;Windows\include;src;src\lib;src\lib\System;Windows\include\freetype2</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>Windows\lib\Release</AdditionalLibraryDirectories>
+      <SubSystem>NotSet</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='EngineDeveloperRelease|x64'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>include;Windows\include;src;src\lib;src\lib\System;Windows\include\freetype2</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>ENGINE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>Windows\lib\Release</AdditionalLibraryDirectories>
+      <SubSystem>NotSet</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\lib\Event\ConfigInput\ConfigInputEvent.h" />
     <ClInclude Include="src\lib\System\File\File.hpp" />
     <ClInclude Include="src\lib\System\MovieImage\Images.h" />
     <ClInclude Include="src\lib\System\MovieImage\MovieImage.h" />
+    <ClInclude Include="src\lib\System\StrID\StrID.h" />
+    <ClInclude Include="src\Scene\TestScene\Entity\InputTest.h" />
     <ClInclude Include="src\Scene\TestScene\Entity\SoundTestEntity.h" />
     <ClInclude Include="src\Scene\TestScene\Entity\TestEntity.h" />
     <ClInclude Include="src\Scene\TestScene\TestScene.h" />
+    <None Include="data\event\KeyConfig.ini" />
     <None Include="data\shader\mosaic.fsh" />
     <None Include="src\lib\doxygen.h" />
     <ClInclude Include="src\lib\Event\Event.h" />
@@ -174,6 +286,7 @@
     <ClInclude Include="src\Object\State\State.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\lib\Event\ConfigInput\ConfigInputEvent.cpp" />
     <ClCompile Include="src\lib\Event\Event.cpp" />
     <ClCompile Include="src\lib\Event\ResourceLoad\ResourceLoad.cpp" />
     <ClCompile Include="src\lib\Event\WindowEvent\WindowEvent.cpp" />
@@ -187,6 +300,7 @@
     <ClCompile Include="src\lib\System\Collision\Collision.cpp" />
     <ClCompile Include="src\lib\System\Engine\Data.cpp" />
     <ClCompile Include="src\lib\System\Engine\Engine.cpp" />
+    <ClCompile Include="src\lib\System\Engine\EngineMacro.h" />
     <ClCompile Include="src\lib\System\Engine\Framework.cpp" />
     <ClCompile Include="src\lib\System\Engine\Initializer.cpp" />
     <ClCompile Include="src\lib\System\Entity\Entity.cpp" />
@@ -205,6 +319,7 @@
     <ClCompile Include="src\lib\System\Scene\SceneManager.cpp" />
     <ClCompile Include="src\lib\System\Shader\Shader.cpp" />
     <ClCompile Include="src\lib\System\Sprite\Sprite.cpp" />
+    <ClCompile Include="src\lib\System\StrID\StrID.cpp" />
     <ClCompile Include="src\lib\System\System\System.cpp" />
     <ClCompile Include="src\lib\System\Texture\Texture.cpp" />
     <ClCompile Include="src\lib\System\Timer\glTimer.cpp" />
@@ -213,6 +328,7 @@
     <ClCompile Include="src\lib\WinConfig\StartScene.cpp" />
     <ClCompile Include="src\lib\WinConfig\WinConfig.cpp" />
     <ClCompile Include="src\Object\State\State.cpp" />
+    <ClCompile Include="src\Scene\TestScene\Entity\InputTest.cpp" />
     <ClCompile Include="src\Scene\TestScene\Entity\SoundTestEntity.cpp" />
     <ClCompile Include="src\Scene\TestScene\Entity\TestEntity.cpp" />
     <ClCompile Include="src\Scene\TestScene\TestScene.cpp" />
@@ -229,9 +345,13 @@
     <None Include="data\shader\font.fsh">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='EngineDeveloperDebug|x64'">
+      </ExcludedFromBuild>
     </None>
     <None Include="data\shader\sample.fsh">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='EngineDeveloperDebug|x64'">
       </ExcludedFromBuild>
     </None>
   </ItemGroup>
@@ -239,10 +359,14 @@
     <None Include="data\shader\font.vsh">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='EngineDeveloperDebug|x64'">
+      </ExcludedFromBuild>
       <FileType>Document</FileType>
     </None>
     <None Include="data\shader\sample.vsh">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='EngineDeveloperDebug|x64'">
       </ExcludedFromBuild>
       <FileType>Document</FileType>
     </None>

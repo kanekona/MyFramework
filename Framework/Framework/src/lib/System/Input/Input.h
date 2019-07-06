@@ -4,6 +4,9 @@
 #include "Collision\Collision.h"
 #include "Engine\Data.h"
 #include "NonCopyable\NonCopyable.hpp"
+#include "StrID\StrID.h"
+#include <unordered_map>
+
 /**
 *namespace In
 *@brief	簡易引数用
@@ -99,7 +102,7 @@ namespace In
 	*enum IN
 	*@brief	仮想入力
 	*/
-	enum IN
+	enum
 	{
 		B1,
 		B2,
@@ -172,6 +175,33 @@ class Input : private NonCopyable
 {
 public:
 	/**
+	*@brief	ゲームパッドとキーボードを区別する
+	*/
+	struct InputData
+	{
+		//! ゲームパッドのボタン
+		int button;
+		//! キーボードのキー
+		int key;
+	};
+	/**
+	 * @brief
+	 */
+	struct ConfigData
+	{
+		int index;
+		int key;
+		ConfigData()
+		{
+
+		}
+		ConfigData(int i, int k)
+		{
+			index = i;
+			key = k;
+		}
+	};
+	/**
 	*enum in
 	*@brief	入力用仮想入力
 	*/
@@ -213,34 +243,34 @@ public:
 		*/
 		enum Pad
 		{
-			//! 1
+			//! 0
 			BUTTON_A,
-			//! 2
+			//! 1
 			BUTTON_B,
-			//! 3
+			//! 2
 			BUTTON_X,
-			//! 4
+			//! 3
 			BUTTON_Y,		
-			//! 5
+			//! 4
 			BUTTON_L1,		
-			//! 6
+			//! 5
 			BUTTON_R1,		
-			//! 7
+			//! 6
 			BUTTON_BACK,	
-			//! 8
+			//! 7
 			BUTTON_START,	
-			//! 9
+			//! 8
 			BUTTON_L3,		
-			//! 10
+			//! 9
 			BUTTON_R3,		
-			//! 11
+			//! 10
 			BUTTON_U,		
-			//! 12
+			//! 11
 			BUTTON_R,	
-			//! 13
+			//! 12
 			BUTTON_D,	
-			//! 14
-			BUTTON_L,	
+			//! 13
+			BUTTON_L,
 		};
 		/**
 		*enum AXIS
@@ -357,7 +387,7 @@ public:
 		*@brief	ゲームパッドの有無を返す
 		*@return bool 存在すればtrue
 		*/
-		bool isPresent() const;
+		bool IsPresent() const;
 		/**
 		*@brief	入力状況の更新
 		*/
@@ -365,7 +395,7 @@ public:
 		/**
 		*@brief	各値の初期化
 		*/
-		void Initialize();
+		void SetConfig(std::unordered_map<StrID,Input::ConfigData>* ConfigData);
 		/**
 		*@brief	入力状態のリセット
 		*/
@@ -375,7 +405,7 @@ public:
 		*@param[in]	float axis_threshold_ 区切る値
 		*@return 成功true
 		*/
-		bool registAxisButton(
+		bool RegistAxisButton(
 			const float axis_threshold_);
 		/**
 		*@brief	ゲームパッド名を返す
@@ -384,13 +414,13 @@ public:
 		const char* GetName() const;
 	private:
 		//! ゲームパッド複数個に対応させるために１つ１つにidを振り分ける
-		int id_;
+		int id;
 		//! ゲームパッドのボタン数
 		int button_num;
 		//! ゲームパッドのスティック数
 		int axis_num;
 		//! 入力データを格納する変数
-		int GPadData[14];
+		int gPadData[14];
 		//! スティック情報を格納する変数
 		std::vector<float> axis_value;
 		//! スティックの頂点値
@@ -418,7 +448,7 @@ public:
 		*@brief	スティック数を返す
 		*@return スティック数
 		*/
-		int axes() const;
+		int GetStickNum() const;
 	};
 	/**
 	*@brief	キーボード入力
@@ -435,7 +465,7 @@ public:
 			A, S, D, W, Q, E, Z, X, C, R, F, V, T,
 			G, B, Y, H, N, U, J, M, I, K, O, L, P,
 			SPACE, ENTER, ESCAPE,
-			UP, DOWN, LEFT, RIGHT,
+			UP, DOWN, LEFT, RIGHT, Num
 		};
 		/**
 		*@brief	constructor
@@ -484,7 +514,7 @@ public:
 		*/
 		void SetWindow(GLFWwindow* w);
 		//! キーボードの有無
-		bool isPresent;
+		bool IsPresent;
 		//! buttonのonを格納する変数
 		std::vector<u_char> button_on;
 		//! buttonのdownを格納する変数
@@ -493,7 +523,7 @@ public:
 		std::vector<u_char> button_up;
 	private:
 		//! 入力データを格納する変数
-		int KeyData[256];
+		int keyData[256];
 		//! Window情報を格納する
 		GLFWwindow* nowWindow;
 	};
@@ -507,7 +537,7 @@ public:
 		*enum Mouse_
 		*@brief	マウスの入力設定
 		*/
-		enum Mouse_
+		enum Button
 		{
 			//! 右
 			LEFT,
@@ -591,17 +621,17 @@ public:
 		*/
 		PointCollider* GetCollision() const;
 		//! マウスの有無
-		bool isPresent;
+		bool IsPresent;
 	private:
 		//! MauseButtonデータ
-		int MouseData[8];
+		int mouseData[8];
 		//! マウスの座標を保存する変数
 		//Vec2 position;
 		Transform transform;
 		//! Windowの情報を格納する
 		GLFWwindow* nowWindow;
 		//! ホイール値
-		Vec2 _scroll;
+		Vec2 scrollValue;
 		//! マウスの判定
 		PointCollider* collision;
 		//! buttonのonを格納する変数
@@ -620,17 +650,7 @@ public:
 		*@param[in]	double x x座標のホイール値
 		*@param[in] double y y座標のホイール値
 		*/
-		static void scroll_callback(GLFWwindow* w, double x, double y);
-	};
-	/**
-	*@brief	ゲームパッドとキーボードを区別する
-	*/
-	struct InputData
-	{
-		//! ゲームパッドのボタン
-		int button;
-		//! キーボードのキー
-		int key;
+		static void SetScroll_Callback(GLFWwindow* w, double x, double y);
 	};
 	//! ゲームパッド配列
 	std::vector<GamePad*> pad;
@@ -678,7 +698,7 @@ public:
 	*@brief	全てのゲームパッドのスティックの傾き範囲を制限する
 	*@param[in]	float regist 指定値
 	*/
-	void registAxis(const float regist);
+	void RegistAxis(const float regist);
 	/**
 	*@brief	入力状況の更新
 	*/
@@ -698,6 +718,14 @@ public:
 	*@return bool 1つ以上入力されているとtrue
 	*/
 	bool EitherUp() const;
+	/**
+	*
+	*/
+	void SetPadConfig(const StrID& key,const int padKey);
+	/**
+	 * @brief constructor
+	 */
+	explicit Input();
 	/**
 	*@brief	destructor
 	*/
@@ -730,18 +758,20 @@ private:
 	*@brief	ゲームパッド初期化
 	*@return vetor<GamePad*> 生成したゲームパッド達
 	*/
-	std::vector<Input::GamePad*> initGamePad();
+	std::vector<Input::GamePad*> InitGamePad();
 	/**
 	*@brief	キーボード初期化
 	*return KeyBoard* 生成したキーボード
 	*/
-	KeyBoard* initkeyBoard();
+	KeyBoard* InitkeyBoard();
 	/**
 	*@brief	マウス初期化
 	*@return Mouse* 生成したマウス
 	*/
-	Mouse* initMouse();
+	Mouse* InitMouse();
 	//! in分のデータ
 	InputData inputdata[24];
+	//! コンフィグデータ
+	std::unordered_map<StrID, ConfigData> PadConfigData;
 };
 //Input* Input::instance = nullptr;

@@ -23,14 +23,16 @@ public:
 	explicit Buffer(const std::string& path_, const size_t& time);
 	virtual ~Buffer();
 	std::string path;
-	ALuint id_;
+	ALuint id;
 	float nowTime;
 	float GetTime() const;
 	ALuint GetID() const;
 	void Bind(const bool stereo, const void* data, const u_int size, const u_int rate) const;
 	void SetFrameBuffer(const size_t& num);
+	char GetWaveform(const float time);
 	std::vector<char> waveformData;
 	u_int sampleRate;
+	unsigned int oneSecondsData;
 };
 /**
 *@brief	SoundDataのSourceDataを扱う
@@ -80,8 +82,14 @@ public:
 	float GetConeOuterAngle() const;
 	void SetConeOuterGain(const float volume) const;
 	float GetConeOuterGain() const;
-	void SetOrientation(const float* orientation) const;
-	float* GetOrientation() const;
+	static void SetOrientation(const float* orientation);
+	static float* GetOrientation(float* orientation);
+	static void SetListenerPosition(const Vec3& position);
+	static Vec3 GetListenerPosition();
+	static void SetListenerVelocity(const Vec3& velocity);
+	static Vec3 GetListenerVelocity();
+	static void SetListenerGain(const float volume);
+	static float GetListenerGain();
 };
 /**
 *@brief	Wavファイルのデータを扱う

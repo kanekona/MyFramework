@@ -2,6 +2,7 @@
 #include <sstream>
 #include <fstream>
 #include <string>
+#include <vector>
 #include "System\System.h"
 typedef int FileFormat;
 class File final
@@ -131,5 +132,15 @@ public:
 	{
 		*out = Count(path) + 1;
 		return LoadStrings(path, *out, config);
+	}
+	static void LoadStrings(std::vector<std::string>* out, const std::string& path)
+	{
+		std::ifstream ifs(path, std::ios::in);
+		std::string line;
+		out->clear();
+		while (std::getline(ifs, line))
+		{
+			out->emplace_back(line);
+		}
 	}
 };

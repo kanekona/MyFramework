@@ -9,6 +9,10 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		EngineDeveloperDebug|x64 = EngineDeveloperDebug|x64
+		EngineDeveloperDebug|x86 = EngineDeveloperDebug|x86
+		EngineDeveloperRelease|x64 = EngineDeveloperRelease|x64
+		EngineDeveloperRelease|x86 = EngineDeveloperRelease|x86
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
@@ -17,6 +21,14 @@ Global
 		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.Debug|x64.Build.0 = Debug|x64
 		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.Debug|x86.ActiveCfg = Debug|Win32
 		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.Debug|x86.Build.0 = Debug|Win32
+		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.EngineDeveloperDebug|x64.ActiveCfg = EngineDeveloperDebug|x64
+		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.EngineDeveloperDebug|x64.Build.0 = EngineDeveloperDebug|x64
+		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.EngineDeveloperDebug|x86.ActiveCfg = EngineDeveloperDebug|Win32
+		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.EngineDeveloperDebug|x86.Build.0 = EngineDeveloperDebug|Win32
+		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.EngineDeveloperRelease|x64.ActiveCfg = EngineDeveloperRelease|x64
+		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.EngineDeveloperRelease|x64.Build.0 = EngineDeveloperRelease|x64
+		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.EngineDeveloperRelease|x86.ActiveCfg = EngineDeveloperRelease|Win32
+		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.EngineDeveloperRelease|x86.Build.0 = EngineDeveloperRelease|Win32
 		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.Release|x64.ActiveCfg = Release|x64
 		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.Release|x64.Build.0 = Release|x64
 		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.Release|x86.ActiveCfg = Release|Win32

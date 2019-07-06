@@ -1,43 +1,52 @@
 #include "Input.h"
+#include "StrID\StrID.h"
+#include "ENgine\EngineMacro.h"
+#include "File\File.hpp"
 //--------------------------------------------------
 //@:Input::GamePadclass									
 //--------------------------------------------------
-void Input::GamePad::Initialize()
+void Input::GamePad::SetConfig(std::unordered_map<StrID, Input::ConfigData>* ConfigData)
 {
 	//入力値をenumと配列で管理
-	this->GPadData[Pad::BUTTON_A] = GLFW_JOYSTICK_1;
-	this->GPadData[Pad::BUTTON_B] = GLFW_JOYSTICK_2;
-	this->GPadData[Pad::BUTTON_X] = GLFW_JOYSTICK_3;
-	this->GPadData[Pad::BUTTON_Y] = GLFW_JOYSTICK_4;
-	this->GPadData[Pad::BUTTON_L1] = GLFW_JOYSTICK_5;
-	this->GPadData[Pad::BUTTON_R1] = GLFW_JOYSTICK_6;
-	this->GPadData[Pad::BUTTON_BACK] = GLFW_JOYSTICK_7;
-	this->GPadData[Pad::BUTTON_START] = GLFW_JOYSTICK_8;
-	this->GPadData[Pad::BUTTON_L3] = GLFW_JOYSTICK_9;
-	this->GPadData[Pad::BUTTON_R3] = GLFW_JOYSTICK_10;
-	this->GPadData[Pad::BUTTON_U] = GLFW_JOYSTICK_11;
-	this->GPadData[Pad::BUTTON_R] = GLFW_JOYSTICK_12;
-	this->GPadData[Pad::BUTTON_D] = GLFW_JOYSTICK_13;
-	this->GPadData[Pad::BUTTON_L] = GLFW_JOYSTICK_14;
+	//this->gPadData[Pad::BUTTON_A] = GLFW_JOYSTICK_1;
+	//this->gPadData[Pad::BUTTON_B] = GLFW_JOYSTICK_2;
+	//this->gPadData[Pad::BUTTON_X] = GLFW_JOYSTICK_3;
+	//this->gPadData[Pad::BUTTON_Y] = GLFW_JOYSTICK_4;
+	//this->gPadData[Pad::BUTTON_L1] = GLFW_JOYSTICK_5;
+	//this->gPadData[Pad::BUTTON_R1] = GLFW_JOYSTICK_6;
+	//this->gPadData[Pad::BUTTON_BACK] = GLFW_JOYSTICK_7;
+	//this->gPadData[Pad::BUTTON_START] = GLFW_JOYSTICK_8;
+	//this->gPadData[Pad::BUTTON_L3] = GLFW_JOYSTICK_9;
+	//this->gPadData[Pad::BUTTON_R3] = GLFW_JOYSTICK_10;
+	//this->gPadData[Pad::BUTTON_U] = GLFW_JOYSTICK_11;
+	//this->gPadData[Pad::BUTTON_R] = GLFW_JOYSTICK_12;
+	//this->gPadData[Pad::BUTTON_D] = GLFW_JOYSTICK_13;
+	//this->gPadData[Pad::BUTTON_L] = GLFW_JOYSTICK_14;
+	for (auto& it : *ConfigData)
+	{
+		gPadData[it.second.index] = it.second.key;
+	}
 }
-bool Input::GamePad::isPresent() const
+bool Input::GamePad::IsPresent() const
 {
 	//Joystickが存在するかどうか
-	return (glfwJoystickPresent(this->id_) == GLFW_TRUE) ? true : false;
+	return glfwJoystickPresent(this->id) == GLFW_TRUE;
 }
-Input::GamePad::GamePad(const int id) :
-	id_(id),
-	name(glfwGetJoystickName(id_))
+Input::GamePad::GamePad(const int padID) :
+	id(padID),
+	name(glfwGetJoystickName(padID))
 {
 	//GamePadが存在するかどうか、ボタン数スティック数はいくつかの計測とその分の要素の確保
-	glfwGetJoystickButtons(id_, &button_num);
-	glfwGetJoystickAxes(id_, &axis_num);
+	glfwGetJoystickButtons(padID, &button_num);
+	glfwGetJoystickAxes(padID, &axis_num);
+#if DEBUG_ENABLE
 	std::cout <<
-		"GamePadID: " << id_ << 
+		"GamePadID: " << id << 
 		" button:" << button_num << 
 		" axis:" << axis_num << 
 		" name:" << name <<
 	std::endl;
+#endif
 	button_on.resize(button_num);
 	std::fill(std::begin(button_on), std::end(button_on), 0);
 	button_down.resize(button_num);
@@ -65,15 +74,15 @@ void Input::GamePad::Reset()
 	std::fill(std::begin(axis_button_down), std::end(axis_button_down), 0);
 	std::fill(std::begin(axis_button_up), std::end(axis_button_up), 0);
 }
-std::vector<Input::GamePad*> Input::initGamePad()
+std::vector<Input::GamePad*> Input::InitGamePad()
 {
 	//GamePadが存在する分だけ生成する
 	std::vector<Input::GamePad*> gamepad_;
-	for (int id = GLFW_JOYSTICK_1; id <= GLFW_JOYSTICK_LAST; ++id)
+	for (int it = GLFW_JOYSTICK_1; it <= GLFW_JOYSTICK_LAST; ++it)
 	{
-		if (glfwJoystickPresent(id) == GLFW_TRUE)
+		if (glfwJoystickPresent(it) == GLFW_TRUE)
 		{
-			gamepad_.emplace_back(new GamePad(id));
+			gamepad_.emplace_back(new GamePad(it));
 		}
 	}
 	return gamepad_;
@@ -82,7 +91,7 @@ int Input::GamePad::buttons() const
 {
 	return button_num;
 }
-int Input::GamePad::axes() const
+int Input::GamePad::GetStickNum() const
 {
 	return axis_num;
 }
@@ -100,16 +109,16 @@ bool Input::GamePad::up(const int index) const
 }
 bool Input::GamePad::EitherDown() const
 {
-	for (auto id = this->button_down.begin(); id != this->button_down.end(); ++id)
+	for (auto it = this->button_down.begin(); it != this->button_down.end(); ++it)
 	{
-		if (*id)
+		if (*it)
 		{
 			return true;
 		}
 	}
-	for (auto id = this->axis_button_down.begin(); id != this->axis_button_down.end(); ++id)
+	for (auto it = this->axis_button_down.begin(); it != this->axis_button_down.end(); ++it)
 	{
-		if (*id)
+		if (*it)
 		{
 			return true;
 		}
@@ -118,16 +127,16 @@ bool Input::GamePad::EitherDown() const
 }
 bool Input::GamePad::EitherOn() const
 {
-	for (auto id = this->button_on.begin(); id != this->button_on.end(); ++id)
+	for (auto it = this->button_on.begin(); it != this->button_on.end(); ++it)
 	{
-		if (*id)
+		if (*it)
 		{
 			return true;
 		}
 	}
-	for (auto id = this->axis_button_on.begin(); id != this->axis_button_on.end(); ++id)
+	for (auto it = this->axis_button_on.begin(); it != this->axis_button_on.end(); ++it)
 	{
-		if (*id)
+		if (*it)
 		{
 			return true;
 		}
@@ -136,16 +145,16 @@ bool Input::GamePad::EitherOn() const
 }
 bool Input::GamePad::EitherUp() const
 {
-	for (auto id = this->button_up.begin(); id != this->button_up.end(); ++id)
+	for (auto it = this->button_up.begin(); it != this->button_up.end(); ++it)
 	{
-		if (*id)
+		if (*it)
 		{
 			return true;
 		}
 	}
-	for (auto id = this->axis_button_up.begin(); id != this->axis_button_up.end(); ++id)
+	for (auto it = this->axis_button_up.begin(); it != this->axis_button_up.end(); ++it)
 	{
-		if (*id)
+		if (*it)
 		{
 			return true;
 		}
@@ -168,7 +177,7 @@ bool Input::GamePad::axis_up(const int index) const
 {
 	return this->axis_button_up[index];
 }
-bool Input::GamePad::registAxisButton(const float axis_threshold_)
+bool Input::GamePad::RegistAxisButton(const float axis_threshold_)
 {
 	axis_threshold = axis_threshold_;
 	return true;
@@ -176,12 +185,12 @@ bool Input::GamePad::registAxisButton(const float axis_threshold_)
 void Input::GamePad::Update()
 {
 	//現在の入力状況と1回前の入力状況からtrueかfalseをいれる
-	int button_num_;
+	int nowButtonNum;
 	//GamePadのButtonの状況を取得
-	const auto* buttons_ = glfwGetJoystickButtons(id_, &button_num_);
-	if (button_num_ > 0)
+	const auto* buttons_ = glfwGetJoystickButtons(id, &nowButtonNum);
+	if (nowButtonNum > 0)
 	{
-		for (int i = 0; i < button_num_; ++i)
+		for (int i = 0; i < nowButtonNum; ++i)
 		{
 			button_down[i] = !button_on[i] && buttons_[i];
 			button_up[i] = button_on[i] && !buttons_[i];
@@ -190,7 +199,7 @@ void Input::GamePad::Update()
 	}
 	int axisNumber;
 	//GamePadのJoyStickの状態を取得
-	const auto* axes = glfwGetJoystickAxes(id_, &axisNumber);
+	const auto* axes = glfwGetJoystickAxes(id, &axisNumber);
 	if (axisNumber > 0) {
 		for (int i = 0; i < axisNumber; ++i) {
 			axis_value[i] = axes[i];
@@ -228,11 +237,11 @@ const char* Input::GamePad::GetName() const
 void ResetGamePad(std::vector<Input::GamePad*>& gamepad_)
 {
 	//入力状況を初期化する
-	for (auto& id : gamepad_)
+	for (auto& it : gamepad_)
 	{
-		if (id->isPresent())
+		if (it->IsPresent())
 		{
-			id->Reset();
+			it->Reset();
 		}
 	}
 }
@@ -242,39 +251,39 @@ void ResetGamePad(std::vector<Input::GamePad*>& gamepad_)
 Input::KeyBoard::KeyBoard()
 {
 	//仮想キーとの組み合わせ
-	this->KeyData[Key::A] = GLFW_KEY_A;
-	this->KeyData[Key::B] = GLFW_KEY_B;
-	this->KeyData[Key::C] = GLFW_KEY_C;
-	this->KeyData[Key::D] = GLFW_KEY_D;
-	this->KeyData[Key::E] = GLFW_KEY_E;
-	this->KeyData[Key::F] = GLFW_KEY_F;
-	this->KeyData[Key::G] = GLFW_KEY_G;
-	this->KeyData[Key::H] = GLFW_KEY_H;
-	this->KeyData[Key::I] = GLFW_KEY_I;
-	this->KeyData[Key::J] = GLFW_KEY_J;
-	this->KeyData[Key::K] = GLFW_KEY_K;
-	this->KeyData[Key::L] = GLFW_KEY_L;
-	this->KeyData[Key::N] = GLFW_KEY_N;
-	this->KeyData[Key::M] = GLFW_KEY_M;
-	this->KeyData[Key::O] = GLFW_KEY_O;
-	this->KeyData[Key::P] = GLFW_KEY_P;
-	this->KeyData[Key::Q] = GLFW_KEY_Q;
-	this->KeyData[Key::R] = GLFW_KEY_R;
-	this->KeyData[Key::S] = GLFW_KEY_S;
-	this->KeyData[Key::T] = GLFW_KEY_T;
-	this->KeyData[Key::U] = GLFW_KEY_U;
-	this->KeyData[Key::V] = GLFW_KEY_V;
-	this->KeyData[Key::W] = GLFW_KEY_W;
-	this->KeyData[Key::X] = GLFW_KEY_X;
-	this->KeyData[Key::Y] = GLFW_KEY_Y;
-	this->KeyData[Key::Z] = GLFW_KEY_Z;
-	this->KeyData[Key::SPACE] = GLFW_KEY_SPACE;
-	this->KeyData[Key::ENTER] = GLFW_KEY_ENTER;
-	this->KeyData[Key::UP] = GLFW_KEY_UP;
-	this->KeyData[Key::DOWN] = GLFW_KEY_DOWN;
-	this->KeyData[Key::RIGHT] = GLFW_KEY_RIGHT;
-	this->KeyData[Key::LEFT] = GLFW_KEY_LEFT;
-	this->KeyData[Key::ESCAPE] = GLFW_KEY_ESCAPE;
+	this->keyData[Key::A] = GLFW_KEY_A;
+	this->keyData[Key::B] = GLFW_KEY_B;
+	this->keyData[Key::C] = GLFW_KEY_C;
+	this->keyData[Key::D] = GLFW_KEY_D;
+	this->keyData[Key::E] = GLFW_KEY_E;
+	this->keyData[Key::F] = GLFW_KEY_F;
+	this->keyData[Key::G] = GLFW_KEY_G;
+	this->keyData[Key::H] = GLFW_KEY_H;
+	this->keyData[Key::I] = GLFW_KEY_I;
+	this->keyData[Key::J] = GLFW_KEY_J;
+	this->keyData[Key::K] = GLFW_KEY_K;
+	this->keyData[Key::L] = GLFW_KEY_L;
+	this->keyData[Key::N] = GLFW_KEY_N;
+	this->keyData[Key::M] = GLFW_KEY_M;
+	this->keyData[Key::O] = GLFW_KEY_O;
+	this->keyData[Key::P] = GLFW_KEY_P;
+	this->keyData[Key::Q] = GLFW_KEY_Q;
+	this->keyData[Key::R] = GLFW_KEY_R;
+	this->keyData[Key::S] = GLFW_KEY_S;
+	this->keyData[Key::T] = GLFW_KEY_T;
+	this->keyData[Key::U] = GLFW_KEY_U;
+	this->keyData[Key::V] = GLFW_KEY_V;
+	this->keyData[Key::W] = GLFW_KEY_W;
+	this->keyData[Key::X] = GLFW_KEY_X;
+	this->keyData[Key::Y] = GLFW_KEY_Y;
+	this->keyData[Key::Z] = GLFW_KEY_Z;
+	this->keyData[Key::SPACE] = GLFW_KEY_SPACE;
+	this->keyData[Key::ENTER] = GLFW_KEY_ENTER;
+	this->keyData[Key::UP] = GLFW_KEY_UP;
+	this->keyData[Key::DOWN] = GLFW_KEY_DOWN;
+	this->keyData[Key::RIGHT] = GLFW_KEY_RIGHT;
+	this->keyData[Key::LEFT] = GLFW_KEY_LEFT;
+	this->keyData[Key::ESCAPE] = GLFW_KEY_ESCAPE;
 
 	button_on.resize(256);
 	std::fill(std::begin(button_on), std::end(button_on), 0);
@@ -283,13 +292,13 @@ Input::KeyBoard::KeyBoard()
 	button_up.resize(256);
 	std::fill(std::begin(button_up), std::end(button_up), 0);
 
-	this->isPresent = true;
+	this->IsPresent = true;
 }
-Input::KeyBoard* Input::initkeyBoard()
+Input::KeyBoard* Input::InitkeyBoard()
 {
 	//キーボードを１つ生成
 	KeyBoard* keyBoard_ = new KeyBoard;
-	keyBoard_->isPresent = true;
+	keyBoard_->IsPresent = true;
 	return keyBoard_;
 }
 void Input::KeyBoard::SetWindow(GLFWwindow* w)
@@ -310,9 +319,9 @@ bool Input::KeyBoard::up(const int index) const
 }
 bool Input::KeyBoard::EitherDown() const
 {
-	for (auto id = this->button_down.begin(); id != this->button_down.end(); ++id)
+	for (auto it = this->button_down.begin(); it != this->button_down.end(); ++it)
 	{
-		if (*id)
+		if (*it)
 		{
 			return true;
 		}
@@ -321,9 +330,9 @@ bool Input::KeyBoard::EitherDown() const
 }
 bool Input::KeyBoard::EitherOn() const
 {
-	for (auto id = this->button_on.begin(); id != this->button_on.end(); ++id)
+	for (auto it = this->button_on.begin(); it != this->button_on.end(); ++it)
 	{
-		if (*id)
+		if (*it)
 		{
 			return true;
 		}
@@ -332,9 +341,9 @@ bool Input::KeyBoard::EitherOn() const
 }
 bool Input::KeyBoard::EitherUp() const
 {
-	for (auto id = this->button_up.begin(); id != this->button_up.end(); ++id)
+	for (auto it = this->button_up.begin(); it != this->button_up.end(); ++it)
 	{
-		if (*id)
+		if (*it)
 		{
 			return true;
 		}
@@ -343,10 +352,10 @@ bool Input::KeyBoard::EitherUp() const
 }
 void Input::KeyBoard::Update()
 {
-	for (int i = 0; i < 256; ++i)
+	for (int i = 0; i < Key::Num; ++i)
 	{
 		//キーボードの入力状況を取得
-		int state = glfwGetKey(this->nowWindow, this->KeyData[i]);
+		int state = glfwGetKey(this->nowWindow, this->keyData[i]);
 		button_down[i] = !button_on[i] && state;
 		button_up[i] = button_on[i] && !state;
 		button_on[i] = (u_char)state;
@@ -363,14 +372,14 @@ void ResetKeyBoard(Input::KeyBoard& keyboard)
 //--------------------------------------------------
 Input::Mouse::Mouse()
 {
-	this->MouseData[Mouse_::LEFT] = GLFW_MOUSE_BUTTON_1;
-	this->MouseData[Mouse_::RIGHT] = GLFW_MOUSE_BUTTON_2;
-	this->MouseData[Mouse_::CENTER] = GLFW_MOUSE_BUTTON_3;
-	this->MouseData[Mouse_::BUTTON_4] = GLFW_MOUSE_BUTTON_4;
-	this->MouseData[Mouse_::BUTTON_5] = GLFW_MOUSE_BUTTON_5;
-	this->MouseData[Mouse_::BUTTON_6] = GLFW_MOUSE_BUTTON_6;
-	this->MouseData[Mouse_::BUTTON_7] = GLFW_MOUSE_BUTTON_7;
-	this->MouseData[Mouse_::BUTTON_8] = GLFW_MOUSE_BUTTON_8;
+	this->mouseData[Button::LEFT] = GLFW_MOUSE_BUTTON_1;
+	this->mouseData[Button::RIGHT] = GLFW_MOUSE_BUTTON_2;
+	this->mouseData[Button::CENTER] = GLFW_MOUSE_BUTTON_3;
+	this->mouseData[Button::BUTTON_4] = GLFW_MOUSE_BUTTON_4;
+	this->mouseData[Button::BUTTON_5] = GLFW_MOUSE_BUTTON_5;
+	this->mouseData[Button::BUTTON_6] = GLFW_MOUSE_BUTTON_6;
+	this->mouseData[Button::BUTTON_7] = GLFW_MOUSE_BUTTON_7;
+	this->mouseData[Button::BUTTON_8] = GLFW_MOUSE_BUTTON_8;
 	button_on.resize(256);
 	std::fill(std::begin(button_on), std::end(button_on), 0);
 	button_down.resize(256);
@@ -378,25 +387,25 @@ Input::Mouse::Mouse()
 	button_up.resize(256);
 	std::fill(std::begin(button_up), std::end(button_up), 0);
 
-	this->isPresent = true;
+	this->IsPresent = true;
 	this->collision = new PointCollider(&transform);
 }
 Input::Mouse::~Mouse()
 {
 	delete this->collision;
 }
-Input::Mouse* Input::initMouse()
+Input::Mouse* Input::InitMouse()
 {
 	Mouse* mouse_ = new Input::Mouse;
-	mouse_->isPresent = true;
+	mouse_->IsPresent = true;
 	return mouse_;
 }
 void Input::Mouse::SetWindow(GLFWwindow* w)
 {
 	this->nowWindow = w;
-	glfwSetScrollCallback(this->nowWindow, Input::Mouse::scroll_callback);
+	glfwSetScrollCallback(this->nowWindow, Input::Mouse::SetScroll_Callback);
 }
-void Input::Mouse::scroll_callback(GLFWwindow* w, double x, double y)
+void Input::Mouse::SetScroll_Callback(GLFWwindow* w, double x, double y)
 {
 	Input::Mouse::scroll = { (float)x,(float)y };
 }
@@ -414,9 +423,9 @@ bool Input::Mouse::up(const int index) const
 }
 bool Input::Mouse::EitherDown() const
 {
-	for (auto id = this->button_down.begin(); id != this->button_down.end(); ++id)
+	for (auto it = this->button_down.begin(); it != this->button_down.end(); ++it)
 	{
-		if (*id)
+		if (*it)
 		{
 			return true;
 		}
@@ -425,9 +434,9 @@ bool Input::Mouse::EitherDown() const
 }
 bool Input::Mouse::EitherOn() const
 {
-	for (auto id = this->button_on.begin(); id != this->button_on.end(); ++id)
+	for (auto it = this->button_on.begin(); it != this->button_on.end(); ++it)
 	{
-		if (*id)
+		if (*it)
 		{
 			return true;
 		}
@@ -436,9 +445,9 @@ bool Input::Mouse::EitherOn() const
 }
 bool Input::Mouse::EitherUp() const
 {
-	for (auto id = this->button_up.begin(); id != this->button_up.end(); ++id)
+	for (auto it = this->button_up.begin(); it != this->button_up.end(); ++it)
 	{
-		if (*id)
+		if (*it)
 		{
 			return true;
 		}
@@ -450,12 +459,12 @@ void Input::Mouse::Update()
 	for (int i = 0; i < 8; ++i)
 	{
 		//マウスの入力状況を取得
-		int state = glfwGetMouseButton(this->nowWindow, this->MouseData[i]);
+		int state = glfwGetMouseButton(this->nowWindow, this->mouseData[i]);
 		button_down[i] = !button_on[i] && state;
 		button_up[i] = button_on[i] && !state;
 		button_on[i] = (u_char)state;
 	}
-	this->_scroll = Input::Mouse::scroll;
+	this->scrollValue = Input::Mouse::scroll;
 	Input::Mouse::scroll = { 0,0 };
 
 	glfwGetCursorPos(this->nowWindow, &this->pos_x, &this->pos_y);
@@ -463,7 +472,7 @@ void Input::Mouse::Update()
 }
 Vec2 Input::Mouse::GetScroll() const
 {
-	return this->_scroll;
+	return this->scrollValue;
 }
 Vec2 Input::Mouse::GetPos() const
 {
@@ -484,28 +493,28 @@ void Input::Mouse::ResetMouse()
 //--------------------------------------------------
 Input::~Input()
 {
-	KL::Destroy<Mouse>(this->mouse);
-	KL::Destroy<KeyBoard>(this->key);
-	for (auto id = this->pad.begin(); id != this->pad.end(); ++id)
+	delete this->mouse;
+	delete this->key;
+	for (auto it = this->pad.begin(); it != this->pad.end(); ++it)
 	{
-		KL::Destroy<GamePad>(*id);
+		delete *it;
 	}
 }
 void Input::Inputinit(GLFWwindow *w)
 {
 	//キーボードの初期化
-	this->key = this->initkeyBoard();
+	this->key = this->InitkeyBoard();
 	this->key->SetWindow(w);
 	//マウスの初期化
-	this->mouse = this->initMouse();
+	this->mouse = this->InitMouse();
 	this->mouse->SetWindow(w);
 	//ゲームパッドの初期化
-	this->pad = this->initGamePad();
+	this->pad = this->InitGamePad();
 	//ゲームパッドが１つ以上存在している場合
 	this->pad_Connection = false;
 	for (int i = 0; i < this->pad.size(); ++i)
 	{
-		this->pad[i]->Initialize();
+		this->pad[i]->SetConfig(&PadConfigData);
 		this->pad_Connection = true;
 	}
 	//ゲームパッドとの紐づけ
@@ -630,9 +639,9 @@ bool Input::up(const int index, const int padNum) const
 }
 bool Input::EitherDown() const
 {
-	for (auto id = this->pad.begin(); id != this->pad.end(); ++id)
+	for (auto it = this->pad.begin(); it != this->pad.end(); ++it)
 	{
-		if ((*id)->EitherDown())
+		if ((*it)->EitherDown())
 		{
 			return true;
 		}
@@ -641,9 +650,9 @@ bool Input::EitherDown() const
 }
 bool Input::EitherOn() const
 {
-	for (auto id = this->pad.begin(); id != this->pad.end(); ++id)
+	for (auto it = this->pad.begin(); it != this->pad.end(); ++it)
 	{
-		if ((*id)->EitherOn())
+		if ((*it)->EitherOn())
 		{
 			return true;
 		}
@@ -652,14 +661,18 @@ bool Input::EitherOn() const
 }
 bool Input::EitherUp() const
 {
-	for (auto id = this->pad.begin(); id != this->pad.end(); ++id)
+	for (auto it = this->pad.begin(); it != this->pad.end(); ++it)
 	{
-		if ((*id)->EitherUp())
+		if ((*it)->EitherUp())
 		{
 			return true;
 		}
 	}
 	return this->key->EitherUp() || this->mouse->EitherUp();
+}
+void Input::SetPadConfig(const StrID& Key, const int padKey)
+{
+	PadConfigData[Key].key = padKey;
 }
 float Input::axis(const int index, const int padNum) const
 {
@@ -735,14 +748,23 @@ void Input::ResetInputData()
 	ResetKeyBoard(*this->key);
 	this->mouse->ResetMouse();
 }
-void Input::registAxis(const float regist)
+void Input::RegistAxis(const float regist)
 {
-	for (auto id = this->pad.begin(); id != this->pad.end(); ++id)
+	for (auto it = this->pad.begin(); it != this->pad.end(); ++it)
 	{
-		(*id)->registAxisButton(regist);
+		(*it)->RegistAxisButton(regist);
 	}
 }
 Vec2 Input::Mouse::scroll;
+Input::Input()
+{
+	std::vector<std::string> ConfigTag;
+	File::LoadStrings(&ConfigTag, "./data/bin/InputTag.txt");
+	for (int i = 0; i < ConfigTag.size(); ++i)
+	{
+		PadConfigData.insert(std::make_pair(StrID(ConfigTag[i]), ConfigData(i, i)));
+	}
+}
 Input* Input::Create(GLFWwindow* window)
 {
 	if (instance == nullptr)

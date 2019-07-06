@@ -9,11 +9,16 @@ Entity::Entity()
 Entity::~Entity()
 {
 	//Žq‚Ì‰ð•ú
-	for (auto id : this->childs)
+	for (auto& it : this->childs)
 	{
-		delete id;
+		delete it;
 	}
 	this->childs.clear();
+	for (auto& it : plansChilds)
+	{
+		delete it;
+	}
+	plansChilds.clear();
 }
 void Entity::Update()
 {
@@ -115,9 +120,27 @@ size_t Entity::ChildCount() const
 {
 	return this->childs.size();
 }
-Entity* Entity::GetChild(const size_t num)
+Entity* Entity::GetChild(const size_t index)
 {
-	return this->childs[num];
+	return this->childs[index];
+}
+Entity* Entity::GetChild(const Layer key)
+{
+	for (auto& it : childs)
+	{
+		if (it->layer == key)
+		{
+			return it;
+		}
+	}
+	for (auto& it : plansChilds)
+	{
+		if (it->layer == key)
+		{
+			return it;
+		}
+	}
+	return nullptr;
 }
 std::vector<Entity*>* Entity::GetChilds()
 {

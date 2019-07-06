@@ -1,7 +1,9 @@
 #pragma once
 #include "NonCopyable\NonCopyable.hpp"
-#include "Scene\Scene.h"
 #include "Window\Window.h"
+
+class Scene;
+
 /**
 *@brief	‰Šú‰»class
 *‰Šú‰»‚É•K—v‚È’l‚ğ“n‚µ‚½‚è‚·‚éclass

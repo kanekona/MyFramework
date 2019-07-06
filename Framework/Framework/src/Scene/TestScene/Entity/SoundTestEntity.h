@@ -13,6 +13,7 @@ class SoundTestEntity : public Entity
 	void ChangeDirection();
 	void DebugCout();
 	void Rotation();
+	void UpdateReferenceDistance();
 public:
 	explicit SoundTestEntity();
 	virtual ~SoundTestEntity();

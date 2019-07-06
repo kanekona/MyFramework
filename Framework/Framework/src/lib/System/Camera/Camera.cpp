@@ -82,12 +82,12 @@ void Camera2D::SetSize_h(const float& h_)
 {
 	this->scale.y = h_;
 }
-Vec2 Camera2D::GetPos() const
+const Vec2& Camera2D::GetPos() const
 {
 	//位置を返す
 	return this->position;
 }
-Vec2 Camera2D::GetSize() const
+const Vec2& Camera2D::GetSize() const
 {
 	//サイズを返す
 	return this->scale;

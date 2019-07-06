@@ -1,6 +1,11 @@
 #pragma once
 #include "Entity\Entity.h"
-#include "Texture\Texture.h"
+
+class Texture;
+class Color;
+class Transform;
+class Shader;
+
 class Sprite : public Entity
 {
 	//! order in layer

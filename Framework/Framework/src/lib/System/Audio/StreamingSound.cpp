@@ -48,7 +48,9 @@ void StreamingSound::streamProc(const std::string& path, const bool loop, std::s
 		//指定した時間だけスレッドをブロックする
 		std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME_MS));
 	}
+#ifdef KL_DEBUG
 	std::cout << "Streaming終了" << std::endl;
+#endif 
 	//stream.End();
 }
 StreamingSound::StreamingSound()
@@ -143,7 +145,9 @@ float StreamingSound::GetTime() const
 	//現在の時間を返すけどstreamingだから1秒ごとに読み込み直すから0~1くらいしか返らないよ
 	return this->source_->GetTime();
 }
+#ifdef KL_DEBUG
 void StreamingSound::debugUpdata()
 {
 
 }
+#endif

@@ -9,20 +9,26 @@ Audio::Audio()
 	this->device = alcOpenDevice(nullptr);
 	if (!this->device)
 	{
+#ifdef KL_DEBUG
 		std::cout << "デバイスの接続Error" << std::endl;
+#endif
 		return;
 	}
 	//コンテキストの生成
 	this->context = alcCreateContext(this->device, nullptr);
 	if (!this->context)
 	{
+#ifdef KL_DEBUG
 		std::cout << "コンテキスト生成Error" << std::endl;
+#endif
 		return;
 	}
 	//操作するコンテキストの選択
 	if (alcMakeContextCurrent(this->context) == ALC_FALSE)
 	{
+#ifdef KL_DEBUG
 		std::cout << "操作コンテキストの選択Error" << std::endl;
+#endif		
 		return;
 	}
 }
@@ -38,7 +44,7 @@ Audio::~Audio()
 Buffer::Buffer()
 {
 	//バッファを１つ生成
-	alGenBuffers(1, &this->id_);
+	alGenBuffers(1, &this->id);
 	//現在進行時間を0にする
 	this->nowTime = 0.f;
 }
@@ -46,11 +52,12 @@ Buffer::Buffer(const std::string& path_)
 	:path(path_)
 {
 	//バッファを１つ生成
-	alGenBuffers(1, &this->id_);
+	alGenBuffers(1, &this->id);
 	//Wavファイルの読み込み
 	Wav wav_data(path_);
 	//経過時間を確認
 	this->nowTime = wav_data.time();
+	oneSecondsData = wav_data.sampleRate() * wav_data.channel() * sizeof(uint16_t);
 	// 波形データをバッファにセット
 	//BufferID,Format,波形データ,サイズ,サンプリングレート
 	Bind(wav_data.isStereo(), wav_data.data(), wav_data.size(), wav_data.sampleRate());
@@ -61,12 +68,13 @@ Buffer::Buffer(const std::string& path_, const size_t& time)
 	:path(path_)
 {
 	//バッファを１つ生成
-	alGenBuffers(1, &this->id_);
+	alGenBuffers(1, &this->id);
 	//Wavファイルの読み込み
 	Wav wav_data(path_);
 	//経過時間を確認
 	this->nowTime = wav_data.time();
 	size_t num = time * wav_data.sampleRate()* wav_data.channel() * sizeof(uint16_t);
+	oneSecondsData = wav_data.sampleRate() * wav_data.channel() * sizeof(uint16_t);
 	// 波形データをバッファにセット
 	//BufferID,Format,波形データ,サイズ,サンプリングレート
 	Bind(wav_data.isStereo(), wav_data.data(num), wav_data.size() - (u_int)num, wav_data.sampleRate());
@@ -76,7 +84,7 @@ Buffer::Buffer(const std::string& path_, const size_t& time)
 Buffer::~Buffer()
 {
 	//バッファの削除
-	alDeleteBuffers(1, &this->id_);
+	alDeleteBuffers(1, &this->id);
 }
 float Buffer::GetTime() const
 {
@@ -86,17 +94,21 @@ float Buffer::GetTime() const
 ALuint Buffer::GetID() const
 {
 	//バッファに登録してあるIDを返す
-	return this->id_;
+	return this->id;
 }
 void Buffer::Bind(const bool stereo, const void* data, const u_int size, const u_int rate) const
 {
 	//波形データをバッファにセット
-	alBufferData(this->id_, stereo ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data, size, rate);
+	alBufferData(this->id, stereo ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data, size, rate);
 }
 void Buffer::SetFrameBuffer(const size_t& num)
 {
 	Wav wav_data(path);
 	Bind(wav_data.isStereo(), wav_data.data(num), wav_data.size() - (u_int)num, wav_data.sampleRate());
+}
+char Buffer::GetWaveform(const float time)
+{
+	return waveformData.at((unsigned int)(time * oneSecondsData));
 }
 //---------------------------------
 //@:Sourceclass
@@ -322,15 +334,44 @@ float Source::GetConeOuterGain() const
 	alGetSourcef(this->id, AL_CONE_OUTER_GAIN, &gain);
 	return gain;
 }
-void Source::SetOrientation(const float* orientation) const
+void Source::SetOrientation(const float* orientation)
 {
-	alSourcefv(this->id, AL_ORIENTATION, orientation);
+	alListenerfv(AL_ORIENTATION, orientation);
 }
-float* Source::GetOrientation() const
+float* Source::GetOrientation(float* orientation)
 {
-	float orientation[6];
-	alGetSourcefv(this->id, AL_ORIENTATION, orientation);
+	alGetListenerfv(AL_ORIENTATION, orientation);
 	return orientation;	
+}
+void Source::SetListenerPosition(const Vec3& position)
+{
+	alListener3f(AL_POSITION, position.x, position.y, position.z);
+}
+Vec3 Source::GetListenerPosition()
+{
+	Vec3 position;
+	alGetListener3f(AL_POSITION, &position.x, &position.y, &position.z);
+	return position;
+}
+void Source::SetListenerVelocity(const Vec3& velocity)
+{
+	alListener3f(AL_VELOCITY, velocity.x, velocity.y, velocity.z);
+}
+Vec3 Source::GetListenerVelocity()
+{
+	Vec3 velocity;
+	alGetListener3f(AL_VELOCITY, &velocity.x, &velocity.y, &velocity.z);
+	return velocity;
+}
+void Source::SetListenerGain(const float volume)
+{
+	alListenerf(AL_GAIN, volume);
+}
+float Source::GetListenerGain()
+{
+	float volume;
+	alGetListenerf(AL_GAIN, &volume);
+	return volume;
 }
 //---------------------------------
 //@:Wavclass
@@ -340,19 +381,25 @@ Wav::Wav(const std::string& file)
 	std::ifstream fstr(file, std::ios::binary);
 	if (!fstr)
 	{
+#ifdef KL_DEBUG
 		std::cout << "ファイル読み込みエラー" << std::endl;
+#endif
 		throw;
 	}
 	// ファイル情報を解析
 	if (!Wav::analyzeWavFile(this->info, fstr))
 	{
+#ifdef KL_DEBUG
 		std::cout << "Wavファイル読み込みエラー: " << file << std::endl;
+#endif		
 		throw;
 	}
 	if ((this->info.id != 1) || (this->info.bit != 16))
 	{
 		// IDが１で量子化ビット数が16以外は扱わない
+#ifdef KL_DEBUG
 		std::cout << "Wavファイルのフォーマットエラー" << std::endl;
+#endif
 		throw;
 	}
 	// 再生時間(秒)
@@ -447,12 +494,16 @@ bool Wav::analyzeWavFile(Info& info, std::ifstream& fstr)
 	fstr.read(header, WAV_HEADER_SIZE);
 	if (std::strncmp(&header[0], "RIFF", 4))
 	{
+#ifdef KL_DEBUG
 		std::cout << "このファイルはRIFFではありません" << std::endl;
+#endif
 		return false;
 	}
 	if (std::strncmp(&header[8], "WAVE", 4))
 	{
+#ifdef KL_DEBUG
 		std::cout << "このファイルはWaveではありません" << std::endl;
+#endif		
 		return false;
 	}
 	enum
@@ -468,7 +519,9 @@ bool Wav::analyzeWavFile(Info& info, std::ifstream& fstr)
 	// fmtチャンクを探してデータ形式を取得
 	if (!searchChunk(fstr, "fmt "))
 	{
+#ifdef KL_DEBUG
 		std::cout << "fmtチャンクが存在しません" << std::endl;
+#endif
 		return false;
 	}
 	u_int chunk_size = Wav::getChunkSize(fstr);
@@ -481,7 +534,9 @@ bool Wav::analyzeWavFile(Info& info, std::ifstream& fstr)
 	// dataチャンクを探してデータ長を取得
 	if (!searchChunk(fstr, "data"))
 	{
+#ifdef KL_DEBUG
 		std::cout << "dataチャンクが存在しません" << std::endl;
+#endif
 		return false;
 	}
 	info.size = Wav::getChunkSize(fstr);
@@ -514,7 +569,9 @@ StreamWav::StreamWav(const std::string& file) :
 	if ((this->info.id != 1) || (this->info.bit != 16))
 	{
 		// IDが１で量子化ビット数が16以外は扱わない
+#ifdef KL_DEBUG
 		std::cout << "Wavファイルフォーマットエラー" << std::endl;
+#endif
 		return;
 	}
 	this->last_size_ = this->info.size;

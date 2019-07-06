@@ -1,6 +1,5 @@
 
 #pragma once
-#include <cmath>
 #define PI 3.1415926f
 class Circle;
 class Vec3;
@@ -222,6 +221,7 @@ namespace KL
 	float get_distance(const float, const float, const float, const float, const float, const float);
 	bool innerJudge(const Vec2* line, const Vec2* point);
 	//bool crossJudge(const Vec2* line1, const Vec2* line2);
+#ifdef ENGINE_DEVELOP
 	template <class T> bool Destroy(T* t)
 	{
 		if (t)
@@ -242,4 +242,5 @@ namespace KL
 		}
 		return false;
 	}
+#endif
 }

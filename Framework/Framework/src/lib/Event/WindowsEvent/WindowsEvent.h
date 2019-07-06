@@ -2,7 +2,6 @@
 #include "NonCopyable\NonCopyable.hpp"
 #include <vector>
 #include <string>
-#include "System\System.h"
 class WindowsEvent : private NonCopyable
 {
 	std::vector<std::string>* loadPath;

@@ -1,5 +1,6 @@
 #include "MovieImage.h"
 #include "Engine\Framework.h"
+#include "Texture\Texture.h"
 MovieImage::MovieImage()
 	:Sprite(true)
 {

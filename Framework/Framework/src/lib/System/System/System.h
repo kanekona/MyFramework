@@ -1,8 +1,8 @@
 #pragma once
-//ファイル名は仮置き
-//engine.cpp
-//OGSystem_.hpp
-#if !defined (_DEBUG)
+
+#include "Engine\EngineMacro.h"
+
+#if !DEBUG_ENABLE
 // Degub版のみコンソールを表示する設定
 #pragma comment(linker, "/subsystem:windows /entry:mainCRTStartup")
 #endif
@@ -33,10 +33,14 @@
 #pragma comment(lib, "opencv_videoio342.lib")
 //LNK4098
 #pragma comment(lib, "freetype.lib")
+//FFTW
+#pragma comment(lib, "libfftw3-3.lib")
+#pragma comment(lib, "libfftw3f-3.lib")
+#pragma comment(lib, "libfftw3l-3.lib")
 
 #if defined(_MSC_VER)
 // Windows:外部ライブラリのリンク指定
-#if defined (_DEBUG)
+#if DEBUG_ENABLE
 #pragma comment(lib, "glew32sd.lib")
 #pragma comment(lib, "glfw3d.lib")
 #else
@@ -70,9 +74,14 @@
 #include "al\alc.h"
 //OpenCV
 #include "opencv2\opencv.hpp"
+//FFTW
+#include "fftw3.h"
 
 #include "Engine\Data.h"
+#include "StrID\StrID.h"
 #include "randmais.h"
+#include <vector>
+
 /**
 *namespace KL
 *@brief	便利機能関数や数学計算
@@ -106,6 +115,14 @@ namespace KL
 	bool CheckText(std::string* first, std::string* second);
 	void FileCreate(const std::string& path, std::vector<std::string>& data);
 	bool StringisNumber(const std::string& str);
+	bool StringFromNumber(const std::string& str, float* out);
+	bool StringFromNumber(const std::string& str, int* out);
+	bool StringFromStrID(const std::string& str, StrID* out);
 	unsigned int Count(const std::string& str, const char c);
 	std::string* SplitString(const std::string& text, const char c, int* out);
+	void SplitString(std::vector<std::string>* out, const std::string& text, const char c);
+	void Trim(std::string* str, const char c);
+	void Trim(std::string* str, const std::string& trim);
+	bool Split(const std::string& text, const std::string& find, std::string* outLeft, std::string* outRigth);
+	bool Split(const std::string& text, const char find, std::string* outLeft, std::string* outRigth);
 }

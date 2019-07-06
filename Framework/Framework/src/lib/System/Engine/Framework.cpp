@@ -1,5 +1,7 @@
 #include "Framework.h"
 #include "Data.h"
+#include "Scene\SceneManager.h"
+#include "Window\Window.h"
 Framework::Framework(bool* destroy)
 {
 	this->sceneManager = nullptr;

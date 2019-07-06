@@ -1,9 +1,13 @@
-#include "System\System.h"
 #include "Engine.h"
 #include "Input\Input.h"
 #include "Random\Random.h"
 #include "Event\Event.h"
 #include "ResourceManager\ResourceManager.h"
+#include "Audio\Audio.h"
+#include "StrID\StrID.h"
+#include "Initializer.h"
+#include "Framework.h"
+#include "Scene\Scene.h"
 Engine::Engine()
 {
 	//OpenGL,OpenFW Initialize
@@ -40,15 +44,15 @@ Engine::Engine()
 }
 Engine::~Engine()
 {
-	//Input‚Ì”jŠü
+	//Delete Input
 	Input::Destroy();
-	//ResourceManager‚Ì”jŠü
+	//Delete ResourceManager
 	ResourceManager::Destroy();
-	//AudioDevice‚Ì”jŠü
-	KL::Destroy<Audio>(audiodevice);
-	//GameFramework‚Ì”jŠü
+	//Delete AudioDevice
+	delete audiodevice;
+	//Delete GameFramework
 	Framework::Destroy();
-	//GLFWI—¹ˆ—
+	//End GLFW
 	glfwTerminate();
 }
 void Engine::GLFWInitialize()

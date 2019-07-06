@@ -1,4 +1,7 @@
 #include "Data.h"
+
+#include <cmath>
+
 Circle::Circle()
 	:center_x(0.f), center_y(0.f), r(0.f)
 {}

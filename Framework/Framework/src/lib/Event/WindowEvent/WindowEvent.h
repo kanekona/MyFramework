@@ -1,7 +1,6 @@
 #pragma once
 #include <fstream>
 #include <sstream>
-#include "Window\Window.h"
 class WindowEvent
 {
 public:
@@ -17,7 +16,7 @@ public:
 	*@param[in] ifstream& ifs ファイルデータ
 	*@param[out] WindowParameter* parameter
 	*/
-	//explicit WindowEvent(std::ifstream& ifs, WindowParameter* parameter);
+	explicit WindowEvent(std::ifstream& ifs);
 
 	/**
 	*@brief	destructor

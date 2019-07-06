@@ -50,6 +50,8 @@ void ResourceLoad::DataCreate(const std::string& text)
 	}
 	else
 	{
+#if DEBUG_ENABLE
 		std::cout << "ResourceLoad>>–¢“o˜^‚ÌŒ`Ž®‚Å‚·\n";
+#endif
 	}
 }

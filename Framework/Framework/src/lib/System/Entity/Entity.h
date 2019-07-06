@@ -5,7 +5,6 @@
 #include "EntityLayer.h"
 #define KL_ENTITY_NORMAL 0x00
 #define KL_ENTITY_KILL 0x01
-#pragma warning (disable : 4100)
 /**
 *@brief 基礎class
 *描画と更新の機能のみ
@@ -227,10 +226,14 @@ public:
 	size_t ChildCount() const;
 	/**
 	*@brief	Get Children
-	*@param[in] size_t num Children Number
+	*@param[in] size_t index Children Number
 	*@return Entity* Children
 	*/
-	Entity* GetChild(const size_t num);
+	Entity* GetChild(const size_t index);
+	/**
+	*@brief Get Children
+	*/
+	Entity* GetChild(const Layer key);
 	/**
 	*@brief Get Childrens
 	*@return std::vector<Entity*>* All Children

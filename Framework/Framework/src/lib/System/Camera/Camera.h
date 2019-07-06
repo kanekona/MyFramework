@@ -110,12 +110,12 @@ public:
 	*@brief	カメラの位置を返す
 	*@return Vec2 カメラ位置
 	*/
-	Vec2 GetPos() const;
+	const Vec2& GetPos() const;
 	/**
 	*@brief	カメラのサイズを返す
 	*@return Vec2 カメラの大きさ
 	*/
-	Vec2 GetSize() const;
+	const Vec2& GetSize() const;
 	/**
 	*@brief	投影行列を取得する
 	*@return GLfloat* 投影行列

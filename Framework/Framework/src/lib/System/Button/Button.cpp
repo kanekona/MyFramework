@@ -1,6 +1,7 @@
 #include "Button.h"
 #include "Input\Input.h"
 #include "ResourceManager\ResourceManager.h"
+#include "Collision\Collision.h"
 Button::Button(const Transform& t)
 	:back(true)
 {

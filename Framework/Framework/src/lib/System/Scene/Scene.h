@@ -256,8 +256,10 @@ public:
 	*@param[in] Scene* scene this
 	*/
 	static void EntityUpdate(Scene* scene);
+#ifdef KL_DEBUG
 	/**
 	*@brief Debug Program
 	*/
 	void Debug();
+#endif
 };

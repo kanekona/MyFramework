@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "Engine\Framework.h"
+#include "Window\Window.h"
 Scene::Scene()
 {
 	camera = new Camera2D(Box2D(Vec2(), Framework::Get()->GetWindow()->GetSize()));
@@ -16,7 +17,7 @@ Scene::~Scene()
 		delete id;
 	}
 	plansEntity.clear();
-	KL::Destroy<Camera2D>(camera);
+	delete camera;
 }
 void Scene::Enter()
 {
@@ -105,6 +106,7 @@ std::vector<Entity*>* Scene::GetEntitys()
 {
 	return &this->entitys;
 }
+#ifdef KL_DEBUG
 void Scene::Debug()
 {
 	std::cout << "SceneTag : " << this->tag << "\n";
@@ -113,3 +115,4 @@ void Scene::Debug()
 		std::cout << "Entitys : " << it->tag << "\n";
 	}
 }
+#endif

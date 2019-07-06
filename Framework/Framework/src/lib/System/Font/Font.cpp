@@ -7,7 +7,9 @@ Font::Font()
 	FT_Init_FreeType(&this->ft_library);
 	if (!this->ft_library)
 	{
+#ifdef KL_DEBUG
 		std::cout << "FontInitError" << std::endl;
+#endif
 		return;
 	}
 	FT_New_Face(this->ft_library, "data/font/msgothic.ttc", 0, &this->face);

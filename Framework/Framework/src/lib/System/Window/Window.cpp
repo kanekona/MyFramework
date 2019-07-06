@@ -1,5 +1,6 @@
 #include "Window.h"
 #include "stb_image.h"
+#include "Scene\Scene.h"
 #include "Engine\Framework.h"
 Window::Window()
 {

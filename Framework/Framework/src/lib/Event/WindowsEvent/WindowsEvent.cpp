@@ -1,4 +1,5 @@
 #include "WindowsEvent.h"
+#include "System\System.h"
 WindowsEvent::WindowsEvent()
 {
 	this->loadPath = nullptr;
@@ -6,8 +7,14 @@ WindowsEvent::WindowsEvent()
 }
 WindowsEvent::~WindowsEvent()
 {
-	KL::Destroy<std::vector<std::string>>(this->loadPath);
-	KL::Destroy<std::vector<std::string>>(this->notLoadFileName);
+	if (loadPath)
+	{
+		delete loadPath;
+	}
+	if (notLoadFileName)
+	{
+		delete notLoadFileName;
+	}
 }
 void WindowsEvent::SetLoadPath(const std::string& path)
 {

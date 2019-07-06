@@ -1,10 +1,13 @@
 #pragma once
-#include "Framework.h"
 #include "FPS\FPS.h"
-#include "Audio\Audio.h"
-#include "Initializer.h"
 #define ERROR_GLFE_INIT 0x01
 #define ERROR_GLEW_INIT 0x02
+
+class Framework;
+class Window;
+class Audio;
+class Initializer;
+
 /**
 *@brief	Game Engine
 */
