@@ -48,7 +48,7 @@ public:
 		}
 		if (cnt >= duration)
 		{
-			this->toplay = false;
+			toplay = false;
 		}
 		return cnt;
 	}
@@ -58,22 +58,22 @@ public:
 	*/
 	bool IsPlay() const
 	{
-		return this->toplay;
+		return toplay;
 	}
 	/**
 	*@brief	タイム初期化
 	*/
 	void ResetTime()
 	{
-		this->cnt = 0;
-		this->toplay = true;
-		this->start = 0;
-		this->end = 0;
+		cnt = 0;
+		toplay = true;
+		start = 0;
+		end = 0;
 	}
 	/**
 	*@brief	constructor
 	*/
-	Easing() { this->ResetTime(); };
+	Easing() { ResetTime(); };
 	/**
 	*@brief	開始と終了地点を登録
 	*@param[in] float startValue StartValue
@@ -81,8 +81,8 @@ public:
 	*/
 	void Set(const float startValue, const float endValue)
 	{
-		this->start = startValue;
-		this->end = endValue;
+		start = startValue;
+		end = endValue;
 	}
 
 	/**
@@ -91,7 +91,7 @@ public:
 	*/
 	float GetStartValue() const
 	{
-		return this->start;
+		return start;
 	}
 	/**
 	*@brief	終了始点を取得
@@ -99,7 +99,7 @@ public:
 	*/
 	float GetEndValue() const
 	{
-		return this->end;
+		return end;
 	}
 
 	//t = 時間 d = 始点 c = 終点-始点 d = 経過時間

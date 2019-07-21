@@ -10,7 +10,7 @@ ResourceLoad::ResourceLoad(std::ifstream& ifs)
 		{
 			continue;
 		}
-		this->DataCreate(lineText);
+		DataCreate(lineText);
 	}
 }
 ResourceLoad::~ResourceLoad()
@@ -21,8 +21,8 @@ void ResourceLoad::DataCreate(const std::string& text)
 {
 	//'>'の前と後でstringデータをわける
 	std::string::size_type t = text.find(">");
-	this->dataPath = text.substr(0, t);
-	this->dataName = text.substr(t + 1);
+	dataPath = text.substr(0, t);
+	dataName = text.substr(t + 1);
 	//文字列の中に以下の文字が含まれていればその部分を空白へ変更する
 	while ((t = dataName.find_first_of("(,);")) != std::string::npos)
 	{

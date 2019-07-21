@@ -161,12 +161,12 @@ public:
 	*/
 	template <class T> T* GetEntity()
 	{
-		T* now = Scene::GetEntity<T>(&this->entitys);
+		T* now = Scene::GetEntity<T>(&entitys);
 		if (now)
 		{
 			return now;
 		}
-		return Scene::GetEntity<T>(&this->plansEntity);
+		return Scene::GetEntity<T>(&plansEntity);
 	}
 	/**
 	*@brief	Get Entity
@@ -178,12 +178,12 @@ public:
 	*/
 	template <class T> T* GetEntity(const std::string& tag)
 	{
-		T* now = Scene::GetEntity<T>(&this->entitys,tag);
+		T* now = Scene::GetEntity<T>(&entitys,tag);
 		if (now)
 		{
 			return now;
 		}
-		return Scene::GetEntity<T>(&this->plansEntity,tag);
+		return Scene::GetEntity<T>(&plansEntity,tag);
 	}
 	/**
 	*@brief	Get Entity
@@ -195,12 +195,12 @@ public:
 	*/
 	template <class T> T* GetEntity(const Layer& layer)
 	{
-		T* now = Scene::GetEntity<T>(&this->entitys,layer);
+		T* now = Scene::GetEntity<T>(&entitys,layer);
 		if (now)
 		{
 			return now;
 		}
-		return Scene::GetEntity<T>(&this->plansEntity,layer);
+		return Scene::GetEntity<T>(&plansEntity,layer);
 	}
 	/**
 	*@brief	Get Entity
@@ -212,8 +212,8 @@ public:
 	template <class T> std::vector<T*> GetEntitys()
 	{
 		std::vector<T> vector;
-		Scene::GetEntitys<T>(&this->entitys, &vector);
-		Scene::GetEntitys<T>(&this->plansEntity, &vector);
+		Scene::GetEntitys<T>(&entitys, &vector);
+		Scene::GetEntitys<T>(&plansEntity, &vector);
 		return vector;
 	}
 	/**
@@ -227,8 +227,8 @@ public:
 	template <class T> std::vector<T*> GetEntitys(const std::string& tag)
 	{
 		std::vector<T> vector;
-		Scene::GetEntitys<T>(&this->entitys, tag,&vector);
-		Scene::GetEntitys<T>(&this->plansEntity, tag,&vector);
+		Scene::GetEntitys<T>(&entitys, tag,&vector);
+		Scene::GetEntitys<T>(&plansEntity, tag,&vector);
 		return vector;
 	}
 	/**
@@ -242,8 +242,8 @@ public:
 	template <class T> std::vector<T*> GetEntitys(const Layer& layer)
 	{
 		std::vector<T> vector;
-		Scene::GetEntitys<T>(&this->entitys, layer,&vector);
-		Scene::GetEntitys<T>(&this->plansEntity, layer,&vector);
+		Scene::GetEntitys<T>(&entitys, layer,&vector);
+		Scene::GetEntitys<T>(&plansEntity, layer,&vector);
 		return vector;
 	}
 	/**

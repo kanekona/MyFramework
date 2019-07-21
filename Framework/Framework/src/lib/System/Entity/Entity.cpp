@@ -2,18 +2,19 @@
 
 Entity::Entity()
 {
-	this->active = true;
-	this->stateCount = KL_ENTITY_NORMAL;
-	this->layer = Layer::Default;
+	active = true;
+	stateCount = KL_ENTITY_NORMAL;
+	layer = Layer::Default;
+	tag = typeid(*this).name();
 }
 Entity::~Entity()
 {
 	//Žq‚Ì‰ð•ú
-	for (auto& it : this->childs)
+	for (auto& it : childs)
 	{
 		delete it;
 	}
-	this->childs.clear();
+	childs.clear();
 	for (auto& it : plansChilds)
 	{
 		delete it;
@@ -30,15 +31,15 @@ void Entity::Enter()
 }
 void Entity::Destroy()
 {
-	this->stateCount = KL_ENTITY_KILL;
+	stateCount = KL_ENTITY_KILL;
 }
 void Entity::SetActive(const bool isActive)
 {
-	this->active = isActive;
+	active = isActive;
 }
 bool Entity::GetActive() const
 {
-	return this->active;
+	return active;
 }
 void Entity::RegisterChildren()
 {
@@ -118,11 +119,11 @@ void Entity::ChildrenStateAdaptation(Entity* entity)
 }
 size_t Entity::ChildCount() const
 {
-	return this->childs.size();
+	return childs.size();
 }
 Entity* Entity::GetChild(const size_t index)
 {
-	return this->childs[index];
+	return childs[index];
 }
 Entity* Entity::GetChild(const Layer key)
 {
@@ -144,5 +145,5 @@ Entity* Entity::GetChild(const Layer key)
 }
 std::vector<Entity*>* Entity::GetChilds()
 {
-	return &this->childs;
+	return &childs;
 }

@@ -4,19 +4,19 @@
 #include "Window\Window.h"
 Framework::Framework(bool* destroy)
 {
-	this->sceneManager = nullptr;
-	this->enableEngineDestroy = destroy;
+	sceneManager = nullptr;
+	enableEngineDestroy = destroy;
 	//Window¶¬
-	this->window = new Window();
+	window = new Window();
 	time.Start();
 	preTime = 0.0f;
 	deltaTime = 0.0f;
 }
 Framework::~Framework()
 {
-	this->enableEngineDestroy = nullptr;
-	delete this->sceneManager;
-	delete this->window;
+	enableEngineDestroy = nullptr;
+	delete sceneManager;
+	delete window;
 }
 Framework* Framework::Create(bool* destroy)
 {
@@ -41,29 +41,29 @@ void Framework::Destroy()
 }
 void Framework::ChangeScene(Scene* next)
 {
-	this->sceneManager->ChangeScene(next);
+	sceneManager->ChangeScene(next);
 }
 Scene* Framework::GetScene()
 {
-	return this->sceneManager->Get();
+	return sceneManager->Get();
 }
 void Framework::Update()
 {
 	deltaTime = time.GetTime() - preTime;
 	preTime = time.GetTime();
-	this->sceneManager->SceneUpdate();
+	sceneManager->SceneUpdate();
 }
 Window* Framework::GetWindow()
 {
-	return this->window;
+	return window;
 }
 void Framework::EngineDestroy()
 {
-	*this->enableEngineDestroy = false;
+	*enableEngineDestroy = false;
 }
 void Framework::CreateSceneManager(Scene* begin)
 {
-	if (this->sceneManager == nullptr)
+	if (sceneManager == nullptr)
 	{
 		sceneManager = new SceneManager(begin);
 	}

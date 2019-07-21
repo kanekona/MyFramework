@@ -1,6 +1,8 @@
 
 #pragma once
 #include "Shader\Shader.h"
+#include "Engine\EngineMacro.h"
+#include <vector>
 /**
 *@brief	âÊëúÇÃì«Ç›çûÇ›ÇçsÇ§class
 */
@@ -22,4 +24,20 @@ public:
 	bool LoadShader(const std::string& name);
 	Shader* GetShader();
 	void SetBuffer(unsigned char* buffer, unsigned int w, unsigned int h);
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Texture Pixel
+
+	static void GetPixels(const Texture* tex, Color* out);
+	static Color* NewPixels(const Texture* tex);
+	static std::vector<std::vector<Color>> VectorFromArray(const Texture* tex,const Color* in);
+	static std::vector<std::vector<Color>> VectorFromArray(const Texture* tex, const Color* in, int x, int y, int w, int h);
+	static Color ColorFromArray(const Texture* tex, const Color* in, int x, int y);
+	static void FreePixels(Color* in);
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#if ENGINE_DEBUG
+	void OutputPixcelData();
+#endif
 };

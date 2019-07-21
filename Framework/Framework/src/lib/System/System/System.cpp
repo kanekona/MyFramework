@@ -403,9 +403,9 @@ void KL::Trim(std::string* str, const char c)
 void KL::Trim(std::string* str, const std::string& trim)
 {
 	size_t size = 0;
-	while ((size = str->find_first_of(trim)) != std::string::npos)
+	while ((size = str->find(trim)) != std::string::npos)
 	{
-		str->erase(size, 1);
+		str->erase(size, trim.size());
 	}
 }
 

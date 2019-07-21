@@ -1,4 +1,5 @@
 #include "Shader.h"
+#include "Engine\EngineMacro.h"
 
 GLuint Shader::Compile(GLuint type, const std::string &text)
 {
@@ -11,7 +12,7 @@ GLuint Shader::Compile(GLuint type, const std::string &text)
 	glShaderSource(shader, 1, &text_ptr, 0);
 	//コンパイル
 	glCompileShader(shader);
-#ifdef KL_DEBUG
+#if DEBUG_ENABLE
 	//コンパイルエラーチェック
 	GLint compiled;
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
@@ -34,7 +35,7 @@ void Shader::Setup(const GLuint program, const std::string &v_source, const std:
 	GLuint vertex_shader = Compile(GL_VERTEX_SHADER, v_source);
 	glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &status);
 	if (status != GL_TRUE) {
-#ifdef KL_DEBUG
+#if DEBUG_ENABLE
 		std::cout << "VertexShader Compile is Failed " << std::endl;
 #endif
 		system("pause");
@@ -45,7 +46,7 @@ void Shader::Setup(const GLuint program, const std::string &v_source, const std:
 	GLuint fragment_shader = Compile(GL_FRAGMENT_SHADER, f_source);
 	glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &status);
 	if (status != GL_TRUE) {
-#ifdef KL_DEBUG
+#if DEBUG_ENABLE
 		std::cout << "FragmentShader Compile is Failed " << std::endl;
 #endif
 		system("pause");
@@ -58,8 +59,7 @@ void Shader::Setup(const GLuint program, const std::string &v_source, const std:
 	glAttachShader(program, fragment_shader);
 	//シェーダーのリンク
 	glLinkProgram(program);
-
-#ifdef KL_DEBUG
+#if DEBUG_ENABLE
 	//リンクエラーチェック
 	//GLint status;
 	glGetProgramiv(program, GL_LINK_STATUS, &status);
@@ -114,23 +114,23 @@ GLuint Shader::Read(const std::string &file) {
 	GLuint program = glCreateProgram();
 	//vertexとfragmentのシェーダーの生成
 	Setup(program, v_source, f_source);
-	this->id = program;
+	id = program;
 	return program;
 }
 GLint Shader::Attrib(const std::string &name) {
-	return glGetAttribLocation(this->id, name.c_str());
+	return glGetAttribLocation(id, name.c_str());
 }
 //シェーダー内ユニフォーム変数の識別子を取得
 GLint Shader::Uniform(const std::string &name) {
-	return glGetUniformLocation(this->id, name.data());
+	return glGetUniformLocation(id, name.data());
 }
 //シェーダープログラムの使用開始
 void Shader::Use() {
-	glUseProgram(this->id);
+	glUseProgram(id);
 }
 GLuint Shader::GetID() const
 {
-	return this->id;
+	return id;
 }
 Shader::Shader()
 {

@@ -5,8 +5,8 @@
 Collider::Collider(const unsigned short vertex,Transform* t)
 	:VERTEX_NUM(vertex)
 {
-	this->transform = t;
-	this->radius = { 1,1 };
+	transform = t;
+	radius = { 1,1 };
 }
 //--------------------------------------------------
 //@:CollisionBox
@@ -18,7 +18,7 @@ BoxCollider::BoxCollider(Transform* t)
 //‹éŒ`~‹éŒ`
 bool BoxCollider::GetHit(BoxCollider* b)
 {
-	this->CreateCollision();
+	CreateCollision();
 	b->CreateCollision();
 	//’¸“_î•ñ‚ÌƒZƒbƒg
 	Vec2 _ver[4] = {
@@ -88,7 +88,7 @@ bool BoxCollider::GetHit(BoxCollider* b)
 //‹éŒ`~‰~
 bool BoxCollider::GetHit(CircleCollider* b)
 {
-	this->CreateCollision();
+	CreateCollision();
 	b->CreateCollision();
 	//’¸“_î•ñ‚ÌƒZƒbƒg
 	Vec2 _ver[1] = {
@@ -121,7 +121,7 @@ bool BoxCollider::GetHit(CircleCollider* b)
 //‹éŒ`~“_
 bool BoxCollider::GetHit(PointCollider* b)
 {
-	this->CreateCollision();
+	CreateCollision();
 	b->CreateCollision();
 	Vec2 _v[4] = {
 		{ hitBase.x,hitBase.y },
@@ -146,7 +146,7 @@ bool BoxCollider::GetHit(PointCollider* b)
 //‹éŒ`~ü
 bool BoxCollider::GetHit(LineCollider* b)
 {
-	this->CreateCollision();
+	CreateCollision();
 	b->CreateCollision();
 	return false;
 }
@@ -159,23 +159,23 @@ bool BoxCollider::GetHit(CapsuleCollider* b)
 void BoxCollider::CreateCollision()
 {
 	Vec2 scaleSize = { transform->scale.x * radius.x,transform->scale.y * radius.y };
-	this->hitBase = {
+	hitBase = {
 		transform->position.x - (scaleSize.x / 2.f),
 		transform->position.y - (scaleSize.y / 2.f),
 		transform->position.x + (scaleSize.x / 2.f),
 		transform->position.y + (scaleSize.y / 2.f)
 	};
-	this->Rotate(transform->angle);
+	Rotate(transform->angle);
 }
 //‰ñ“]“K—p
 void BoxCollider::Rotate(const float _angle) {
 	//‰ñ“]‚Ì’l‚ğŠi”[
-	this->angle = _angle;
+	angle = _angle;
 }
 //‰ñ“]æ“¾
 float BoxCollider::Rotate() const
 {
-	return this->angle;
+	return angle;
 }
 //”»’è
 bool BoxCollider::Hit(Collider* collision)
@@ -192,7 +192,7 @@ CircleCollider::CircleCollider(Transform* t)
 //‰~~‹éŒ`
 bool CircleCollider::GetHit(BoxCollider* b)
 {
-	this->CreateCollision();
+	CreateCollision();
 	b->CreateCollision();
 	//’¸“_î•ñ‚ÌƒZƒbƒg
 	Vec2 _ver[1] = {
@@ -224,14 +224,14 @@ bool CircleCollider::GetHit(BoxCollider* b)
 //‰~~‰~
 bool CircleCollider::GetHit(CircleCollider* b)
 {
-	this->CreateCollision();
+	CreateCollision();
 	b->CreateCollision();
 	//‰~‚Ì”ÍˆÍ“à‚É‘Šè‚Ì‰~‚Ì”ÍˆÍ‚ª‘¶İ‚·‚éê‡TRUE‚ğ•Ô‚·
-	if (((b->hitBase.center_x - this->hitBase.center_x)*
-		(b->hitBase.center_x - this->hitBase.center_x)) +
-		((b->hitBase.center_y - this->hitBase.center_y)*
-		(b->hitBase.center_y - this->hitBase.center_y)) <=
-			(b->hitBase.r + this->hitBase.r)*(b->hitBase.r + this->hitBase.r))
+	if (((b->hitBase.center_x - hitBase.center_x)*
+		(b->hitBase.center_x - hitBase.center_x)) +
+		((b->hitBase.center_y - hitBase.center_y)*
+		(b->hitBase.center_y - hitBase.center_y)) <=
+			(b->hitBase.r + hitBase.r)*(b->hitBase.r + hitBase.r))
 	{
 		return true;
 	}
@@ -240,7 +240,7 @@ bool CircleCollider::GetHit(CircleCollider* b)
 //‰~~“_
 bool CircleCollider::GetHit(PointCollider* b)
 {
-	this->CreateCollision();
+	CreateCollision();
 	b->CreateCollision();
 	//’¸“_î•ñ‚ÌƒZƒbƒg
 	Vec2 _ver[1] = {
@@ -250,7 +250,7 @@ bool CircleCollider::GetHit(PointCollider* b)
 		{ b->hitBase.x,b->hitBase.y },
 	};
 	//‰~‚Ì’†‚É’¸“_‚ª‘¶İ‚·‚éê‡TRUE‚ğ•Ô‚·
-	if (((_ver[0].x - _v[0].x) * (_ver[0].x - _v[0].x)) + ((_ver[0].y - _v[0].y) * (_ver[0].y - _v[0].y)) <= this->hitBase.r * this->hitBase.r)
+	if (((_ver[0].x - _v[0].x) * (_ver[0].x - _v[0].x)) + ((_ver[0].y - _v[0].y) * (_ver[0].y - _v[0].y)) <= hitBase.r * hitBase.r)
 	{
 		return true;
 	}
@@ -269,7 +269,7 @@ bool CircleCollider::GetHit(CapsuleCollider* b)
 //”»’è¶¬
 void CircleCollider::CreateCollision()
 {
-	this->hitBase = {
+	hitBase = {
 		transform->position.x,
 		transform->position.y,
 		(transform->scale.x * radius.x) / 2.f
@@ -290,7 +290,7 @@ PointCollider::PointCollider(Transform* t)
 //“_~‹éŒ`
 bool PointCollider::GetHit(BoxCollider* b)
 {
-	this->CreateCollision();
+	CreateCollision();
 	b->CreateCollision();
 	Vec2 _v[4] = {
 	{ b->hitBase.x,b->hitBase.y },
@@ -315,7 +315,7 @@ bool PointCollider::GetHit(BoxCollider* b)
 //“_~‰~
 bool PointCollider::GetHit(CircleCollider* b)
 {
-	this->CreateCollision();
+	CreateCollision();
 	b->CreateCollision();
 	//’¸“_î•ñ‚ÌƒZƒbƒg
 	Vec2 _ver[1] = {
@@ -334,14 +334,14 @@ bool PointCollider::GetHit(CircleCollider* b)
 //“_~“_
 bool PointCollider::GetHit(PointCollider* b)
 {
-	this->CreateCollision();
+	CreateCollision();
 	b->CreateCollision();
-	return this->hitBase == b->hitBase;
+	return hitBase == b->hitBase;
 }
 //“_~ü
 bool PointCollider::GetHit(LineCollider* b)
 {
-	this->CreateCollision();
+	CreateCollision();
 	b->CreateCollision();
 	float line_1 = sqrt(
 		(b->hitBase[1].x - b->hitBase[0].x)*(b->hitBase[1].x - b->hitBase[0].x) +
@@ -369,7 +369,7 @@ bool PointCollider::GetHit(CapsuleCollider* b)
 //”»’è¶¬
 void PointCollider::CreateCollision()
 {
-	this->hitBase = transform->position;
+	hitBase = transform->position;
 }
 //”»’è
 bool PointCollider::Hit(Collider* collision)
@@ -403,18 +403,18 @@ bool LineCollider::GetHit(LineCollider* b)
 bool LineCollider::GetHit(PointCollider* b)
 {
 	b->CreateCollision();
-	this->CreateCollision();
+	CreateCollision();
 	float line_1 = sqrt(
-		(this->hitBase[1].x - this->hitBase[0].x)*(this->hitBase[1].x - this->hitBase[0].x) +
-		(this->hitBase[1].y - this->hitBase[0].y)*(this->hitBase[1].y - this->hitBase[0].y)
+		(hitBase[1].x - hitBase[0].x)*(hitBase[1].x - hitBase[0].x) +
+		(hitBase[1].y - hitBase[0].y)*(hitBase[1].y - hitBase[0].y)
 	);
 	float line_2 = sqrt(
-		(b->hitBase.x - this->hitBase[0].x)*(b->hitBase.x - this->hitBase[0].x) +
-		(b->hitBase.y - this->hitBase[0].y)*(b->hitBase.y - this->hitBase[0].y)
+		(b->hitBase.x - hitBase[0].x)*(b->hitBase.x - hitBase[0].x) +
+		(b->hitBase.y - hitBase[0].y)*(b->hitBase.y - hitBase[0].y)
 	);
 	if (
-		((this->hitBase[1].x - this->hitBase[0].x)*(b->hitBase.x - this->hitBase[0].x) +
-		(this->hitBase[1].y - this->hitBase[0].y)*(b->hitBase.x - this->hitBase[0].y)) == line_1 * line_2 &&
+		((hitBase[1].x - hitBase[0].x)*(b->hitBase.x - hitBase[0].x) +
+		(hitBase[1].y - hitBase[0].y)*(b->hitBase.x - hitBase[0].y)) == line_1 * line_2 &&
 		line_1 >= line_2
 		)
 	{
@@ -430,8 +430,8 @@ bool LineCollider::GetHit(CapsuleCollider* b)
 //”»’è¶¬
 void LineCollider::CreateCollision()
 {
-	this->hitBase[0] = transform->position;
-	this->hitBase[1] = transform->scale;
+	hitBase[0] = transform->position;
+	hitBase[1] = transform->scale;
 }
 //”»’è
 bool LineCollider::Hit(Collider* collision)

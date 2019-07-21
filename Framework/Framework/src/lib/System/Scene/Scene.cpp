@@ -25,7 +25,7 @@ void Scene::Enter()
 }
 void Scene::SetEntity(Entity* entity)
 {
-	this->plansEntity.emplace_back(entity);
+	plansEntity.emplace_back(entity);
 }
 void Scene::RegisterEntity()
 {
@@ -60,11 +60,11 @@ void Scene::KillEntity()
 }
 RenderingManager* Scene::GetRenderingManager()
 {
-	return &this->renderingManager;
+	return &renderingManager;
 }
 Camera2D* Scene::GetCamera()
 {
-	return this->camera;
+	return camera;
 }
 void Scene::EntityStateAdaptation(Scene* scene)
 {
@@ -96,20 +96,20 @@ void Scene::EntityUpdate(Scene* scene)
 }
 size_t Scene::EntityCount() const
 {
-	return this->entitys.size();
+	return entitys.size();
 }
 Entity* Scene::GetEntity(const size_t num)
 {
-	return this->entitys[num];
+	return entitys[num];
 }
 std::vector<Entity*>* Scene::GetEntitys()
 {
-	return &this->entitys;
+	return &entitys;
 }
 #ifdef KL_DEBUG
 void Scene::Debug()
 {
-	std::cout << "SceneTag : " << this->tag << "\n";
+	std::cout << "SceneTag : " << tag << "\n";
 	for (auto it : entitys)
 	{
 		std::cout << "Entitys : " << it->tag << "\n";

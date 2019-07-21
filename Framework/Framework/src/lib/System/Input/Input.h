@@ -5,6 +5,7 @@
 #include "Engine\Data.h"
 #include "NonCopyable\NonCopyable.hpp"
 #include "StrID\StrID.h"
+#include "Engine\EngineMacro.h"
 #include <unordered_map>
 
 /**
@@ -412,6 +413,9 @@ public:
 		*@return char* ゲームパッド名
 		*/
 		const char* GetName() const;
+#if DEBUG_ENABLE
+		void DebugLog();
+#endif
 	private:
 		//! ゲームパッド複数個に対応させるために１つ１つにidを振り分ける
 		int id;
@@ -651,6 +655,10 @@ public:
 		*@param[in] double y y座標のホイール値
 		*/
 		static void SetScroll_Callback(GLFWwindow* w, double x, double y);
+		/**
+		*
+		*/
+		static void SetDrop_Callback(GLFWwindow* w, int count, const char** path);
 	};
 	//! ゲームパッド配列
 	std::vector<GamePad*> pad;
@@ -723,6 +731,10 @@ public:
 	*/
 	void SetPadConfig(const StrID& key,const int padKey);
 	/**
+	 * 
+	 */
+	void RegisterPadConfig(const int padNum = 0);
+	/**
 	 * @brief constructor
 	 */
 	explicit Input();
@@ -745,6 +757,9 @@ public:
 	*@brief	Destroy Singleton
 	*/
 	static void Destroy();
+#if DEBUG_ENABLE
+	void DebugLog();
+#endif
 private:
 	/**
 	*@brief	入力状態をリセット

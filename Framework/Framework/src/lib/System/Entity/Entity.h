@@ -248,13 +248,13 @@ public:
 	*/
 	template <class T> T* GetChild()
 	{
-		T* t = Entity::GetChildren<T>(&this->childs);
+		T* t = Entity::GetChildren<T>(&childs);
 		if (t != nullptr) {
 			return t;
 		}
-		t = Entity::GetChildren<T>(&this->plansChilds);
+		t = Entity::GetChildren<T>(&plansChilds);
 		return t;
-		//return Entity::GetChildren<T>(&this->childs) || Entity::GetChildren<T>(&this->plansChilds);
+		//return Entity::GetChildren<T>(&childs) || Entity::GetChildren<T>(&plansChilds);
 	}
 	/**
 	*@brief	Get Children
@@ -266,13 +266,13 @@ public:
 	*/
 	template <class T> T* GetChild(const std::string& tag)
 	{
-		T* t = Entity::GetChildren<T>(&this->childs, tag);
+		T* t = Entity::GetChildren<T>(&childs, tag);
 		if (t != nullptr) {
 			return t;
 		}
-		t = Entity::GetChildren<T>(&this->plansChilds, tag);
+		t = Entity::GetChildren<T>(&plansChilds, tag);
 		return t;
-		//return Entity::GetChildren<T>(&this->childs) || Entity::GetChildren<T>(&this->plansChilds);
+		//return Entity::GetChildren<T>(&childs) || Entity::GetChildren<T>(&plansChilds);
 	}
 	/**
 	*@brief	Get Children
@@ -284,13 +284,13 @@ public:
 	*/
 	template <class T> T* GetChild(const Layer& layer)
 	{
-		T* t = Entity::GetChildren<T>(&this->childs, layer);
+		T* t = Entity::GetChildren<T>(&childs, layer);
 		if (t != nullptr) {
 			return t;
 		}
-		t = Entity::GetChildren<T>(&this->plansChilds, layer);
+		t = Entity::GetChildren<T>(&plansChilds, layer);
 		return t;
-		//return Entity::GetChildren<T>(&this->childs) || Entity::GetChildren<T>(&this->plansChilds);
+		//return Entity::GetChildren<T>(&childs) || Entity::GetChildren<T>(&plansChilds);
 	}
 	/**
 	*@brief	Get Childrens
@@ -301,8 +301,8 @@ public:
 	template <class T> std::vector<T*> GetChilds()
 	{
 		std::vector<T*> vector;
-		Entity::GetChildrens<T>(&this->childs, &vector);
-		Entity::GetChildrens<T>(&this->plansChilds, &vector);
+		Entity::GetChildrens<T>(&childs, &vector);
+		Entity::GetChildrens<T>(&plansChilds, &vector);
 		return vector;
 	}
 	/**
@@ -315,8 +315,8 @@ public:
 	template <class T> std::vector<T*> GetChilds(const std::string& tag)
 	{
 		std::vector<T*> vector;
-		Entity::GetChildrens<T>(&this->childs, tag, &vector);
-		Entity::GetChildrens<T>(&this->plansChilds, tag, &vector);
+		Entity::GetChildrens<T>(&childs, tag, &vector);
+		Entity::GetChildrens<T>(&plansChilds, tag, &vector);
 		return vector;
 	}
 	/**
@@ -329,8 +329,8 @@ public:
 	template <class T> std::vector<T*> GetChilds(const Layer& layer)
 	{
 		std::vector<T*> vector;
-		Entity::GetChildrens<T>(&this->childs, layer, &vector);
-		Entity::GetChildrens<T>(&this->plansChilds, layer, &vector);
+		Entity::GetChildrens<T>(&childs, layer, &vector);
+		Entity::GetChildrens<T>(&plansChilds, layer, &vector);
 		return vector;
 	}
 	/**
@@ -341,8 +341,8 @@ public:
 	*/
 	template <class T> void GetChilds(std::vector<T*>* vector)
 	{
-		Entity::GetChildrens<T>(&this->childs, vector);
-		Entity::GetChildrens<T>(&this->plansChilds, vector);
+		Entity::GetChildrens<T>(&childs, vector);
+		Entity::GetChildrens<T>(&plansChilds, vector);
 	}
 	/**
 	*@brief	Get Childrens
@@ -353,8 +353,8 @@ public:
 	*/
 	template <class T> void GetChilds(const std::string& tag, std::vector<T*>* vector)
 	{
-		Entity::GetChildrens<T>(&this->childs, tag, vector);
-		Entity::GetChildrens<T>(&this->plansChilds, tag, vector);
+		Entity::GetChildrens<T>(&childs, tag, vector);
+		Entity::GetChildrens<T>(&plansChilds, tag, vector);
 	}
 	/**
 	*@brief	Get Childrens
@@ -365,7 +365,7 @@ public:
 	*/
 	template <class T> void GetChilds(const Layer& layer, std::vector<T*>* vector)
 	{
-		Entity::GetChildrens<T>(&this->childs, layer, vector);
-		Entity::GetChildrens<T>(&this->plansChilds, layer, vector);
+		Entity::GetChildrens<T>(&childs, layer, vector);
+		Entity::GetChildrens<T>(&plansChilds, layer, vector);
 	}
 };

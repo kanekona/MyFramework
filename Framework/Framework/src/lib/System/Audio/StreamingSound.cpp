@@ -62,88 +62,88 @@ StreamingSound::StreamingSound(const std::string& path, const bool loop) :
 	param_(std::make_shared<Param>()),
 	pause_(false)
 {
-	this->filepath_ = path;
-	this->loop_ = loop;
-	this->isplay_ = false;
-	this->param_->backStartPos = false;
+	filepath_ = path;
+	loop_ = loop;
+	isplay_ = false;
+	param_->backStartPos = false;
 }
 void StreamingSound::createSound(const std::string& path_, bool loop)
 {
 	source_ = std::make_shared<Source>();
 	param_ = std::make_shared<Param>();
 	pause_ = false;
-	this->filepath_ = path_;
-	this->loop_ = loop;
-	this->isplay_ = false;
-	this->param_->backStartPos = false;
+	filepath_ = path_;
+	loop_ = loop;
+	isplay_ = false;
+	param_->backStartPos = false;
 }
 void StreamingSound::gain(const float gain)
 {
-	this->source_->SetVolume(gain);
+	source_->SetVolume(gain);
 }
 void StreamingSound::pitch(const float value_) const
 {
-	this->source_->SetPitch(value_);
+	source_->SetPitch(value_);
 }
 void StreamingSound::pause()
 {
 	//別スレッドをロックする
-	this->param_->mutex.lock();
-	bool stopped = this->param_->stopped;
+	param_->mutex.lock();
+	bool stopped = param_->stopped;
 	//別スレッドのロックを解除する
-	this->param_->mutex.unlock();
+	param_->mutex.unlock();
 	if (stopped) return;
-	if (this->isplay_)
+	if (isplay_)
 	{
-		this->source_->Pause();
-		this->isplay_ = false;
+		source_->Pause();
+		isplay_ = false;
 	}
 	else
 	{
-		this->source_->Play();
-		this->isplay_ = true;
+		source_->Play();
+		isplay_ = true;
 	}
 }
 void StreamingSound::stop()
 {
-	this->param_->mutex.lock();
-	this->source_->Stop();
-	this->param_->mutex.unlock();
-	this->isplay_ = false;
+	param_->mutex.lock();
+	source_->Stop();
+	param_->mutex.unlock();
+	isplay_ = false;
 }
 bool StreamingSound::isPlaying()
 {
-	this->param_->mutex.lock();
-	bool stopped = this->param_->stopped;
-	this->param_->mutex.unlock();
+	param_->mutex.lock();
+	bool stopped = param_->stopped;
+	param_->mutex.unlock();
 	if (stopped) return false;
-	return this->source_->IsPlay();
+	return source_->IsPlay();
 }
 void StreamingSound::play()
 {
-	if (!this->isplay_) {
+	if (!isplay_) {
 	//実行スレッドの生成
-	std::thread thread(streamProc, this->filepath_, this->loop_, std::ref(source_), std::ref(param_));
+	std::thread thread(streamProc, filepath_, loop_, std::ref(source_), std::ref(param_));
 	//スレッドの管理を手放す
 	thread.detach();
-	this->param_->mutex.lock();
-	this->param_->stopped = false;
-	this->param_->mutex.unlock();
-	this->isplay_ = true;
+	param_->mutex.lock();
+	param_->stopped = false;
+	param_->mutex.unlock();
+	isplay_ = true;
 	}
 }
 void StreamingSound::DeleteSound()
 {
 	gain(0.0);
 	//スレッド間の処理を取得する
-	std::lock_guard<std::mutex>(this->param_->mutex);
-	this->param_->stopped = true;
-	this->isplay_ = false;
+	std::lock_guard<std::mutex>(param_->mutex);
+	param_->stopped = true;
+	isplay_ = false;
 }
 float StreamingSound::GetTime() const
 {
 	//現在の時間を返すけどstreamingだから1秒ごとに読み込み直すから0~1くらいしか返らないよ
-	return this->source_->GetTime();
+	return source_->GetTime();
 }
 #ifdef KL_DEBUG
 void StreamingSound::debugUpdata()

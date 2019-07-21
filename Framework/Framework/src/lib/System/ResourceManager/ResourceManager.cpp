@@ -2,7 +2,7 @@
 
 void ResourceManager::SetSoundData(const std::string& dataname,Sound* sound)
 {
-	for (auto id = this->soundData.begin(); id != soundData.end(); ++id)
+	for (auto id = soundData.begin(); id != soundData.end(); ++id)
 	{
 		if ((*id).first == dataname)
 		{
@@ -12,12 +12,12 @@ void ResourceManager::SetSoundData(const std::string& dataname,Sound* sound)
 	std::pair<std::string, Sound*> d;
 	d.first = dataname;
 	d.second = sound;
-	this->soundData.emplace_back(d);
+	soundData.emplace_back(d);
 }
 
 bool ResourceManager::CreateSound(const std::string& name,const std::string& path)
 {
-	for (auto id = this->soundData.begin(); id != this->soundData.end(); ++id)
+	for (auto id = soundData.begin(); id != soundData.end(); ++id)
 	{
 		if ((*id).first == name)
 		{
@@ -29,13 +29,13 @@ bool ResourceManager::CreateSound(const std::string& name,const std::string& pat
 	std::pair<std::string, Sound*> d;
 	d.first = name;
 	d.second = so;
-	this->soundData.emplace_back(d);
+	soundData.emplace_back(d);
 	return true;
 }
 
 void ResourceManager::SetTextureData(const std::string& dataname, Texture* texture)
 {
-	for (auto id = this->textureData.begin(); id != this->textureData.end(); ++id)
+	for (auto id = textureData.begin(); id != textureData.end(); ++id)
 	{
 		if ((*id).first == dataname)
 		{
@@ -45,12 +45,12 @@ void ResourceManager::SetTextureData(const std::string& dataname, Texture* textu
 	std::pair<std::string, Texture*> d;
 	d.first = dataname;
 	d.second = texture;
-	this->textureData.emplace_back(d);
+	textureData.emplace_back(d);
 }
 
 bool ResourceManager::CreateTexture(const std::string& name, const std::string& path)
 {
-	for (auto id = this->textureData.begin(); id != this->textureData.end(); ++id)
+	for (auto id = textureData.begin(); id != textureData.end(); ++id)
 	{
 		if ((*id).first == name)
 		{
@@ -61,13 +61,13 @@ bool ResourceManager::CreateTexture(const std::string& name, const std::string& 
 	std::pair<std::string, Texture*> d;
 	d.first = name;
 	d.second = tex;
-	this->textureData.emplace_back(d);
+	textureData.emplace_back(d);
 	return true;
 }
 
 Sound* ResourceManager::GetSoundData(const std::string& dataname)
 {
-	for (auto id = this->soundData.begin(); id != this->soundData.end(); ++id)
+	for (auto id = soundData.begin(); id != soundData.end(); ++id)
 	{
 		if ((*id).first == dataname)
 		{
@@ -79,7 +79,7 @@ Sound* ResourceManager::GetSoundData(const std::string& dataname)
 
 Texture* ResourceManager::GetTextureData(const std::string& dataname)
 {
-	for (auto id = this->textureData.begin(); id != this->textureData.end(); ++id)
+	for (auto id = textureData.begin(); id != textureData.end(); ++id)
 	{
 		if ((*id).first == dataname)
 		{
@@ -91,35 +91,35 @@ Texture* ResourceManager::GetTextureData(const std::string& dataname)
 
 ResourceManager::~ResourceManager()
 {
-	for (auto& d : this->soundData)
+	for (auto& d : soundData)
 	{
 		if (d.second)
 		{
 			delete d.second;
 		}
 	}
-	for (auto& d : this->textureData)
+	for (auto& d : textureData)
 	{
 		if (d.second)
 		{
 			delete d.second;
 		}
 	}
-	for (auto& d : this->shaderData)
+	for (auto& d : shaderData)
 	{
 		if (d.second)
 		{
 			delete d.second;
 		}
 	}
-	this->soundData.clear();
-	this->textureData.clear();
-	this->shaderData.clear();
+	soundData.clear();
+	textureData.clear();
+	shaderData.clear();
 }
 
 bool ResourceManager::DeleteTexture(const std::string& name)
 {
-	for (auto id = this->textureData.begin(); id != this->textureData.end(); ++id)
+	for (auto id = textureData.begin(); id != textureData.end(); ++id)
 	{
 		if ((*id).first == name)
 		{
@@ -127,7 +127,7 @@ bool ResourceManager::DeleteTexture(const std::string& name)
 			{
 				delete (*id).second;
 			}
-			this->textureData.erase(id);
+			textureData.erase(id);
 			return true;
 		}
 	}
@@ -136,7 +136,7 @@ bool ResourceManager::DeleteTexture(const std::string& name)
 
 bool ResourceManager::DeleteSound(const std::string& name)
 {
-	for (auto id = this->soundData.begin(); id != this->soundData.end(); ++id)
+	for (auto id = soundData.begin(); id != soundData.end(); ++id)
 	{
 		if ((*id).first == name)
 		{
@@ -144,7 +144,7 @@ bool ResourceManager::DeleteSound(const std::string& name)
 			{
 				delete (*id).second;
 			}
-			this->soundData.erase(id);
+			soundData.erase(id);
 			return true;
 		}
 	}
@@ -153,7 +153,7 @@ bool ResourceManager::DeleteSound(const std::string& name)
 
 bool ResourceManager::CreateShader(const std::string& name, const std::string& path)
 {
-	for (auto id = this->shaderData.begin(); id != this->shaderData.end(); ++id)
+	for (auto id = shaderData.begin(); id != shaderData.end(); ++id)
 	{
 		if ((*id).first == name)
 		{
@@ -166,13 +166,13 @@ bool ResourceManager::CreateShader(const std::string& name, const std::string& p
 	std::pair<std::string, Shader*> d;
 	d.first = name;
 	d.second = shader;
-	this->shaderData.emplace_back(d);
+	shaderData.emplace_back(d);
 	return true;
 }
 
 Shader* ResourceManager::GetShaderData(const std::string& dataname)
 {
-	for (auto id = this->shaderData.begin(); id != this->shaderData.end(); ++id)
+	for (auto id = shaderData.begin(); id != shaderData.end(); ++id)
 	{
 		if ((*id).first == dataname)
 		{

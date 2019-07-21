@@ -1,8 +1,12 @@
 #include "InputTest.h"
 #include "Input\Input.h"
+#include "System\System.h"
 
 void InputTest::Update()
 {
+#if DEBUG_ENABLE
+	Input::Get()->DebugLog();
+#endif
 }
 
 void InputTest::Enter()
@@ -11,7 +15,7 @@ void InputTest::Enter()
 
 InputTest::InputTest()
 {
-	tag = typeid(this).name();
+	KL::ClassFromName<InputTest>(&tag);
 	std::cout << tag << std::endl;
 	input = Input::Get();
 }

@@ -2,17 +2,17 @@
 
 SceneManager::SceneManager(Scene* begin)
 {
-	this->nowScene = begin;
-	this->nextScene = nullptr;
+	nowScene = begin;
+	nextScene = nullptr;
 }
 SceneManager::~SceneManager()
 {
-	if (this->nowScene)
+	if (nowScene)
 	{
 		delete nowScene;
 		nowScene = nullptr;
 	}
-	if (this->nextScene)
+	if (nextScene)
 	{
 		delete nextScene;
 		nextScene = nullptr;
@@ -20,7 +20,7 @@ SceneManager::~SceneManager()
 }
 void SceneManager::ChangeScene(Scene* next)
 {
-	this->nextScene = next;
+	nextScene = next;
 }
 void SceneManager::SceneUpdate()
 {
@@ -39,5 +39,5 @@ void SceneManager::ChangeAdaptation()
 }
 Scene* SceneManager::Get()
 {
-	return this->nowScene;
+	return nowScene;
 }

@@ -1,19 +1,19 @@
 #include "SoundManager.h"
 SoundManager::SoundManager()
 {
-	this->MaxVolume = 1.0f;
+	MaxVolume = 1.0f;
 }
 void SoundManager::SetMaxVolume(const float volume_)
 {
-	this->MaxVolume = volume_;
+	MaxVolume = volume_;
 }
 float SoundManager::GetMaxVolume() const
 {
-	return this->MaxVolume;
+	return MaxVolume;
 }
 void SoundManager::SetVolume(const Sound* s, const float value_)
 {
-	s->Volume(value_ * this->MaxVolume);
+	s->Volume(value_ * MaxVolume);
 }
 void SoundManager::SetSound(Sound* s) 
 {
@@ -25,7 +25,7 @@ bool SoundManager::DeleteSound(const Sound* s)
 	{
 		if ((*id) == s)
 		{
-			this->sounddata.erase(id);
+			sounddata.erase(id);
 			return true;
 		}
 	}
@@ -33,16 +33,16 @@ bool SoundManager::DeleteSound(const Sound* s)
 }
 void SoundManager::AllDelete() 
 {
-	this->sounddata.clear();
+	sounddata.clear();
 }
 SoundManager::~SoundManager()
 {
-	this->sounddata.clear();
+	sounddata.clear();
 }
 void SoundManager::Application()
 {
-	for (unsigned int i = 0; i < this->sounddata.size(); ++i)
+	for (unsigned int i = 0; i < sounddata.size(); ++i)
 	{
-		this->sounddata[i]->Volume(sounddata[i]->GetVolume() * this->GetMaxVolume());
+		sounddata[i]->Volume(sounddata[i]->GetVolume() * GetMaxVolume());
 	}
 }

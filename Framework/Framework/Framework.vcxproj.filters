@@ -303,6 +303,12 @@
     <ClInclude Include="src\Scene\TestScene\Entity\InputTest.h">
       <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
     </ClInclude>
+    <ClInclude Include="src\Scene\TestScene\Entity\TextureTest.h">
+      <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Texture\ScreenShot.h">
+      <Filter>ソース ファイル\Library\System\Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Win\WinMain.cpp">
@@ -446,6 +452,12 @@
     <ClCompile Include="src\Scene\TestScene\Entity\InputTest.cpp">
       <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scene\TestScene\Entity\TextureTest.cpp">
+      <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Texture\ScreenShot.cpp">
+      <Filter>ソース ファイル\Library\System\Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="src\lib\System\Icon\Resource.rc">
@@ -494,5 +506,10 @@
     <Image Include="data\image\testicon.ico">
       <Filter>リソース ファイル</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="data\TODO.txt">
+      <Filter>リソース ファイル</Filter>
+    </Text>
   </ItemGroup>
 </Project>

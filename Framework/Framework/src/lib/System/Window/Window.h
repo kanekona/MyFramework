@@ -23,7 +23,7 @@ class Window : private NonCopyable
 	//! 高さ
 	int height;
 	//! Windowの名
-	const char* name;
+	std::string name;
 	//! フルスク設定
 	bool enableFullScreen;
 	//! Windowの位置
@@ -180,6 +180,11 @@ public:
 	*@param[in]	bool flag true hullScreen
 	*/
 	void ChangeMode(const int x, const int y, const int w, const int h, const char* name, const bool flag);
+	/**
+	*@brief WindowTitleを取得する
+	*@return const char* WindowTitle
+	*/
+	const std::string& GetTitle() const;
 };
 class WindowParameter
 {

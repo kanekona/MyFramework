@@ -125,4 +125,20 @@ namespace KL
 	void Trim(std::string* str, const std::string& trim);
 	bool Split(const std::string& text, const std::string& find, std::string* outLeft, std::string* outRigth);
 	bool Split(const std::string& text, const char find, std::string* outLeft, std::string* outRigth);
+	template<class T> std::string ClassFromName()
+	{
+		std::string name = typeid(T).name();
+		Trim(&name, "class ");
+		return name;
+	}
+	template<class T> void ClassFromName(std::string* out)
+	{
+		*out = typeid(T).name();
+		Trim(out, "class ");
+	}
+	template<typename T> void StructFromName(std::string* out)
+	{
+		*out = typeid(T).name();
+		Trim(out, "struct ");
+	}
 }

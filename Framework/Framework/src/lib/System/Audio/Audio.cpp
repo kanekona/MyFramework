@@ -1,4 +1,5 @@
 #include "Audio.h"
+#include "Engine\EngineMacro.h"
 //---------------------------------
 //@:Audioclass
 //---------------------------------
@@ -6,8 +7,8 @@ Audio::Audio()
 {
 	//アプリケーションをデバイスに接続させる
 	//引数はデバイスの指定,NULLなら既定のデバイス
-	this->device = alcOpenDevice(nullptr);
-	if (!this->device)
+	device = alcOpenDevice(nullptr);
+	if (!device)
 	{
 #ifdef KL_DEBUG
 		std::cout << "デバイスの接続Error" << std::endl;
@@ -15,8 +16,8 @@ Audio::Audio()
 		return;
 	}
 	//コンテキストの生成
-	this->context = alcCreateContext(this->device, nullptr);
-	if (!this->context)
+	context = alcCreateContext(device, nullptr);
+	if (!context)
 	{
 #ifdef KL_DEBUG
 		std::cout << "コンテキスト生成Error" << std::endl;
@@ -24,7 +25,7 @@ Audio::Audio()
 		return;
 	}
 	//操作するコンテキストの選択
-	if (alcMakeContextCurrent(this->context) == ALC_FALSE)
+	if (alcMakeContextCurrent(context) == ALC_FALSE)
 	{
 #ifdef KL_DEBUG
 		std::cout << "操作コンテキストの選択Error" << std::endl;
@@ -35,8 +36,8 @@ Audio::Audio()
 Audio::~Audio()
 {
 	alcMakeContextCurrent(nullptr);
-	alcDestroyContext(this->context);
-	alcCloseDevice(this->device);
+	alcDestroyContext(context);
+	alcCloseDevice(device);
 }
 //---------------------------------
 //@:Bufferclass
@@ -44,19 +45,19 @@ Audio::~Audio()
 Buffer::Buffer()
 {
 	//バッファを１つ生成
-	alGenBuffers(1, &this->id);
+	alGenBuffers(1, &id);
 	//現在進行時間を0にする
-	this->nowTime = 0.f;
+	nowTime = 0.f;
 }
 Buffer::Buffer(const std::string& path_)
 	:path(path_)
 {
 	//バッファを１つ生成
-	alGenBuffers(1, &this->id);
+	alGenBuffers(1, &id);
 	//Wavファイルの読み込み
 	Wav wav_data(path_);
 	//経過時間を確認
-	this->nowTime = wav_data.time();
+	nowTime = wav_data.time();
 	oneSecondsData = wav_data.sampleRate() * wav_data.channel() * sizeof(uint16_t);
 	// 波形データをバッファにセット
 	//BufferID,Format,波形データ,サイズ,サンプリングレート
@@ -68,11 +69,11 @@ Buffer::Buffer(const std::string& path_, const size_t& time)
 	:path(path_)
 {
 	//バッファを１つ生成
-	alGenBuffers(1, &this->id);
+	alGenBuffers(1, &id);
 	//Wavファイルの読み込み
 	Wav wav_data(path_);
 	//経過時間を確認
-	this->nowTime = wav_data.time();
+	nowTime = wav_data.time();
 	size_t num = time * wav_data.sampleRate()* wav_data.channel() * sizeof(uint16_t);
 	oneSecondsData = wav_data.sampleRate() * wav_data.channel() * sizeof(uint16_t);
 	// 波形データをバッファにセット
@@ -84,22 +85,22 @@ Buffer::Buffer(const std::string& path_, const size_t& time)
 Buffer::~Buffer()
 {
 	//バッファの削除
-	alDeleteBuffers(1, &this->id);
+	alDeleteBuffers(1, &id);
 }
 float Buffer::GetTime() const
 {
 	//進行時間を返す
-	return this->nowTime;
+	return nowTime;
 }
 ALuint Buffer::GetID() const
 {
 	//バッファに登録してあるIDを返す
-	return this->id;
+	return id;
 }
 void Buffer::Bind(const bool stereo, const void* data, const u_int size, const u_int rate) const
 {
 	//波形データをバッファにセット
-	alBufferData(this->id, stereo ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data, size, rate);
+	alBufferData(id, stereo ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data, size, rate);
 }
 void Buffer::SetFrameBuffer(const size_t& num)
 {
@@ -116,222 +117,222 @@ char Buffer::GetWaveform(const float time)
 Source::Source()
 {
 	//ソースを１つ生成する
-	alGenSources(1, &this->id);
+	alGenSources(1, &id);
 }
 Source::~Source()
 {
 	//波形データを解除する
-	this->UnBindBuffer();
+	UnBindBuffer();
 	//ソースを削除する
-	alDeleteSources(1, &this->id);
+	alDeleteSources(1, &id);
 }
 void Source::BindBuffer(const Buffer& burrer)
 {
 	//ソースにバッファを指定する
-	alSourcei(this->id, AL_BUFFER, burrer.GetID());
+	alSourcei(id, AL_BUFFER, burrer.GetID());
 }
 void Source::UnBindBuffer() const
 {
 	//ソースのバッファを解除する
-	alSourcei(this->id, AL_BUFFER, 0);
+	alSourcei(id, AL_BUFFER, 0);
 }
 int Source::GetBufferID() const
 {
 	int bufferID;
-	alGetSourcei(this->id, AL_BUFFER, &bufferID);
+	alGetSourcei(id, AL_BUFFER, &bufferID);
 	return bufferID;
 }
 ALuint Source::GetID() const
 {
 	//ソースのIDを返す
-	return this->id;
+	return id;
 }
 void Source::Play() const
 {
 	//再生する
-	alSourcePlay(this->id);
+	alSourcePlay(id);
 }
 void Source::Stop() const
 {
 	//止める
-	alSourceStop(this->id);
+	alSourceStop(id);
 }
 void Source::Pause() const
 {
 	//一時停止する
-	alSourcePause(this->id);
+	alSourcePause(id);
 }
 void Source::SetSourceRelative(const bool relative) const
 {
-	alSourcei(this->id, AL_SOURCE_RELATIVE, relative ? AL_TRUE : AL_FALSE);
+	alSourcei(id, AL_SOURCE_RELATIVE, relative ? AL_TRUE : AL_FALSE);
 }
 int Source::GetSourceRelative() const
 {
 	int relative;
-	alGetSourcei(this->id, AL_SOURCE_RELATIVE, &relative);
+	alGetSourcei(id, AL_SOURCE_RELATIVE, &relative);
 	return relative;
 }
 void Source::SetVolume(const float volume) const
 {
 	//音量の変更
-	alSourcef(this->id, AL_GAIN, volume);
+	alSourcef(id, AL_GAIN, volume);
 }
 void Source::SetPitch(const float value) const
 {
 	//ピッチの変更
-	alSourcef(this->id, AL_PITCH, value);
+	alSourcef(id, AL_PITCH, value);
 }
 void Source::SetLoop(const bool loop) const
 {
 	//TRUEで終了時最初の位置に戻る
-	alSourcei(this->id, AL_LOOPING, loop ? AL_TRUE : AL_FALSE);
+	alSourcei(id, AL_LOOPING, loop ? AL_TRUE : AL_FALSE);
 }
 bool Source::IsPlay() const
 {
 	//現在の状態を返す
 	ALint state;
-	alGetSourcei(this->id, AL_SOURCE_STATE, &state);
+	alGetSourcei(id, AL_SOURCE_STATE, &state);
 	return state == AL_PLAYING;
 }
 float Source::GetTime() const
 {
 	//現在の再生時間を返す
 	ALfloat nowtime;
-	alGetSourcef(this->id, AL_SEC_OFFSET, &nowtime);
+	alGetSourcef(id, AL_SEC_OFFSET, &nowtime);
 	return nowtime;
 }
 void Source::SetTime(const float time) const
 {
-	alSourcef(this->id, AL_SEC_OFFSET, time);
+	alSourcef(id, AL_SEC_OFFSET, time);
 }
 void Source::QueueBuffer(const Buffer& buffer) const
 {
 	ALuint buffers = buffer.GetID();
 	//バッファネームのキューを作成
-	alSourceQueueBuffers(this->id, 1, &buffers);
+	alSourceQueueBuffers(id, 1, &buffers);
 }
 ALuint Source::UnqueueBuffer() const
 {
 	ALuint buffers;
 	//キューからバッファを除去する
-	alSourceUnqueueBuffers(this->id, 1, &buffers);
+	alSourceUnqueueBuffers(id, 1, &buffers);
 	return buffers;
 }
 int Source::GetProcessed() const
 {
 	int pro_;
 	//再生済みのバッファ数を返す
-	alGetSourcei(this->id, AL_BUFFERS_PROCESSED, &pro_);
+	alGetSourcei(id, AL_BUFFERS_PROCESSED, &pro_);
 	return pro_;
 }
 int Source::GetQueued() const
 {
 	int queued;
-	alGetSourcei(this->id, AL_BUFFERS_QUEUED, &queued);
+	alGetSourcei(id, AL_BUFFERS_QUEUED, &queued);
 	return queued;
 }
 float Source::GetPitch() const
 {
 	float pitch;
-	alGetSourcef(this->id, AL_PITCH, &pitch);
+	alGetSourcef(id, AL_PITCH, &pitch);
 	return pitch;
 }
 float Source::GetVolume() const
 {
 	float volume;
-	alGetSourcef(this->id, AL_GAIN, &volume);
+	alGetSourcef(id, AL_GAIN, &volume);
 	return volume;
 }
 int Source::GetLoop() const
 {
 	int loop;
-	alGetSourcei(this->id, AL_LOOPING, &loop);
+	alGetSourcei(id, AL_LOOPING, &loop);
 	return loop;
 }
 int Source::GetSourceType() const
 {
 	int type;
-	alGetSourcei(this->id, AL_SOURCE_TYPE, &type);
+	alGetSourcei(id, AL_SOURCE_TYPE, &type);
 	return type;
 }
 void Source::SetReferenceDistance(const float distance) const
 {
-	alSourcef(this->id, AL_REFERENCE_DISTANCE, distance);
+	alSourcef(id, AL_REFERENCE_DISTANCE, distance);
 }
 float Source::GetReferenceDistance() const
 {
 	float distance;
-	alGetSourcef(this->id, AL_REFERENCE_DISTANCE, &distance);
+	alGetSourcef(id, AL_REFERENCE_DISTANCE, &distance);
 	return distance;
 }
 void Source::SetRolloffFactor(const float factor) const
 {
-	alSourcef(this->id, AL_ROLLOFF_FACTOR, factor);
+	alSourcef(id, AL_ROLLOFF_FACTOR, factor);
 }
 float Source::GetRolloffFactor() const
 {
 	float factor;
-	alGetSourcef(this->id, AL_ROLLOFF_FACTOR, &factor);
+	alGetSourcef(id, AL_ROLLOFF_FACTOR, &factor);
 	return factor;
 }
 void Source::SetPosition(const Vec3& position) const
 {
-	alSource3f(this->id, AL_POSITION, position.x, position.y, position.z);
+	alSource3f(id, AL_POSITION, position.x, position.y, position.z);
 }
 Vec3 Source::GetPosition() const
 {
 	Vec3 position;
-	alGetSource3f(this->id, AL_POSITION, &position.x, &position.y, &position.z);
+	alGetSource3f(id, AL_POSITION, &position.x, &position.y, &position.z);
 	return position;
 }
 void Source::SetVelocity(const Vec3& velocity) const
 {
-	alSource3f(this->id, AL_VELOCITY, velocity.x, velocity.y, velocity.z);
+	alSource3f(id, AL_VELOCITY, velocity.x, velocity.y, velocity.z);
 }
 Vec3 Source::GetVelocity() const
 {
 	Vec3 velocity;
-	alGetSource3f(this->id, AL_VELOCITY, &velocity.x, &velocity.y, &velocity.z);
+	alGetSource3f(id, AL_VELOCITY, &velocity.x, &velocity.y, &velocity.z);
 	return velocity;
 }
 void Source::SetDirection(const Vec3& direction) const
 {
-	alSource3f(this->id, AL_DIRECTION, direction.x, direction.y, direction.z);
+	alSource3f(id, AL_DIRECTION, direction.x, direction.y, direction.z);
 }
 Vec3 Source::GetDirection() const
 {
 	Vec3 direction;
-	alGetSource3f(this->id, AL_DIRECTION, &direction.x, &direction.y, &direction.z);
+	alGetSource3f(id, AL_DIRECTION, &direction.x, &direction.y, &direction.z);
 	return direction;
 }
 void Source::SetConeInnerAngle(const float angle) const
 {
-	alSourcef(this->id, AL_CONE_INNER_ANGLE, angle);
+	alSourcef(id, AL_CONE_INNER_ANGLE, angle);
 }
 float Source::GetConeInnerAngle() const
 {
 	float angle;
-	alGetSourcef(this->id, AL_CONE_INNER_ANGLE, &angle);
+	alGetSourcef(id, AL_CONE_INNER_ANGLE, &angle);
 	return angle;
 }
 void Source::SetConeOuterAngle(const float angle) const
 {
-	alSourcef(this->id, AL_CONE_OUTER_ANGLE, angle);
+	alSourcef(id, AL_CONE_OUTER_ANGLE, angle);
 }
 float Source::GetConeOuterAngle() const
 {
 	float angle;
-	alGetSourcef(this->id, AL_CONE_OUTER_ANGLE, &angle);
+	alGetSourcef(id, AL_CONE_OUTER_ANGLE, &angle);
 	return angle;
 }
 void Source::SetConeOuterGain(const float volume) const
 {
-	alSourcef(this->id, AL_CONE_OUTER_GAIN, volume);
+	alSourcef(id, AL_CONE_OUTER_GAIN, volume);
 }
 float Source::GetConeOuterGain() const
 {
 	float gain;
-	alGetSourcef(this->id, AL_CONE_OUTER_GAIN, &gain);
+	alGetSourcef(id, AL_CONE_OUTER_GAIN, &gain);
 	return gain;
 }
 void Source::SetOrientation(const float* orientation)
@@ -381,62 +382,62 @@ Wav::Wav(const std::string& file)
 	std::ifstream fstr(file, std::ios::binary);
 	if (!fstr)
 	{
-#ifdef KL_DEBUG
+#if DEBUG_ENABLE
 		std::cout << "ファイル読み込みエラー" << std::endl;
 #endif
 		throw;
 	}
 	// ファイル情報を解析
-	if (!Wav::analyzeWavFile(this->info, fstr))
+	if (!Wav::analyzeWavFile(info, fstr))
 	{
-#ifdef KL_DEBUG
+#if DEBUG_ENABLE
 		std::cout << "Wavファイル読み込みエラー: " << file << std::endl;
 #endif		
 		throw;
 	}
-	if ((this->info.id != 1) || (this->info.bit != 16))
+	if ((info.id != 1) || (info.bit != 16))
 	{
 		// IDが１で量子化ビット数が16以外は扱わない
-#ifdef KL_DEBUG
+#if DEBUG_ENABLE
 		std::cout << "Wavファイルのフォーマットエラー" << std::endl;
 #endif
 		throw;
 	}
 	// 再生時間(秒)
-	this->time_ = this->info.size / this->info.ch / 2.0f / this->info.sample_rate;
+	time_ = info.size / info.ch / 2.0f / info.sample_rate;
 	// データ読み込み
-	data_.resize(this->info.size);
+	data_.resize(info.size);
 	Wav::searchChunk(fstr, "data");
 	fstr.seekg(4, fstr.cur);
 	fstr.read(&data_[0], info.size);
 }
 u_int Wav::channel() const
 {
-	return this->info.ch;
+	return info.ch;
 }
 bool Wav::isStereo() const
 {
-	return this->info.ch == 2;
+	return info.ch == 2;
 }
 u_int Wav::sampleRate() const
 {
-	return this->info.sample_rate;
+	return info.sample_rate;
 }
 u_int Wav::size() const
 {
-	return this->info.size;
+	return info.size;
 }
 float Wav::time() const
 {
-	return this->time_;
+	return time_;
 }
 const char* Wav::data() const
 {
-	return &this->data_[0];
+	return &data_[0];
 }
 const char* Wav::data(const size_t& number) const
 {
-	return &this->data_[number];
+	return &data_[number];
 }
 u_int Wav::getValue(const char* ptr, const u_int num)
 {
@@ -494,14 +495,14 @@ bool Wav::analyzeWavFile(Info& info, std::ifstream& fstr)
 	fstr.read(header, WAV_HEADER_SIZE);
 	if (std::strncmp(&header[0], "RIFF", 4))
 	{
-#ifdef KL_DEBUG
+#if DEBUG_ENABLE
 		std::cout << "このファイルはRIFFではありません" << std::endl;
 #endif
 		return false;
 	}
 	if (std::strncmp(&header[8], "WAVE", 4))
 	{
-#ifdef KL_DEBUG
+#if DEBUG_ENABLE
 		std::cout << "このファイルはWaveではありません" << std::endl;
 #endif		
 		return false;
@@ -519,7 +520,7 @@ bool Wav::analyzeWavFile(Info& info, std::ifstream& fstr)
 	// fmtチャンクを探してデータ形式を取得
 	if (!searchChunk(fstr, "fmt "))
 	{
-#ifdef KL_DEBUG
+#if DEBUG_ENABLE
 		std::cout << "fmtチャンクが存在しません" << std::endl;
 #endif
 		return false;
@@ -534,7 +535,7 @@ bool Wav::analyzeWavFile(Info& info, std::ifstream& fstr)
 	// dataチャンクを探してデータ長を取得
 	if (!searchChunk(fstr, "data"))
 	{
-#ifdef KL_DEBUG
+#if DEBUG_ENABLE
 		std::cout << "dataチャンクが存在しません" << std::endl;
 #endif
 		return false;
@@ -544,7 +545,7 @@ bool Wav::analyzeWavFile(Info& info, std::ifstream& fstr)
 }
 std::vector<char> Wav::Getdata()
 {
-	return this->data_;
+	return data_;
 }
 void Wav::TestFunction(const float value)
 {
@@ -560,44 +561,44 @@ StreamWav::StreamWav(const std::string& file) :
 	fstr_(file, std::ios::binary),
 	loop_(false)
 {
-	if (!this->fstr_) throw "ファイルを開くことができません";
+	if (!fstr_) throw "ファイルを開くことができません";
 	// ファイル情報を解析
-	if (!Wav::analyzeWavFile(this->info, this->fstr_))
+	if (!Wav::analyzeWavFile(info, fstr_))
 	{
 		return;
 	}
-	if ((this->info.id != 1) || (this->info.bit != 16))
+	if ((info.id != 1) || (info.bit != 16))
 	{
 		// IDが１で量子化ビット数が16以外は扱わない
-#ifdef KL_DEBUG
+#if DEBUG_ENABLE
 		std::cout << "Wavファイルフォーマットエラー" << std::endl;
 #endif
 		return;
 	}
-	this->last_size_ = this->info.size;
+	last_size_ = info.size;
 	// データの先頭位置を覚えておく
-	this->top_pos_ = static_cast<size_t>(this->fstr_.tellg());
+	top_pos_ = static_cast<size_t>(fstr_.tellg());
 }
 bool StreamWav::isStereo() const
 {
-	return this->info.ch == 2;
+	return info.ch == 2;
 }
 u_int StreamWav::sampleRate() const
 {
-	return this->info.sample_rate;
+	return info.sample_rate;
 }
 size_t StreamWav::GetlastSize() const
 {
-	return this->last_size_;
+	return last_size_;
 }
 void StreamWav::loop(const bool loop)
 {
-	this->loop_ = loop;
+	loop_ = loop;
 }
 void StreamWav::toTop()
 {
-	this->fstr_.seekg(this->top_pos_, this->fstr_.beg);
-	this->last_size_ = this->info.size;
+	fstr_.seekg(top_pos_, fstr_.beg);
+	last_size_ = info.size;
 }
 bool StreamWav::isEnd() const
 {
@@ -607,9 +608,9 @@ size_t StreamWav::read(std::vector<char>& buffer)
 {
 	size_t remain_size = buffer.size();
 	// ループしない場合、残りの中途半端なサイズを読み込んで終了
-	if (!this->loop_ && (this->last_size_ < remain_size))
+	if (!loop_ && (last_size_ < remain_size))
 	{
-		remain_size = this->last_size_;
+		remain_size = last_size_;
 	}
 	size_t offset = 0;
 	size_t total_read_size = 0;
@@ -619,9 +620,9 @@ size_t StreamWav::read(std::vector<char>& buffer)
 
 		total_read_size += read_size;
 		remain_size -= read_size;
-		this->last_size_ -= read_size;
+		last_size_ -= read_size;
 		offset += read_size;
-		if (this->loop_ && !this->last_size_)
+		if (loop_ && !last_size_)
 		{
 			StreamWav::toTop();
 		}
@@ -630,7 +631,7 @@ size_t StreamWav::read(std::vector<char>& buffer)
 }
 size_t StreamWav::readData(std::vector<char>& buffer, const size_t offset, const size_t size)
 {
-	size_t read_size = (size < this->last_size_) ? size : this->last_size_;
-	this->fstr_.read(&buffer[offset], read_size);
+	size_t read_size = (size < last_size_) ? size : last_size_;
+	fstr_.read(&buffer[offset], read_size);
 	return read_size;
 }

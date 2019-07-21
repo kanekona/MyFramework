@@ -2,12 +2,13 @@
 #include "Engine\Framework.h"
 #include "Texture\Texture.h"
 #include "Engine\OGF.hpp"
+#include "Engine\EngineMacro.h"
 Sprite::Sprite(const bool flag,const int r)
 	:registerd(r)
 {
 	if (flag)
 	{
-		this->Register();
+		Register();
 	}
 }
 Sprite::~Sprite()
@@ -26,7 +27,7 @@ Sprite::~Sprite()
 		break;
 	default:
 		//エラー出力
-#ifdef KL_DEBUG
+#if DEBUG_ENABLE
 		std::cout << "削除ミス\n";
 #endif
 		break;
@@ -48,7 +49,7 @@ void Sprite::Register()
 		break;
 	default:
 		//エラー出力
-#ifdef KL_DEBUG
+#if DEBUG_ENABLE
 		std::cout << "登録ミス\n";
 #endif
 		break;

@@ -11,13 +11,13 @@ Sound::Sound(const std::string& path_, const bool loop) :
 	source(std::make_shared<Source>()),
 	path(path_)
 {
-	this->source->BindBuffer(*this->buffer);
-	this->Looping(loop);
-	this->Pitch(1.0f);
-	this->volume_ = 1.0f;
-	this->Volume(this->volume_);
-	this->oneSecondWaveformData = buffer->sampleRate;
-	this->allWaveformData = (unsigned int)buffer->waveformData.size();
+	source->BindBuffer(*buffer);
+	Looping(loop);
+	Pitch(1.0f);
+	volume_ = 1.0f;
+	Volume(volume_);
+	oneSecondWaveformData = buffer->sampleRate;
+	allWaveformData = (unsigned int)buffer->waveformData.size();
 }
 Sound::~Sound()
 {
@@ -25,41 +25,41 @@ Sound::~Sound()
 };
 bool Sound::Create(const std::string& path_, const bool loop)
 {
-	this->buffer = std::make_shared<Buffer>(path_);
-	this->source = std::make_shared<Source>();
+	buffer = std::make_shared<Buffer>(path_);
+	source = std::make_shared<Source>();
 	path = path_;
-	this->source->BindBuffer(*this->buffer);
-	this->Looping(loop);
-	this->Pitch(1.0f);
-	this->volume_ = 1.0f;
-	this->Volume(this->volume_);
-	this->oneSecondWaveformData = buffer->sampleRate;
-	this->allWaveformData = (unsigned int)buffer->waveformData.size();
+	source->BindBuffer(*buffer);
+	Looping(loop);
+	Pitch(1.0f);
+	volume_ = 1.0f;
+	Volume(volume_);
+	oneSecondWaveformData = buffer->sampleRate;
+	allWaveformData = (unsigned int)buffer->waveformData.size();
 	return true;
 }
 void Sound::Play() const
 {
-	this->source->Play();
+	source->Play();
 }
 void Sound::Stop() const
 {
-	this->source->Stop();
+	source->Stop();
 }
 void Sound::Pause() const
 {
-	this->source->Pause();
+	source->Pause();
 }
 void Sound::Volume(const float value_) const
 {
-	this->source->SetVolume(value_);
+	source->SetVolume(value_);
 }
 void Sound::Pitch(const float value_) const
 {
-	this->source->SetPitch(value_);
+	source->SetPitch(value_);
 }
 void Sound::Looping(const bool loop_) const
 {
-	this->source->SetLoop(loop_);
+	source->SetLoop(loop_);
 }
 bool Sound::IsPlay() const
 {
@@ -67,19 +67,19 @@ bool Sound::IsPlay() const
 }
 float Sound::CurrentTime() const
 {
-	return this->source->GetTime();
+	return source->GetTime();
 }
 float Sound::Duration() const
 {
-	return this->buffer->GetTime();
+	return buffer->GetTime();
 }
 void Sound::SetVolume(float maxVolume_)
 {
-	this->volume_ = maxVolume_;
+	volume_ = maxVolume_;
 }
 float Sound::GetVolume() const
 {
-	return this->volume_;
+	return volume_;
 }
 Buffer* Sound::GetBuffer() const
 {
@@ -109,7 +109,13 @@ void Sound::Test()
 	fftwf_execute(plan);
 	for (int i = 0; i < buffer->waveformData.size(); ++i)
 	{
-		printf("in[%.3f][%.3f]out[%.3f][%.3f][%.3f][%.3f][%.3f]\n", in[i][0], in[i][1], out[i][0] * out[i][0] + out[i][1] * out[i][1],sqrt(out[i][0] * out[i][0] + out[i][1] * out[i][1]), atan2(out[i][0], out[i][1]), out[i][0], out[i][1]);
+		printf("in[%.3f][%.3f]out[%.3f][%.3f][%.3f][%.3f][%.3f]\n", 
+			in[i][0],
+			in[i][1],
+			out[i][0] * out[i][0] + out[i][1] * out[i][1],
+			sqrt(out[i][0] * out[i][0] + out[i][1] * out[i][1]),
+			atan2(out[i][0], out[i][1]), out[i][0], out[i][1]
+		);
 	}
 	fftwf_destroy_plan(plan);
 	fftwf_free(in);

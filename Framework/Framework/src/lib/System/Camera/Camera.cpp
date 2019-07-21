@@ -11,9 +11,9 @@ Camera2D::Camera2D(const Box2D& pos)
 	: collision(&transform)
 {
 	//各値をセットする
-	this->cameraPos = pos;
-	this->position = { 0,0 };
-	this->scale = { pos.w,pos.h };
+	cameraPos = pos;
+	position = { 0,0 };
+	scale = { pos.w,pos.h };
 }
 Camera2D::~Camera2D()
 {
@@ -22,9 +22,9 @@ Camera2D::~Camera2D()
 void Camera2D::Initialize(const Box2D& pos)
 {
 	//各値をセットする
-	this->cameraPos = pos;
-	this->position = { 0,0 };
-	this->scale = { pos.w,pos.h };
+	cameraPos = pos;
+	position = { 0,0 };
+	scale = { pos.w,pos.h };
 }
 void Camera2D::Update()
 {
@@ -35,62 +35,62 @@ void Camera2D::Update()
 	//元データが書き換わらないよう値の代入
 	Box2D _camera(cameraPos);
 	//初期設定値からの変更値
-	_camera.x += this->position.x;
-	_camera.y += this->position.y;
-	_camera.w = this->scale.x;
-	_camera.h = this->scale.y;
+	_camera.x += position.x;
+	_camera.y += position.y;
+	_camera.w = scale.x;
+	_camera.h = scale.y;
 	_camera.OffsetSize();
 	//描画縦横サイズの指定
-	this->transform.position = { this->position.x + this->scale.x / 2,this->position.y + this->scale.y / 2 };
-	this->transform.scale = this->scale * 1.5f;
+	transform.position = { position.x + scale.x / 2,position.y + scale.y / 2 };
+	transform.scale = scale * 1.5f;
 	glOrtho(_camera.x, _camera.w, _camera.h, _camera.y, -1.0f, 1.0f);
-	this->SetProjectionMatrix(_camera.x, _camera.w, _camera.h, _camera.y, -1.0, 1.0f);
+	SetProjectionMatrix(_camera.x, _camera.w, _camera.h, _camera.y, -1.0, 1.0f);
 }
 void Camera2D::MovePos(const Vec2& est)
 {
 	//位置を加算する
-	this->position += est;
+	position += est;
 }
 void Camera2D::SetPos(const Vec2& est)
 {
 	//位置を上書きする
-	this->position = est;
+	position = est;
 }
 void Camera2D::SetSize(const Vec2& size_)
 {
 	//サイズを上書きする
-	this->scale = size_;
+	scale = size_;
 }
 void Camera2D::MoveSize(const Vec2& size_)
 {
 	//サイズを加算する
-	this->scale += size_;
+	scale += size_;
 }
 void Camera2D::SetPos_x(const float& x_)
 {
-	this->position.x = x_;
+	position.x = x_;
 }
 void Camera2D::SetPos_y(const float& y_)
 {
-	this->position.y = y_;
+	position.y = y_;
 }
 void Camera2D::SetSize_w(const float& w_)
 {
-	this->scale.x = w_;
+	scale.x = w_;
 }
 void Camera2D::SetSize_h(const float& h_)
 {
-	this->scale.y = h_;
+	scale.y = h_;
 }
 const Vec2& Camera2D::GetPos() const
 {
 	//位置を返す
-	return this->position;
+	return position;
 }
 const Vec2& Camera2D::GetSize() const
 {
 	//サイズを返す
-	return this->scale;
+	return scale;
 }
 void Camera2D::SetProjectionMatrix(float cl, float cr, float cb, float ct, float cn, float cf)
 {
@@ -113,9 +113,9 @@ void Camera2D::SetProjectionMatrix(float cl, float cr, float cb, float ct, float
 }
 GLfloat* Camera2D::GetProjectionMatrix()
 {
-	return this->projectionMatrix;
+	return projectionMatrix;
 }
 CircleCollider* Camera2D::GetCollision()
 {
-	return &this->collision;
+	return &collision;
 }

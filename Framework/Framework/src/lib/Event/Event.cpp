@@ -13,14 +13,14 @@ EventTask::~EventTask()
 bool EventTask::Load(const Event& eventType, const std::string& path)
 {
 	//もしそのファイルがほかで開かれているなら閉じる
-	if (this->ifs.is_open())
+	if (ifs.is_open())
 	{
-		this->ifs.close();
+		ifs.close();
 	}
 	//ファイルを開く
-	this->ifs.open(path);
+	ifs.open(path);
 	//存在しない場合終了する
-	if (!this->ifs)
+	if (!ifs)
 	{
 		return false;
 	}
@@ -30,7 +30,7 @@ bool EventTask::Load(const Event& eventType, const std::string& path)
 	case Event::RESOURCE_LOAD:
 	{
 		//constructorで処理が終わるので生成してdeleteする
-		ResourceLoad* rl = new ResourceLoad(this->ifs);
+		ResourceLoad* rl = new ResourceLoad(ifs);
 		delete rl;
 	}
 	break;

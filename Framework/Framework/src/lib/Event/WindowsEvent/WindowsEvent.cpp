@@ -2,8 +2,8 @@
 #include "System\System.h"
 WindowsEvent::WindowsEvent()
 {
-	this->loadPath = nullptr;
-	this->notLoadFileName = nullptr;
+	loadPath = nullptr;
+	notLoadFileName = nullptr;
 }
 WindowsEvent::~WindowsEvent()
 {
@@ -18,33 +18,33 @@ WindowsEvent::~WindowsEvent()
 }
 void WindowsEvent::SetLoadPath(const std::string& path)
 {
-	if (this->loadPath)
+	if (loadPath)
 	{
-		this->loadPath->emplace_back(path);
+		loadPath->emplace_back(path);
 	}
 	else
 	{
-		this->loadPath = new std::vector<std::string>;
-		this->loadPath->emplace_back(path);
+		loadPath = new std::vector<std::string>;
+		loadPath->emplace_back(path);
 	}
 }
 void WindowsEvent::SetNotLoadFileName(const std::string& name)
 {
-	if (this->notLoadFileName)
+	if (notLoadFileName)
 	{
-		this->notLoadFileName->emplace_back(name);
+		notLoadFileName->emplace_back(name);
 	}
 	else
 	{
-		this->notLoadFileName = new std::vector<std::string>;
-		this->notLoadFileName->emplace_back(name);
+		notLoadFileName = new std::vector<std::string>;
+		notLoadFileName->emplace_back(name);
 	}
 }
 
 std::vector<std::string> WindowsEvent::ResourceFileNameLoad(const std::string& filepath)
 {
 	std::vector<std::string> filename;
-	this->FileLoad(filepath, &filename);
+	FileLoad(filepath, &filename);
 	return filename;
 }
 
@@ -69,14 +69,14 @@ void WindowsEvent::FileLoad(const std::string& filepath, std::vector<std::string
 					continue;
 				}
 			}
-			if (this->notLoadFileName)
+			if (notLoadFileName)
 			{
 				std::string tmp = findData.cFileName;
-				for (int i = 0; i < this->notLoadFileName->size(); ++i)
+				for (int i = 0; i < notLoadFileName->size(); ++i)
 				{
-					std::cout << findData.cFileName << ":" << *this->notLoadFileName[i].data() << "\n";
+					std::cout << findData.cFileName << ":" << *notLoadFileName[i].data() << "\n";
 					//if (!OG::CheckText(&tmp, &(*notLoadFileName)[i]))
-					if(tmp != this->notLoadFileName->at(i))
+					if(tmp != notLoadFileName->at(i))
 					{
 						FileLoad(allFilePath.substr(0, allFilePath.size() - 4) + "\\" + findData.cFileName, vec);
 						break;
@@ -90,7 +90,7 @@ void WindowsEvent::FileLoad(const std::string& filepath, std::vector<std::string
 		}
 		else
 		{
-			if (this->loadPath)
+			if (loadPath)
 			{
 				std::string tmp = findData.cFileName;
 				for (int i = 0; i < loadPath->size(); ++i)

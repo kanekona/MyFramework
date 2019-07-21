@@ -25,6 +25,7 @@ ConfigInputEvent::ConfigInputEvent(std::ifstream& ifs)
 		}
 		ChangeInputConfig(lineText);
 	}
+	Input::Get()->RegisterPadConfig();
 }
 
 ConfigInputEvent::~ConfigInputEvent()

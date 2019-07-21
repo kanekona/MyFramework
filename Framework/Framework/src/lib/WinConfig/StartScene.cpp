@@ -11,5 +11,5 @@ StartScene::~StartScene()
 }
 void StartScene::Enter()
 {
-	this->SetEntity(new WinConfig());
+	SetEntity(new WinConfig());
 }

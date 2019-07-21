@@ -67,9 +67,9 @@ void RenderingManager::BackRendering()
 }
 void RenderingManager::Render()
 {
-	this->UIRendering();
-	this->CanvasRendering();
-	this->BackRendering();
+	UIRendering();
+	CanvasRendering();
+	BackRendering();
 }
 void RenderingManager::AllStateAdaptation()
 {

@@ -8,11 +8,11 @@ Button::Button(const Transform& t)
 	transform = t;
 	tag = "Button";
 	layer = Layer::Button;
-	this->hitBase = new BoxCollider(&transform);
-	this->back.texture = ResourceManager::Get()->GetTextureData("button");
-	this->back.transform = &transform;
-	this->back.color = &notSelect;
-	this->font.transform = &transform;
+	hitBase = new BoxCollider(&transform);
+	back.texture = ResourceManager::Get()->GetTextureData("button");
+	back.transform = &transform;
+	back.color = &notSelect;
+	font.transform = &transform;
 	notSelect = { 0.5f,0.5f,0.5f,1.0f };
 	//Default
 	SetDrawOrder(0);
@@ -20,23 +20,23 @@ Button::Button(const Transform& t)
 
 Button::~Button()
 {
-	delete this->hitBase;
+	delete hitBase;
 }
 
 bool Button::Enable(Collider* collision)
 {
-	return this->hitBase->Hit(collision);
+	return hitBase->Hit(collision);
 }
 
 void Button::ChangeColor(const bool flag)
 {
 	if (flag)
 	{
-		this->back.color = &this->select;
+		back.color = &select;
 	}
 	else
 	{
-		this->back.color = &this->notSelect;
+		back.color = &notSelect;
 	}
 }
 void Button::Update()
@@ -45,7 +45,7 @@ void Button::Update()
 	ChangeColor(hit);
 	if (hit && Input::Get()->mouse->down(Mouse::LEFT))
 	{
-		this->Decision();
+		Decision();
 	}
 }
 void Button::Decision()
@@ -55,12 +55,12 @@ void Button::Decision()
 
 Font* Button::GetFont()
 {
-	return &this->font;
+	return &font;
 }
 
 void Button::SetDrawOrder(const unsigned int o)
 {
-	this->order = o;
+	order = o;
 	font.SetDrawOrder(order + 1);
 	back.SetDrawOrder(order);
 }

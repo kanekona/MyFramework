@@ -37,16 +37,16 @@ Vec2::Vec2(const Vec2Int& vec)
 {}
 void Vec2::Set(const int vx, const int vy)
 {
-	this->x = (float)vx;
-	this->y = (float)vy;
+	x = (float)vx;
+	y = (float)vy;
 }
 void Vec2::Set(const float vx, const float vy)
 {
-	this->x = vx;
-	this->y = vy;
+	x = vx;
+	y = vy;
 }
 void Vec2::Normalize() {
-	float len = this->GetLength();
+	float len = GetLength();
 	if (len == 0) { return; }
 	x /= len;
 	y /= len;
@@ -70,10 +70,10 @@ void Vec2::operator*=(const Vec2Int& v) { x *= (float)v.x; y *= (float)v.y; }
 void Vec2::operator/=(const float n) { x /= n; y /= n; }
 void Vec2::operator-=(const Vec2& v) { x -= v.x; y -= v.y; }
 void Vec2::operator-=(const Vec2Int& v) { x -= (float)v.x; y -= (float)v.y; }
-bool Vec2::operator==(const Vec2& v) { return this->x == v.x && this->y == v.y; }
-bool Vec2::operator==(const Vec2Int& v) { return this->x == (float)v.x && this->y == (float)v.y; }
-bool Vec2::operator!=(const Vec2& v) { return this->x != v.x || this->y != v.y; }
-bool Vec2::operator!=(const Vec2Int& v) { return this->x != (float)v.x || this->y != (float)v.y; }
+bool Vec2::operator==(const Vec2& v) { return x == v.x && y == v.y; }
+bool Vec2::operator==(const Vec2Int& v) { return x == (float)v.x && y == (float)v.y; }
+bool Vec2::operator!=(const Vec2& v) { return x != v.x || y != v.y; }
+bool Vec2::operator!=(const Vec2Int& v) { return x != (float)v.x || y != (float)v.y; }
 
 Vec2Int::Vec2Int()
 	:x(0),y(0)
@@ -89,17 +89,17 @@ Vec2Int::Vec2Int(const Vec2& vec)
 {}
 void Vec2Int::Set(const int vx, const int vy)
 {
-	this->x = vx;
-	this->y = vy;
+	x = vx;
+	y = vy;
 }
 void Vec2Int::Set(const float vx, const float vy)
 {
-	this->x = (int)vx;
-	this->y = (int)vy;
+	x = (int)vx;
+	y = (int)vy;
 }
 void Vec2Int::Normalize()
 {
-	float len = this->GetLength();
+	float len = GetLength();
 	if (len == 0) { return; }
 	x /= (int)len;
 	y /= (int)len;
@@ -124,10 +124,10 @@ void Vec2Int::operator*=(const int v) { x *= v; y *= v; }
 void Vec2Int::operator*=(const Vec2& v) { x *= (int)v.x; y *= (int)v.y; }
 void Vec2Int::operator*=(const Vec2Int& v) { x *= v.x; y *= v.y; }
 void Vec2Int::operator/=(const int v) { x /= v; y /= v; }
-bool Vec2Int::operator==(const Vec2& v) { return this->x == (int)v.x && this->y == (int)v.y; }
-bool Vec2Int::operator==(const Vec2Int& v) { return this->x == v.x && this->y == v.y; }
-bool Vec2Int::operator!=(const Vec2& v) { return this->x != (int)v.x || this->y != (int)v.y; }
-bool Vec2Int::operator!=(const Vec2Int& v) { return this->x != v.x || this->y != v.y; }
+bool Vec2Int::operator==(const Vec2& v) { return x == (int)v.x && y == (int)v.y; }
+bool Vec2Int::operator==(const Vec2Int& v) { return x == v.x && y == v.y; }
+bool Vec2Int::operator!=(const Vec2& v) { return x != (int)v.x || y != (int)v.y; }
+bool Vec2Int::operator!=(const Vec2Int& v) { return x != v.x || y != v.y; }
 
 
 Mat4::Mat4(const float ex, const float ey, const float ez, const float ew)
@@ -243,26 +243,26 @@ void Box2D::Offset(const int x_, const int y_)
 }
 void Box2D::OffsetSize()
 {
-	this->w = this->w + this->x;
-	this->h = this->h + this->y;
+	w = w + x;
+	h = h + y;
 }
 void Box2D::Offset()
 {
-	this->x -= this->w / 2;
-	this->y -= this->h / 2;
+	x -= w / 2;
+	y -= h / 2;
 }
 void Box2D::OffsetCenterSize()
 {
-	this->Offset();
-	this->OffsetSize();
+	Offset();
+	OffsetSize();
 }
 //Box2D Box2D::operator+(const Box2D& b) { return Box2D(x += b.x, y += b.y, w += b.w, h += b.h); }
-//Box2D Box2D::operator+(const Box2D& b) { this->x += b.x, this->y += b.y, this->w += b.w, this->h += b.h; return *this; }
-Box2D Box2D::operator+(const Box2D& b) { return Box2D(this->x + b.x, this->y + b.y, this->w + b.w, this->h + b.h); }
+//Box2D Box2D::operator+(const Box2D& b) { x += b.x, y += b.y, w += b.w, h += b.h; return *this; }
+Box2D Box2D::operator+(const Box2D& b) { return Box2D(x + b.x, y + b.y, w + b.w, h + b.h); }
 //Box2D Box2D::operator-(const Box2D& b) { return Box2D(x -= b.x, y -= b.y, w -= b.w, h -= b.h); }
-Box2D Box2D::operator-(const Box2D& b) { return Box2D(this->x - b.x, this->y - b.y, this->w - b.w, this->h - b.h); }
+Box2D Box2D::operator-(const Box2D& b) { return Box2D(x - b.x, y - b.y, w - b.w, h - b.h); }
 //Box2D Box2D::operator*(const Box2D& b) { return Box2D(x *= b.x, y *= b.y, w *= b.w, h *= b.h); }
-Box2D Box2D::operator*(const Box2D& b) { return Box2D(this->x - b.x, this->y - b.y, this->w - b.w, this->h - b.h); }
+Box2D Box2D::operator*(const Box2D& b) { return Box2D(x - b.x, y - b.y, w - b.w, h - b.h); }
 void Box2D::operator+=(const Box2D& b){ { x += b.x; y += b.y; w += b.w; h += b.h; } }
 void Box2D::operator-=(const Box2D& b){ { x -= b.x; y -= b.y; w -= b.w; h -= b.h; } }
 void Box2D::operator*=(const Box2D& b){ { x *= b.x; y *= b.y; w *= b.w; h *= b.h; } }
@@ -277,10 +277,10 @@ Color::Color(const int r, const int g, const int b, const int a)
 {}
 unsigned int Color::Getcolor() const
 {
-	unsigned char r = (unsigned char)(this->red * 255.0f);
-	unsigned char g = (unsigned char)(this->green * 255.0f);
-	unsigned char b = (unsigned char)(this->blue * 255.0f);
-	unsigned char a = (unsigned char)(this->alpha * 255.0f);
+	unsigned char r = (unsigned char)(red * 255.0f);
+	unsigned char g = (unsigned char)(green * 255.0f);
+	unsigned char b = (unsigned char)(blue * 255.0f);
+	unsigned char a = (unsigned char)(alpha * 255.0f);
 
 	return (r) | (g << 8) | (b << 16) | (a << 24);
 }
@@ -290,9 +290,9 @@ void Color::operator-=(const Color& b) { red -= b.red; green -= b.green; blue -=
 //Color Color::operator+(const Color& b) { return Color(red += b.red, green += b.green, blue += b.blue, alpha += b.alpha); }
 //Color Color::operator-(const Color& b){ return Color(red -= b.red, green -= b.green, blue -= b.blue, alpha -= b.alpha); }
 //Color Color::operator*(const Color& b){ return Color(red *= b.red, green *= b.green, blue *= b.blue, alpha *= b.alpha); }
-Color Color::operator+(const Color& b) { this->red += b.red, this->green += b.green, this->blue += b.blue, this->alpha += b.alpha; return *this; }
-Color Color::operator-(const Color& b) { this->red -= b.red, this->green -= b.green, this->blue -= b.blue, this->alpha -= b.alpha; return *this; }
-Color Color::operator*(const Color& b) { this->red *= b.red, this->green *= b.green, this->blue *= b.blue, this->alpha *= b.alpha; return *this; }
+Color Color::operator+(const Color& b) { red += b.red, green += b.green, blue += b.blue, alpha += b.alpha; return *this; }
+Color Color::operator-(const Color& b) { red -= b.red, green -= b.green, blue -= b.blue, alpha -= b.alpha; return *this; }
+Color Color::operator*(const Color& b) { red *= b.red, green *= b.green, blue *= b.blue, alpha *= b.alpha; return *this; }
 
 Transform::Transform()
 {
@@ -310,7 +310,7 @@ Transform::Transform(const Vec2& pos, const Vec2& s,const float a)
 	scale = s;
 	angle = a;
 }
-void Transform::operator+=(const Transform& t) { this->position += t.position; this->scale += t.scale; this->angle += t.angle; }
+void Transform::operator+=(const Transform& t) { position += t.position; scale += t.scale; angle += t.angle; }
 Transform Transform::operator+(const Transform& t) { return Transform(position + t.position, scale + t.scale, angle + t.angle); }
 
 float KL::ToRadian(const  float  degree_)
