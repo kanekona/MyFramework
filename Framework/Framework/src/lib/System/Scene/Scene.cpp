@@ -1,11 +1,11 @@
 #include "Scene.h"
 #include "Engine\Framework.h"
 #include "Window\Window.h"
-Scene::Scene()
+CScene::CScene()
 {
-	camera = new Camera2D(Box2D(Vec2(), Framework::Get()->GetWindow()->GetSize()));
+	camera = new CCamera2D(CBox2D(CVec2(), CFramework::Get()->GetWindow()->GetSize()));
 }
-Scene::~Scene()
+CScene::~CScene()
 {
 	for (auto id : entitys)
 	{
@@ -19,34 +19,35 @@ Scene::~Scene()
 	plansEntity.clear();
 	delete camera;
 }
-void Scene::Enter()
+void CScene::Entry()
 {
 
 }
-void Scene::SetEntity(Entity* entity)
+void CScene::SetEntity(CEntity* entity)
 {
 	plansEntity.emplace_back(entity);
 }
-void Scene::RegisterEntity()
+void CScene::RegisterEntity()
 {
 	/*for (auto it = plansEntity.begin(); it != plansEntity.end();)
 	{
 		entitys.emplace_back(*it);
-		Entity::Enter(*it);
+		Entity::Entry(*it);
 		it = plansEntity.erase(it);
 	}*/
 	for (auto it : plansEntity)
 	{
 		entitys.emplace_back(it);
-		Entity::Enter(it);
+		CEntity::Entry(it);
 	}
 	plansEntity.clear();
 }
-void Scene::KillEntity()
+void CScene::KillEntity()
 {
-	for (auto id = entitys.begin(); id != entitys.end();)
+	ENSUREMSG(true, "‚±‚Ìˆ—‚ÍŽg—p•s‰Â‚Å‚·");
+	/*for (auto id = entitys.begin(); id != entitys.end();)
 	{
-		if (Entity::GetStateCount(*id) == KL_ENTITY_KILL)
+		if (CEntity::GetStateCount(*id) == KL_ENTITY_KILL)
 		{
 			delete *id;
 			*id = nullptr;
@@ -56,53 +57,53 @@ void Scene::KillEntity()
 		{
 			++id;
 		}
-	}
+	}*/
 }
-RenderingManager* Scene::GetRenderingManager()
+CRenderingManager* CScene::GetRenderingManager()
 {
 	return &renderingManager;
 }
-Camera2D* Scene::GetCamera()
+CCamera2D* CScene::GetCamera()
 {
 	return camera;
 }
-void Scene::EntityStateAdaptation(Scene* scene)
+void CScene::EntityStateAdaptation(CScene* scene)
 {
 	//íœ—\’è‚ðíœ
 	scene->KillEntity();
 	//“o˜^—\’è‚ð“o˜^
 	scene->RegisterEntity();
 }
-void Scene::EntityUpdate(Scene* scene)
+void CScene::EntityUpdate(CScene* scene)
 {
 	//Entity Update
 	for (auto id : scene->entitys)
 	{
-		Entity::Update(id);
-		Entity::ChildrenUpdate(id);
+		CEntity::Update(id);
+		CEntity::ChildrenUpdate(id);
 	}
 	//Camera Update
 	scene->camera->Update();
 	//Rendering
-	RenderingManager::Render(&scene->renderingManager);
+	CRenderingManager::Render(&scene->renderingManager);
 	//Entity State Check
-	Scene::EntityStateAdaptation(scene);
+	CScene::EntityStateAdaptation(scene);
 	for (auto it : scene->entitys)
 	{
-		Entity::ChildrenStateAdaptation(it);
+		CEntity::ChildrenStateAdaptation(it);
 	}
 	//Rendering State Check
-	RenderingManager::AllSpriteAdaptation(&scene->renderingManager);
+	CRenderingManager::AllSpriteAdaptation(&scene->renderingManager);
 }
-size_t Scene::EntityCount() const
+size_t CScene::EntityCount() const
 {
 	return entitys.size();
 }
-Entity* Scene::GetEntity(const size_t num)
+CEntity* CScene::GetEntity(const size_t num)
 {
 	return entitys[num];
 }
-std::vector<Entity*>* Scene::GetEntitys()
+std::vector<CEntity*>* CScene::GetEntitys()
 {
 	return &entitys;
 }

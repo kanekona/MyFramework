@@ -1,18 +1,19 @@
 #pragma once
+#include "Engine\EngineMacro.h"
 #include "Entity\Entity.h"
 #include "RenderingManager\RenderingManager.h"
 #include "Camera\Camera.h"
 #include <typeinfo>
-class Scene : private NonCopyable
+class CScene : private CNonCopyable
 {
 	//! AllEntity
-	std::vector<Entity*> entitys;
+	std::vector<CEntity*> entitys;
 	//! Plans Entity
-	std::vector<Entity*> plansEntity;
+	std::vector<CEntity*> plansEntity;
 	//! RenderingManager
-	RenderingManager renderingManager;
+	CRenderingManager renderingManager;
 	//! MainCamera
-	Camera2D* camera;
+	CCamera2D* camera;
 	//! 
 	/**
 	*@brief	Register registration schedule
@@ -22,120 +23,35 @@ class Scene : private NonCopyable
 	*@brief	Kill Plans Kills
 	*/
 	void KillEntity();
-	/**
-	*
-	*/
-	template <class T> static T* GetEntity(std::vector<Entity*>* entity)
-	{
-		for (auto it : *entity)
-		{
-			if ((typeid(T) == typeid(*it)))
-			{
-				return static_cast<T*>(it);
-			}
-			T* t = it->GetChild<T>();
-			if (t != nullptr)
-			{
-				return t;
-			}
-		}
-		return nullptr;
-	}
-	template <class T> static T* GetEntity(std::vector<Entity*>* entity,const std::string& tag)
-	{
-		for (auto it : *entity)
-		{
-			if (it->tag == tag)
-			{
-				return static_cast<T*>(it);
-			}
-			T* t = it->GetChild<T>(tag);
-			if (t != nullptr)
-			{
-				return t;
-			}
-		}
-		return nullptr;
-	}
-	template <class T> static T* GetEntity(std::vector<Entity*>* entity,const Layer& layer)
-	{
-		for (auto it : *entity)
-		{
-			if (it->layer == layer)
-			{
-				return static_cast<T*>(it);
-			}
-			T* t = it->GetChild<T>(layer);
-			if (t != nullptr)
-			{
-				return t;
-			}
-		}
-		return nullptr;
-	}
-
-	template <class T> static void GetEntitys(std::vector<Entity*>* entity, std::vector<T*>* vector)
-	{
-		for (auto it : *entity)
-		{
-			if ((typeid(T) == typeid(*it)))
-			{
-				vector->emplace_back(static_cast<T*>(it));
-			}
-			it->GetChilds<T>(vector);
-		}
-	}
-	template <class T> static void GetEntitys(std::vector<Entity*>* entity, const std::string& tag, std::vector<T*>* vector)
-	{
-		for (auto it : *entity)
-		{
-			if (it->tag == tag)
-			{
-				vector->emplace_back(static_cast<T*>(it));
-			}
-			it->GetChilds<T>(tag, vector);
-		}
-	}
-	template <class T> static void GetEntitys(std::vector<Entity*>* entity, const Layer& layer, std::vector<T*>* vector)
-	{
-		for (auto it : *entity)
-		{
-			if (it->layer == layer)
-			{
-				vector->emplace_back(static_cast<T*>(it));
-			}
-			it->GetChilds<T>(layer, vector);
-		}
-	}
 public:
 	//! tag
-	std::string tag;
+	CStrID tag;
 	/**
 	*@brief constructor
 	*/
-	explicit Scene();
+	explicit CScene();
 	/**
 	*@brief	destructor
 	*/
-	virtual ~Scene();
+	virtual ~CScene();
 	/**
-	*@brief Scene Enter
+	*@brief Scene Entry
 	*/
-	virtual void Enter();
+	virtual void Entry();
 	/**
 	*@brief	Registration Entity
 	*/
-	void SetEntity(Entity* entity);
+	void SetEntity(CEntity* entity);
 	/**
 	*@brief	Get RenderingManager
 	*@return RenderingManager* this RenderingManager
 	*/
-	RenderingManager* GetRenderingManager();
+	CRenderingManager* GetRenderingManager();
 	/**
 	*@brief	Get Camera
 	*@return Camera2D* template Scene Camera
 	*/
-	Camera2D* GetCamera();
+	CCamera2D* GetCamera();
 	/**
 	*@brief	Get Entity Count
 	*@return size_t This Entity Size
@@ -146,117 +62,168 @@ public:
 	*@param[in] size_t num Entity Number
 	*@return Entity* entity
 	*/
-	Entity* GetEntity(const size_t num);
+	CEntity* GetEntity(const size_t num);
 	/**
 	*@brief	Get Entitys
 	*@return std::vector<Entity*>* All Entity
 	*/
-	std::vector<Entity*>* GetEntitys();
-	/**
-	*@brief	Get Entity
-	*@tparam T assignment class
-	*@return T* assignment class Entity
-	*@detail ‘¶İ‚µ‚È‚¢ê‡‚Ínullptr‚ğ•Ô‚·
-	*@detail “o˜^‚µ‚Ä‚¢‚é‚à‚Ì‚Æ“o˜^—\’è‚Ì‚à‚Ì‚©‚çŒŸõ‚·‚é
-	*/
-	template <class T> T* GetEntity()
+	std::vector<CEntity*>* GetEntitys();
+
+	template <class T> CEntity* GetEntity()
 	{
-		T* now = Scene::GetEntity<T>(&entitys);
-		if (now)
+		for (auto& it : entitys)
 		{
-			return now;
+			if (typeid(T) == typeid(*it))
+			{
+				return it;
+			}
 		}
-		return Scene::GetEntity<T>(&plansEntity);
+		return nullptr;
 	}
-	/**
-	*@brief	Get Entity
-	*@tparam T Assigment Class
-	*@param[in] std::string tag Assigment Tag
-	*@return T* Assigment Tag Class Entity
-	*@detail ‘¶İ‚µ‚È‚¢ê‡‚Ínullptr‚ğ•Ô‚·
-	*@detail “o˜^‚µ‚Ä‚¢‚é‚à‚Ì‚Æ“o˜^—\’è‚Ì‚à‚Ì‚©‚çŒŸõ‚·‚é
-	*/
-	template <class T> T* GetEntity(const std::string& tag)
+	CEntity* GetEntity(const CStrID& inTag)
 	{
-		T* now = Scene::GetEntity<T>(&entitys,tag);
-		if (now)
+		for (auto& it : entitys)
 		{
-			return now;
+			if (it->tag == inTag)
+			{
+				return it;
+			}
 		}
-		return Scene::GetEntity<T>(&plansEntity,tag);
+		return nullptr;
 	}
-	/**
-	*@brief	Get Entity
-	*@tparam T Assigment Class
-	*@param[in] std::string tag Assigment Tag
-	*@return T* Assigment Tag Class Entity
-	*@detail ‘¶İ‚µ‚È‚¢ê‡‚Ínullptr‚ğ•Ô‚·
-	*@detail “o˜^‚µ‚Ä‚¢‚é‚à‚Ì‚Æ“o˜^—\’è‚Ì‚à‚Ì‚©‚çŒŸõ‚·‚é
-	*/
-	template <class T> T* GetEntity(const Layer& layer)
+	CEntity* GetEntity(const ELayer& inLayer)
 	{
-		T* now = Scene::GetEntity<T>(&entitys,layer);
-		if (now)
+		for (auto& it : entitys)
 		{
-			return now;
+			if (it->layer == inLayer)
+			{
+				return it;
+			}
 		}
-		return Scene::GetEntity<T>(&plansEntity,layer);
+		return nullptr;
 	}
-	/**
-	*@brief	Get Entity
-	*@tparam T assignment class
-	*@return T* assignment class Entity
-	*@detail ‘¶İ‚µ‚È‚¢ê‡‚Ínullptr‚ğ•Ô‚·
-	*@detail “o˜^‚µ‚Ä‚¢‚é‚à‚Ì‚Æ“o˜^—\’è‚Ì‚à‚Ì‚©‚çŒŸõ‚·‚é
-	*/
-	template <class T> std::vector<T*> GetEntitys()
+	template <class T> CEntity* GetEntityAll()
 	{
-		std::vector<T> vector;
-		Scene::GetEntitys<T>(&entitys, &vector);
-		Scene::GetEntitys<T>(&plansEntity, &vector);
-		return vector;
+		for (auto& it : entitys)
+		{
+			if (typeid(T) == typeid(*it))
+			{
+				return it;
+			}
+			CEntity* Return = it->GetChildAll<T>();
+			if (Return != nullptr)
+			{
+				return Return;
+			}
+		}
+		return nullptr;
 	}
-	/**
-	*@brief	Get Entity
-	*@tparam T Assigment Class
-	*@param[in] std::string tag Assigment Tag
-	*@return T* Assigment Tag Class Entity
-	*@detail ‘¶İ‚µ‚È‚¢ê‡‚Ínullptr‚ğ•Ô‚·
-	*@detail “o˜^‚µ‚Ä‚¢‚é‚à‚Ì‚Æ“o˜^—\’è‚Ì‚à‚Ì‚©‚çŒŸõ‚·‚é
-	*/
-	template <class T> std::vector<T*> GetEntitys(const std::string& tag)
+	CEntity* GetEntityAll(const CStrID& inTag)
 	{
-		std::vector<T> vector;
-		Scene::GetEntitys<T>(&entitys, tag,&vector);
-		Scene::GetEntitys<T>(&plansEntity, tag,&vector);
-		return vector;
+		for (auto& it : entitys)
+		{
+			if (it->tag == inTag)
+			{
+				return it;
+			}
+			CEntity* Return = it->GetChildAll(inTag);
+			if (Return != nullptr)
+			{
+				return Return;
+			}
+		}
+		return nullptr;
 	}
-	/**
-	*@brief	Get Entity
-	*@tparam T Assigment Class
-	*@param[in] std::string tag Assigment Tag
-	*@return T* Assigment Tag Class Entity
-	*@detail ‘¶İ‚µ‚È‚¢ê‡‚Ínullptr‚ğ•Ô‚·
-	*@detail “o˜^‚µ‚Ä‚¢‚é‚à‚Ì‚Æ“o˜^—\’è‚Ì‚à‚Ì‚©‚çŒŸõ‚·‚é
-	*/
-	template <class T> std::vector<T*> GetEntitys(const Layer& layer)
+	CEntity* GetEntityAll(const ELayer& inLayer)
 	{
-		std::vector<T> vector;
-		Scene::GetEntitys<T>(&entitys, layer,&vector);
-		Scene::GetEntitys<T>(&plansEntity, layer,&vector);
-		return vector;
+		for (auto& it : entitys)
+		{
+			if (it->layer == inLayer)
+			{
+				return it;
+			}
+			CEntity* Return = it->GetChildAll(inLayer);
+			if (Return != nullptr)
+			{
+				return Return;
+			}
+		}
+		return nullptr;
+	}
+	template <class T> void GetEntitys(std::vector<CEntity*>* out)
+	{
+		for (auto& it : entitys)
+		{
+			if (typeid(T) == typeid(*it))
+			{
+				out->emplace_back(it);
+			}
+		}
+	}
+	void GetEntitys(const CStrID& inTag, std::vector<CEntity*>* out)
+	{
+		for (auto& it : entitys)
+		{
+			if (it->tag == inTag)
+			{
+				out->emplace_back(it);
+			}
+		}
+	}
+	void GetEntitys(const ELayer& inLayer, std::vector<CEntity*>* out)
+	{
+		for (auto& it : entitys)
+		{
+			if (it->layer == inLayer)
+			{
+				out->emplace_back(it);
+			}
+		}
+	}
+	template <class T> void GetEntitysAll(std::vector<CEntity*>* out)
+	{
+		for (auto& it : entitys)
+		{
+			if (typeid(T) == typeid(*it))
+			{
+				out->emplace_back(it);
+			}
+			it->GetChildsAll<T>(out);
+		}
+	}
+	void GetEntitysAll(const CStrID& inTag, std::vector<CEntity*>* out)
+	{
+		for (auto& it : entitys)
+		{
+			if (it->tag == inTag)
+			{
+				out->emplace_back(it);
+			}
+			it->GetChildsAll(inTag, out);
+		}
+	}
+	void GetEntitysAll(const ELayer& inLayer, std::vector<CEntity*>* out)
+	{
+		for (auto& it : entitys)
+		{
+			if (it->layer == inLayer)
+			{
+				out->emplace_back(it);
+			}
+			it->GetChildsAll(inLayer, out);
+		}
 	}
 	/**
 	*@brief	Entity State Chenge Adaptation
 	*@param[in] Scene* scene this
 	*/
-	static void EntityStateAdaptation(Scene* scene);
+	static void EntityStateAdaptation(CScene* scene);
 	/**
 	*@brief	Entitys Update
 	*@param[in] Scene* scene this
 	*/
-	static void EntityUpdate(Scene* scene);
-#ifdef KL_DEBUG
+	static void EntityUpdate(CScene* scene);
+#if DEBUG_ENABLE
 	/**
 	*@brief Debug Program
 	*/

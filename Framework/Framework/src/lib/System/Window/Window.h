@@ -3,12 +3,12 @@
 #include "System\System.h"
 #include "Engine\Data.h"
 #include "NonCopyable\NonCopyable.hpp"
-class WindowParameter;
-class Window;
+class CWindowParameter;
+class CWindow;
 /**
 *@brief	Windowの生成、管理を行うclass
 */
-class Window : private NonCopyable
+class CWindow : private CNonCopyable
 {
 	//! アイコン情報
 	GLFWimage image[1];	
@@ -27,14 +27,14 @@ class Window : private NonCopyable
 	//! フルスク設定
 	bool enableFullScreen;
 	//! Windowの位置
-	Vec2Int position;
+	CVec2Int position;
 	//! Window情報
 	GLFWwindow *window;	
 public:
 	/**
 	*@brief	constructor
 	*/
-	explicit Window();
+	explicit CWindow();
 	/**
 	*@brief	constructor
 	*@param[in]	int x windowXサイズ
@@ -43,16 +43,16 @@ public:
 	*@param[in] bool flag フルスク設定
 	*@param[in]	Vec2Int pos window位置
 	*/
-	explicit Window(
+	explicit CWindow(
 		const int x,
 		const int y,
 		const char* name,
 		const bool flag,
-		const Vec2Int& pos);
+		const CVec2Int& pos);
 	/**
 	*@brief	destructor
 	*/
-	virtual ~Window();
+	virtual ~CWindow();
 	/**
 	*@brief	Create Window
 	*@param[in]	int x windowXサイズ
@@ -67,13 +67,13 @@ public:
 		const int y,
 		char* name,
 		const bool flag,
-		const Vec2Int& pos);
+		const CVec2Int& pos);
 	/**
 	*@brief	Create Window
 	*@param[in] WindowParameter windowParameter
 	*@return bool 生成に成功でtrue
 	*/
-	bool Create(const WindowParameter& windowParameter);
+	bool Create(const CWindowParameter& windowParameter);
 	/**
 	*@brief	Create Window
 	*@return bool 生成に成功でtrue
@@ -111,17 +111,17 @@ public:
 	*@brief	Windowのサイズを返す
 	*@return Vec2Int Windowのサイズ
 	*/
-	Vec2Int GetSize() const;
+	CVec2Int GetSize() const;
 	/**
 	*@brief	Windowの位置を返す
 	*@return Vec2Int Windowの位置
 	*/
-	Vec2Int GetPos() const;
+	CVec2Int GetPos() const;
 	/**
 	*@brief	生成するWindowの位置を設定する
 	*@param[in]	Vec2Int pos Windowの位置
 	*/
-	void CreatePosition(const Vec2Int& pos);
+	void CreatePosition(const CVec2Int& pos);
 	/**
 	*@brief	Window情報を返す
 	*@return GLFWWinfow* Window情報
@@ -131,7 +131,7 @@ public:
 	*@brief	Windowの位置を設定する
 	*@param[in]	const Vec2Int& pos 位置
 	*/
-	void SetPos(const Vec2Int& pos);
+	void SetPos(const CVec2Int& pos);
 	/**
 	*@brief	Windowの位置を設定する
 	*@param[in]	int x WindowPosition_x
@@ -142,7 +142,7 @@ public:
 	*@brief	Windowのサイズを設定する
 	*@param[in]	const Vec2Int& size サイズ
 	*/
-	void SetSize(const Vec2Int& size);
+	void SetSize(const CVec2Int& size);
 	/**
 	*@brief	Windowのサイズを設定する
 	*@param[in]	int w WindowSize_w
@@ -169,7 +169,7 @@ public:
 	*@param[in]	const Vec2Int& size WindowSize
 	*@param[in]	bool flag true fullScreen
 	*/
-	void ChangeMode(const Vec2Int& pos, const Vec2Int& size, const bool flag);
+	void ChangeMode(const CVec2Int& pos, const CVec2Int& size, const bool flag);
 	/**
 	*@brief	Windowモードを変更
 	*@param[in]	int x WindowPosition_x
@@ -186,12 +186,12 @@ public:
 	*/
 	const std::string& GetTitle() const;
 };
-class WindowParameter
+class CWindowParameter
 {
 public:
-	Vec2Int position;
-	Vec2Int size;
+	CVec2Int position;
+	CVec2Int size;
 	const char* name;
 	bool enableFullScreen;
-	WindowParameter(const Vec2Int& pos, const Vec2Int& scale, const char* name, const bool screen);
+	CWindowParameter(const CVec2Int& pos, const CVec2Int& scale, const char* name, const bool screen);
 };

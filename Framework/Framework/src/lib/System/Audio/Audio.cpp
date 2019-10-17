@@ -3,7 +3,7 @@
 //---------------------------------
 //@:Audioclass
 //---------------------------------
-Audio::Audio()
+CAudio::CAudio()
 {
 	//アプリケーションをデバイスに接続させる
 	//引数はデバイスの指定,NULLなら既定のデバイス
@@ -33,7 +33,7 @@ Audio::Audio()
 		return;
 	}
 }
-Audio::~Audio()
+CAudio::~CAudio()
 {
 	alcMakeContextCurrent(nullptr);
 	alcDestroyContext(context);
@@ -42,20 +42,20 @@ Audio::~Audio()
 //---------------------------------
 //@:Bufferclass
 //---------------------------------
-Buffer::Buffer()
+CBuffer::CBuffer()
 {
 	//バッファを１つ生成
 	alGenBuffers(1, &id);
 	//現在進行時間を0にする
 	nowTime = 0.f;
 }
-Buffer::Buffer(const std::string& path_)
+CBuffer::CBuffer(const std::string& path_)
 	:path(path_)
 {
 	//バッファを１つ生成
 	alGenBuffers(1, &id);
 	//Wavファイルの読み込み
-	Wav wav_data(path_);
+	CWav wav_data(path_);
 	//経過時間を確認
 	nowTime = wav_data.time();
 	oneSecondsData = wav_data.sampleRate() * wav_data.channel() * sizeof(uint16_t);
@@ -65,13 +65,13 @@ Buffer::Buffer(const std::string& path_)
 	waveformData = wav_data.Getdata();
 	sampleRate = wav_data.sampleRate();
 }
-Buffer::Buffer(const std::string& path_, const size_t& time)
+CBuffer::CBuffer(const std::string& path_, const size_t& time)
 	:path(path_)
 {
 	//バッファを１つ生成
 	alGenBuffers(1, &id);
 	//Wavファイルの読み込み
-	Wav wav_data(path_);
+	CWav wav_data(path_);
 	//経過時間を確認
 	nowTime = wav_data.time();
 	size_t num = time * wav_data.sampleRate()* wav_data.channel() * sizeof(uint16_t);
@@ -82,293 +82,293 @@ Buffer::Buffer(const std::string& path_, const size_t& time)
 	waveformData = wav_data.Getdata();
 	sampleRate = wav_data.sampleRate();
 }
-Buffer::~Buffer()
+CBuffer::~CBuffer()
 {
 	//バッファの削除
 	alDeleteBuffers(1, &id);
 }
-float Buffer::GetTime() const
+float CBuffer::GetTime() const
 {
 	//進行時間を返す
 	return nowTime;
 }
-ALuint Buffer::GetID() const
+ALuint CBuffer::GetID() const
 {
 	//バッファに登録してあるIDを返す
 	return id;
 }
-void Buffer::Bind(const bool stereo, const void* data, const u_int size, const u_int rate) const
+void CBuffer::Bind(const bool stereo, const void* data, const u_int size, const u_int rate) const
 {
 	//波形データをバッファにセット
 	alBufferData(id, stereo ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data, size, rate);
 }
-void Buffer::SetFrameBuffer(const size_t& num)
+void CBuffer::SetFrameBuffer(const size_t& num)
 {
-	Wav wav_data(path);
+	CWav wav_data(path);
 	Bind(wav_data.isStereo(), wav_data.data(num), wav_data.size() - (u_int)num, wav_data.sampleRate());
 }
-char Buffer::GetWaveform(const float time)
+char CBuffer::GetWaveform(const float time)
 {
 	return waveformData.at((unsigned int)(time * oneSecondsData));
 }
 //---------------------------------
 //@:Sourceclass
 //---------------------------------
-Source::Source()
+CSource::CSource()
 {
 	//ソースを１つ生成する
 	alGenSources(1, &id);
 }
-Source::~Source()
+CSource::~CSource()
 {
 	//波形データを解除する
 	UnBindBuffer();
 	//ソースを削除する
 	alDeleteSources(1, &id);
 }
-void Source::BindBuffer(const Buffer& burrer)
+void CSource::BindBuffer(const CBuffer& burrer)
 {
 	//ソースにバッファを指定する
 	alSourcei(id, AL_BUFFER, burrer.GetID());
 }
-void Source::UnBindBuffer() const
+void CSource::UnBindBuffer() const
 {
 	//ソースのバッファを解除する
 	alSourcei(id, AL_BUFFER, 0);
 }
-int Source::GetBufferID() const
+int CSource::GetBufferID() const
 {
 	int bufferID;
 	alGetSourcei(id, AL_BUFFER, &bufferID);
 	return bufferID;
 }
-ALuint Source::GetID() const
+ALuint CSource::GetID() const
 {
 	//ソースのIDを返す
 	return id;
 }
-void Source::Play() const
+void CSource::Play() const
 {
 	//再生する
 	alSourcePlay(id);
 }
-void Source::Stop() const
+void CSource::Stop() const
 {
 	//止める
 	alSourceStop(id);
 }
-void Source::Pause() const
+void CSource::Pause() const
 {
 	//一時停止する
 	alSourcePause(id);
 }
-void Source::SetSourceRelative(const bool relative) const
+void CSource::SetSourceRelative(const bool relative) const
 {
 	alSourcei(id, AL_SOURCE_RELATIVE, relative ? AL_TRUE : AL_FALSE);
 }
-int Source::GetSourceRelative() const
+int CSource::GetSourceRelative() const
 {
 	int relative;
 	alGetSourcei(id, AL_SOURCE_RELATIVE, &relative);
 	return relative;
 }
-void Source::SetVolume(const float volume) const
+void CSource::SetVolume(const float volume) const
 {
 	//音量の変更
 	alSourcef(id, AL_GAIN, volume);
 }
-void Source::SetPitch(const float value) const
+void CSource::SetPitch(const float value) const
 {
 	//ピッチの変更
 	alSourcef(id, AL_PITCH, value);
 }
-void Source::SetLoop(const bool loop) const
+void CSource::SetLoop(const bool loop) const
 {
 	//TRUEで終了時最初の位置に戻る
 	alSourcei(id, AL_LOOPING, loop ? AL_TRUE : AL_FALSE);
 }
-bool Source::IsPlay() const
+bool CSource::IsPlay() const
 {
 	//現在の状態を返す
 	ALint state;
 	alGetSourcei(id, AL_SOURCE_STATE, &state);
 	return state == AL_PLAYING;
 }
-float Source::GetTime() const
+float CSource::GetTime() const
 {
 	//現在の再生時間を返す
 	ALfloat nowtime;
 	alGetSourcef(id, AL_SEC_OFFSET, &nowtime);
 	return nowtime;
 }
-void Source::SetTime(const float time) const
+void CSource::SetTime(const float time) const
 {
 	alSourcef(id, AL_SEC_OFFSET, time);
 }
-void Source::QueueBuffer(const Buffer& buffer) const
+void CSource::QueueBuffer(const CBuffer& buffer) const
 {
 	ALuint buffers = buffer.GetID();
 	//バッファネームのキューを作成
 	alSourceQueueBuffers(id, 1, &buffers);
 }
-ALuint Source::UnqueueBuffer() const
+ALuint CSource::UnqueueBuffer() const
 {
 	ALuint buffers;
 	//キューからバッファを除去する
 	alSourceUnqueueBuffers(id, 1, &buffers);
 	return buffers;
 }
-int Source::GetProcessed() const
+int CSource::GetProcessed() const
 {
 	int pro_;
 	//再生済みのバッファ数を返す
 	alGetSourcei(id, AL_BUFFERS_PROCESSED, &pro_);
 	return pro_;
 }
-int Source::GetQueued() const
+int CSource::GetQueued() const
 {
 	int queued;
 	alGetSourcei(id, AL_BUFFERS_QUEUED, &queued);
 	return queued;
 }
-float Source::GetPitch() const
+float CSource::GetPitch() const
 {
 	float pitch;
 	alGetSourcef(id, AL_PITCH, &pitch);
 	return pitch;
 }
-float Source::GetVolume() const
+float CSource::GetVolume() const
 {
 	float volume;
 	alGetSourcef(id, AL_GAIN, &volume);
 	return volume;
 }
-int Source::GetLoop() const
+int CSource::GetLoop() const
 {
 	int loop;
 	alGetSourcei(id, AL_LOOPING, &loop);
 	return loop;
 }
-int Source::GetSourceType() const
+int CSource::GetSourceType() const
 {
 	int type;
 	alGetSourcei(id, AL_SOURCE_TYPE, &type);
 	return type;
 }
-void Source::SetReferenceDistance(const float distance) const
+void CSource::SetReferenceDistance(const float distance) const
 {
 	alSourcef(id, AL_REFERENCE_DISTANCE, distance);
 }
-float Source::GetReferenceDistance() const
+float CSource::GetReferenceDistance() const
 {
 	float distance;
 	alGetSourcef(id, AL_REFERENCE_DISTANCE, &distance);
 	return distance;
 }
-void Source::SetRolloffFactor(const float factor) const
+void CSource::SetRolloffFactor(const float factor) const
 {
 	alSourcef(id, AL_ROLLOFF_FACTOR, factor);
 }
-float Source::GetRolloffFactor() const
+float CSource::GetRolloffFactor() const
 {
 	float factor;
 	alGetSourcef(id, AL_ROLLOFF_FACTOR, &factor);
 	return factor;
 }
-void Source::SetPosition(const Vec3& position) const
+void CSource::SetPosition(const CVec3& position) const
 {
 	alSource3f(id, AL_POSITION, position.x, position.y, position.z);
 }
-Vec3 Source::GetPosition() const
+CVec3 CSource::GetPosition() const
 {
-	Vec3 position;
+	CVec3 position;
 	alGetSource3f(id, AL_POSITION, &position.x, &position.y, &position.z);
 	return position;
 }
-void Source::SetVelocity(const Vec3& velocity) const
+void CSource::SetVelocity(const CVec3& velocity) const
 {
 	alSource3f(id, AL_VELOCITY, velocity.x, velocity.y, velocity.z);
 }
-Vec3 Source::GetVelocity() const
+CVec3 CSource::GetVelocity() const
 {
-	Vec3 velocity;
+	CVec3 velocity;
 	alGetSource3f(id, AL_VELOCITY, &velocity.x, &velocity.y, &velocity.z);
 	return velocity;
 }
-void Source::SetDirection(const Vec3& direction) const
+void CSource::SetDirection(const CVec3& direction) const
 {
 	alSource3f(id, AL_DIRECTION, direction.x, direction.y, direction.z);
 }
-Vec3 Source::GetDirection() const
+CVec3 CSource::GetDirection() const
 {
-	Vec3 direction;
+	CVec3 direction;
 	alGetSource3f(id, AL_DIRECTION, &direction.x, &direction.y, &direction.z);
 	return direction;
 }
-void Source::SetConeInnerAngle(const float angle) const
+void CSource::SetConeInnerAngle(const float angle) const
 {
 	alSourcef(id, AL_CONE_INNER_ANGLE, angle);
 }
-float Source::GetConeInnerAngle() const
+float CSource::GetConeInnerAngle() const
 {
 	float angle;
 	alGetSourcef(id, AL_CONE_INNER_ANGLE, &angle);
 	return angle;
 }
-void Source::SetConeOuterAngle(const float angle) const
+void CSource::SetConeOuterAngle(const float angle) const
 {
 	alSourcef(id, AL_CONE_OUTER_ANGLE, angle);
 }
-float Source::GetConeOuterAngle() const
+float CSource::GetConeOuterAngle() const
 {
 	float angle;
 	alGetSourcef(id, AL_CONE_OUTER_ANGLE, &angle);
 	return angle;
 }
-void Source::SetConeOuterGain(const float volume) const
+void CSource::SetConeOuterGain(const float volume) const
 {
 	alSourcef(id, AL_CONE_OUTER_GAIN, volume);
 }
-float Source::GetConeOuterGain() const
+float CSource::GetConeOuterGain() const
 {
 	float gain;
 	alGetSourcef(id, AL_CONE_OUTER_GAIN, &gain);
 	return gain;
 }
-void Source::SetOrientation(const float* orientation)
+void CSource::SetOrientation(const float* orientation)
 {
 	alListenerfv(AL_ORIENTATION, orientation);
 }
-float* Source::GetOrientation(float* orientation)
+float* CSource::GetOrientation(float* orientation)
 {
 	alGetListenerfv(AL_ORIENTATION, orientation);
 	return orientation;	
 }
-void Source::SetListenerPosition(const Vec3& position)
+void CSource::SetListenerPosition(const CVec3& position)
 {
 	alListener3f(AL_POSITION, position.x, position.y, position.z);
 }
-Vec3 Source::GetListenerPosition()
+CVec3 CSource::GetListenerPosition()
 {
-	Vec3 position;
+	CVec3 position;
 	alGetListener3f(AL_POSITION, &position.x, &position.y, &position.z);
 	return position;
 }
-void Source::SetListenerVelocity(const Vec3& velocity)
+void CSource::SetListenerVelocity(const CVec3& velocity)
 {
 	alListener3f(AL_VELOCITY, velocity.x, velocity.y, velocity.z);
 }
-Vec3 Source::GetListenerVelocity()
+CVec3 CSource::GetListenerVelocity()
 {
-	Vec3 velocity;
+	CVec3 velocity;
 	alGetListener3f(AL_VELOCITY, &velocity.x, &velocity.y, &velocity.z);
 	return velocity;
 }
-void Source::SetListenerGain(const float volume)
+void CSource::SetListenerGain(const float volume)
 {
 	alListenerf(AL_GAIN, volume);
 }
-float Source::GetListenerGain()
+float CSource::GetListenerGain()
 {
 	float volume;
 	alGetListenerf(AL_GAIN, &volume);
@@ -377,7 +377,7 @@ float Source::GetListenerGain()
 //---------------------------------
 //@:Wavclass
 //---------------------------------
-Wav::Wav(const std::string& file)
+CWav::CWav(const std::string& file)
 {
 	std::ifstream fstr(file, std::ios::binary);
 	if (!fstr)
@@ -388,7 +388,7 @@ Wav::Wav(const std::string& file)
 		throw;
 	}
 	// ファイル情報を解析
-	if (!Wav::analyzeWavFile(info, fstr))
+	if (!CWav::analyzeWavFile(info, fstr))
 	{
 #if DEBUG_ENABLE
 		std::cout << "Wavファイル読み込みエラー: " << file << std::endl;
@@ -407,39 +407,39 @@ Wav::Wav(const std::string& file)
 	time_ = info.size / info.ch / 2.0f / info.sample_rate;
 	// データ読み込み
 	data_.resize(info.size);
-	Wav::searchChunk(fstr, "data");
+	CWav::searchChunk(fstr, "data");
 	fstr.seekg(4, fstr.cur);
 	fstr.read(&data_[0], info.size);
 }
-u_int Wav::channel() const
+u_int CWav::channel() const
 {
 	return info.ch;
 }
-bool Wav::isStereo() const
+bool CWav::isStereo() const
 {
 	return info.ch == 2;
 }
-u_int Wav::sampleRate() const
+u_int CWav::sampleRate() const
 {
 	return info.sample_rate;
 }
-u_int Wav::size() const
+u_int CWav::size() const
 {
 	return info.size;
 }
-float Wav::time() const
+float CWav::time() const
 {
 	return time_;
 }
-const char* Wav::data() const
+const char* CWav::data() const
 {
 	return &data_[0];
 }
-const char* Wav::data(const size_t& number) const
+const char* CWav::data(const size_t& number) const
 {
 	return &data_[number];
 }
-u_int Wav::getValue(const char* ptr, const u_int num)
+u_int CWav::getValue(const char* ptr, const u_int num)
 {
 	u_int value = 0;
 	for (u_int i = 0; i < num; ++i, ++ptr)
@@ -452,7 +452,7 @@ u_int Wav::getValue(const char* ptr, const u_int num)
 #endif
 	return value;
 }
-bool Wav::searchChunk(std::ifstream& fstr, const char* chunk)
+bool CWav::searchChunk(std::ifstream& fstr, const char* chunk)
 {
 	//チャンク開始位置
 	int WAV_START_SIZE = 12;
@@ -469,7 +469,7 @@ bool Wav::searchChunk(std::ifstream& fstr, const char* chunk)
 		// 次のチャンクへ
 		char data[4];
 		fstr.read(data, 4);
-		u_int chunk_size = Wav::getValue(data, 4);
+		u_int chunk_size = CWav::getValue(data, 4);
 		fstr.seekg(chunk_size, fstr.cur);
 		if (fstr.eof())
 		{
@@ -478,13 +478,13 @@ bool Wav::searchChunk(std::ifstream& fstr, const char* chunk)
 	}
 	return false;
 }
-u_int Wav::getChunkSize(std::ifstream& fstr)
+u_int CWav::getChunkSize(std::ifstream& fstr)
 {
 	char data[4];
 	fstr.read(data, 4);
-	return Wav::getValue(data, 4);
+	return CWav::getValue(data, 4);
 }
-bool Wav::analyzeWavFile(Info& info, std::ifstream& fstr)
+bool CWav::analyzeWavFile(Info& info, std::ifstream& fstr)
 {
 	// ファイルがwav形式か調べる
 	enum
@@ -525,13 +525,13 @@ bool Wav::analyzeWavFile(Info& info, std::ifstream& fstr)
 #endif
 		return false;
 	}
-	u_int chunk_size = Wav::getChunkSize(fstr);
+	u_int chunk_size = CWav::getChunkSize(fstr);
 	std::vector<char> chunk(chunk_size);
 	fstr.read(&chunk[0], chunk_size);
-	info.id = Wav::getValue(&chunk[WAV_ID], 2);
-	info.ch = Wav::getValue(&chunk[WAV_CH], 2);
-	info.sample_rate = Wav::getValue(&chunk[WAV_SAMPLE_RATE], 4);
-	info.bit = Wav::getValue(&chunk[WAV_BIT], 2);
+	info.id = CWav::getValue(&chunk[WAV_ID], 2);
+	info.ch = CWav::getValue(&chunk[WAV_CH], 2);
+	info.sample_rate = CWav::getValue(&chunk[WAV_SAMPLE_RATE], 4);
+	info.bit = CWav::getValue(&chunk[WAV_BIT], 2);
 	// dataチャンクを探してデータ長を取得
 	if (!searchChunk(fstr, "data"))
 	{
@@ -540,14 +540,14 @@ bool Wav::analyzeWavFile(Info& info, std::ifstream& fstr)
 #endif
 		return false;
 	}
-	info.size = Wav::getChunkSize(fstr);
+	info.size = CWav::getChunkSize(fstr);
 	return true;
 }
-std::vector<char> Wav::Getdata()
+std::vector<char> CWav::Getdata()
 {
 	return data_;
 }
-void Wav::TestFunction(const float value)
+void CWav::TestFunction(const float value)
 {
 	for (auto it : data_)
 	{
@@ -557,13 +557,13 @@ void Wav::TestFunction(const float value)
 //---------------------------------
 //@:StreamWavclass
 //---------------------------------
-StreamWav::StreamWav(const std::string& file) :
+CStreamWav::CStreamWav(const std::string& file) :
 	fstr_(file, std::ios::binary),
 	loop_(false)
 {
 	if (!fstr_) throw "ファイルを開くことができません";
 	// ファイル情報を解析
-	if (!Wav::analyzeWavFile(info, fstr_))
+	if (!CWav::analyzeWavFile(info, fstr_))
 	{
 		return;
 	}
@@ -579,32 +579,32 @@ StreamWav::StreamWav(const std::string& file) :
 	// データの先頭位置を覚えておく
 	top_pos_ = static_cast<size_t>(fstr_.tellg());
 }
-bool StreamWav::isStereo() const
+bool CStreamWav::isStereo() const
 {
 	return info.ch == 2;
 }
-u_int StreamWav::sampleRate() const
+u_int CStreamWav::sampleRate() const
 {
 	return info.sample_rate;
 }
-size_t StreamWav::GetlastSize() const
+size_t CStreamWav::GetlastSize() const
 {
 	return last_size_;
 }
-void StreamWav::loop(const bool loop)
+void CStreamWav::loop(const bool loop)
 {
 	loop_ = loop;
 }
-void StreamWav::toTop()
+void CStreamWav::toTop()
 {
 	fstr_.seekg(top_pos_, fstr_.beg);
 	last_size_ = info.size;
 }
-bool StreamWav::isEnd() const
+bool CStreamWav::isEnd() const
 {
 	return last_size_ == 0;
 }
-size_t StreamWav::read(std::vector<char>& buffer)
+size_t CStreamWav::read(std::vector<char>& buffer)
 {
 	size_t remain_size = buffer.size();
 	// ループしない場合、残りの中途半端なサイズを読み込んで終了
@@ -616,7 +616,7 @@ size_t StreamWav::read(std::vector<char>& buffer)
 	size_t total_read_size = 0;
 	// ループ再生の場合はバッファを満たすまでデータを読み込む
 	while (remain_size > 0) {
-		size_t read_size = StreamWav::readData(buffer, offset, remain_size);
+		size_t read_size = CStreamWav::readData(buffer, offset, remain_size);
 
 		total_read_size += read_size;
 		remain_size -= read_size;
@@ -624,12 +624,12 @@ size_t StreamWav::read(std::vector<char>& buffer)
 		offset += read_size;
 		if (loop_ && !last_size_)
 		{
-			StreamWav::toTop();
+			CStreamWav::toTop();
 		}
 	}
 	return total_read_size;
 }
-size_t StreamWav::readData(std::vector<char>& buffer, const size_t offset, const size_t size)
+size_t CStreamWav::readData(std::vector<char>& buffer, const size_t offset, const size_t size)
 {
 	size_t read_size = (size < last_size_) ? size : last_size_;
 	fstr_.read(&buffer[offset], read_size);

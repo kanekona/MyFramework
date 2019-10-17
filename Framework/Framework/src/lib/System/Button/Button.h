@@ -10,16 +10,16 @@
 *@details
 */
 
-class Collider;
+class CCollider;
 
 /**
 *@brief Button Class
 *@details Click Action
 */
-class Button : public Entity
+class CButton : public CEntity
 {
 	//! Button Collision
-	Collider* hitBase;
+	CCollider* hitBase;
 	//! Draw Order
 	unsigned int order;
 public:
@@ -27,18 +27,18 @@ public:
 	*@brief	constructor
 	*@param[in] Transform& transform Button Transform
 	*/
-	explicit Button(const Transform& transform);
+	explicit CButton(const CTransform& transform);
 	/**
 	*@brief	destructor
 	*/
-	virtual ~Button();
+	virtual ~CButton();
 	/**
 	*@brief This Hit Check
 	*@param[in] Collider* collision Partner Collider
 	*@return bool Hit
 	*@details 引数との判定を行いその結果を返す
 	*/
-	bool Enable(Collider* collision);
+	bool Enable(CCollider* collision);
 	/**
 	*@brief This Color Chenge
 	*@param[in] bool flag Color Branch
@@ -66,16 +66,16 @@ public:
 	*@return Font* This FontData
 	*@details Button内のFontデータを取得する
 	*/
-	Font* GetFont();
+	CFont* GetFont();
 protected:
 	//! Select Color
-	Color select;
+	CColor select;
 	//! Not Select Color
-	Color notSelect;
+	CColor notSelect;
 	//! Font
-	Font font;
+	CFont font;
 	//! Back Image
-	Sprite back;
+	CSprite back;
 	//! Transform
-	Transform transform;
+	CTransform transform;
 };

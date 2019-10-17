@@ -4,16 +4,16 @@
 *
 *このclassを継承したclassはコピーコンストラクタと代入演算を禁止されます
 */
-class NonCopyable
+class CNonCopyable
 {
-	void operator=(const NonCopyable&) = delete;
-	NonCopyable(const NonCopyable&) = delete;
+	void operator=(const CNonCopyable&) = delete;
+	CNonCopyable(const CNonCopyable&) = delete;
 protected:
-	explicit NonCopyable()
+	explicit CNonCopyable()
 	{
 
 	}
-	virtual ~NonCopyable()
+	virtual ~CNonCopyable()
 	{
 
 	}

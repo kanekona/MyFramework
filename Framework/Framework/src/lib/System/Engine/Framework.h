@@ -2,51 +2,51 @@
 #include "NonCopyable\NonCopyable.hpp"
 #include "Timer\glTimer.h"
 
-class SceneManager;
-class Scene;
-class Window;
+class CSceneManager;
+class CScene;
+class CWindow;
 
 /**
 *@brief Game Framework
 */
-class Framework : private NonCopyable
+class CFramework : private CNonCopyable
 {
 	//! Scene Manager
-	SceneManager* sceneManager;
+	CSceneManager* sceneManager;
 	//! Window
-	Window* window;
+	CWindow* window;
 	//! Enable Engine Destroy
 	bool* enableEngineDestroy;
 	//! Timer
-	Time time;
+	CTime time;
 	//! preTime
 	float preTime;
 	//! DeltaTime
 	float deltaTime;
 	//! FrameworkInstance
-	static Framework* instance;
+	static CFramework* instance;
 	/**
 	*@brief	constructor
 	*@param[in] bool* destroy Engine Destroy Frag Address
 	*/
-	explicit Framework(bool* destroy);
+	explicit CFramework(bool* destroy);
 	/**
 	*@brief	destructor
 	*/
-	virtual ~Framework();
+	virtual ~CFramework();
 public:
 	/**
 	*@brief Get FrameworkInstance
 	*@return Framework* Instance
 	*/
-	static Framework* Get();
+	static CFramework* Get();
 	/**
 	*@brief	Create Framework Instance
 	*@param[in] bool* destroy Engine Destroy Frag Address
 	*@return Framework* Get Framework Instance
 	*@detail ä˘Ç…ê∂ê¨Ç≥ÇÍÇƒÇ¢ÇÈèÍçáÇÕâΩÇ‡çsÇ¢Ç‹ÇπÇÒ
 	*/
-	static Framework* Create(bool* destroy);
+	static CFramework* Create(bool* destroy);
 	/**
 	*@brief	Instance Destroy
 	*/
@@ -55,16 +55,16 @@ public:
 	*@brief Change Next Scene
 	*@param[in] Scene* next NextScene
 	*/
-	void ChangeScene(Scene* next);
+	void ChangeScene(CScene* next);
 	/**
 	*@brief	Get Now Scene
 	*@return Scene* Now Scene
 	*/
-	Scene* GetScene();
+	static CScene* GetScene();
 	/**
 	*@brief	Get Window
 	*/
-	Window* GetWindow();
+	static CWindow* GetWindow();
 	/**
 	*@brief Framework Update
 	*/
@@ -77,7 +77,7 @@ public:
 	*@brief	Create SceneManager
 	*@param[in] Scene* begin Start Scene
 	*/
-	void CreateSceneManager(Scene* begin);
+	void CreateSceneManager(CScene* begin);
 	/**
 	*@brief Get Position In The Window
 	*@param[in] unsigned int x X Coordinate Split
@@ -85,14 +85,14 @@ public:
 	*@param[in] unsigned int number Split Number
 	*@return Vec2Int In The Window Position
 	*/
-	Vec2Int GetPosition(const unsigned int x, const unsigned int y, const unsigned int number);
+	CVec2Int GetPosition(const unsigned int x, const unsigned int y, const unsigned int number);
 	/**
 	*@brief Get Size In The Window
 	*@param[in] unsigned int x X Coordinate Split
 	*@param[in] unsigned int y Y Coordinate Split
 	*@return Vec2Int In The Window Size
 	*/
-	Vec2Int GetSize(const unsigned int x, const unsigned int y);
+	CVec2Int GetSize(const unsigned int x, const unsigned int y);
 	/**
 	*@brief Get Size In The Window
 	*@param[out] float* out float[2]

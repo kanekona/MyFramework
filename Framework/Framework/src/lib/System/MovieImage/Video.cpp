@@ -1,31 +1,31 @@
 #include "Video.h"
 #include "Engine\Framework.h"
 #include "Engine\OGF.hpp"
-Video::Video()
+CVideo::CVideo()
 {
 }
-Video::Video(const std::string& filePath, const format& movie, const format& sound)
+CVideo::CVideo(const std::string& filePath, const TFormat& movie, const TFormat& sound)
 {
 	Load(filePath, movie, sound);
 }
-Video::~Video()
+CVideo::~CVideo()
 {
 }
-bool Video::Load(const std::string& filepath, const format& movie, const format& s)
+bool CVideo::Load(const std::string& filepath, const TFormat& movie, const TFormat& s)
 {
 	CV_Open(filepath + movie);
 	LoadSound(filepath + s);
 	return true;
 }
-void Video::LoadSound(const std::string& filePath)
+void CVideo::LoadSound(const std::string& filePath)
 {
 	sound.Create(filePath);
 }
-void Video::Enter()
+void CVideo::Entry()
 {
 	sound.Play();
 }
-void Video::Update()
+void CVideo::Update()
 {
 	if (!enablePlay)
 	{
@@ -62,32 +62,32 @@ void Video::Update()
 //	//	}
 //	//}
 //}
-void Video::SetVolume(const float volume)
+void CVideo::SetVolume(const float volume)
 {
 	sound.Volume(volume);
 }
-void Video::SetSpeed(const float speed)
+void CVideo::SetSpeed(const float speed)
 {
 	__super::SetSpeed(speed);
 	sound.Pitch(magnification);
 }
-void Video::SetTime(const float time)
+void CVideo::SetTime(const float time)
 {
 	sound.Skip(time);
 }
-float Video::GetTime() const
+float CVideo::GetTime() const
 {
 	return sound.CurrentTime();
 }
-void Video::Play()
+void CVideo::Play()
 {
 	sound.Play();
 }
-void Video::Pause()
+void CVideo::Pause()
 {
 	sound.Pause();
 }
-const format MovieFormat::MP3 = ".mp3";
-const format MovieFormat::MP4 = ".mp4";
-const format MovieFormat::AVI = ".avi";
-const format MovieFormat::WAV = ".wav";
+const TFormat CMovieFormat::MP3 = ".mp3";
+const TFormat CMovieFormat::MP4 = ".mp4";
+const TFormat CMovieFormat::AVI = ".avi";
+const TFormat CMovieFormat::WAV = ".wav";

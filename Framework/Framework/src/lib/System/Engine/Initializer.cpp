@@ -2,11 +2,11 @@
 #include "Event\Event.h"
 #include "WinConfig\StartScene.h"
 #include "Scene\Scene.h"
-WindowParameter Initializer::ConfigWindow()
+CWindowParameter CInitializer::ConfigWindow()
 {
-	return WindowParameter(Vec2Int(0, 30), Vec2Int(540, 270), "WindowName", false);
+	return CWindowParameter(CVec2Int(0, 30), CVec2Int(540, 270), "WindowName", false);
 }
-Scene* Initializer::SceneAdaptation()
+CScene* CInitializer::SceneAdaptation()
 {
 	return new StartScene();
 }

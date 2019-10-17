@@ -1,11 +1,12 @@
 #include "SceneManager.h"
+#include "Scene.h"
 
-SceneManager::SceneManager(Scene* begin)
+CSceneManager::CSceneManager(CScene* begin)
 {
 	nowScene = begin;
 	nextScene = nullptr;
 }
-SceneManager::~SceneManager()
+CSceneManager::~CSceneManager()
 {
 	if (nowScene)
 	{
@@ -18,26 +19,26 @@ SceneManager::~SceneManager()
 		nextScene = nullptr;
 	}
 }
-void SceneManager::ChangeScene(Scene* next)
+void CSceneManager::ChangeScene(CScene* next)
 {
 	nextScene = next;
 }
-void SceneManager::SceneUpdate()
+void CSceneManager::SceneUpdate()
 {
-	Scene::EntityUpdate(nowScene);
+	CScene::EntityUpdate(nowScene);
 	ChangeAdaptation();
 }
-void SceneManager::ChangeAdaptation()
+void CSceneManager::ChangeAdaptation()
 {
 	if (nextScene != nullptr)
 	{
 		delete nowScene;
 		nowScene = nextScene;
-		nowScene->Enter();
+		nowScene->Entry();
 		nextScene = nullptr;
 	}
 }
-Scene* SceneManager::Get()
+CScene* CSceneManager::Get()
 {
 	return nowScene;
 }

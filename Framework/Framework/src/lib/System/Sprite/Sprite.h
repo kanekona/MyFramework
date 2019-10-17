@@ -1,38 +1,45 @@
 #pragma once
 #include "Entity\Entity.h"
+#include "Engine\EngineTypedef.h"
 
-class Texture;
-class Color;
-class Transform;
-class Shader;
+class CTexture;
+class CColor;
+class CTransform;
+class CShader;
 
-class Sprite : public Entity
+class CSprite : public CEntity
 {
 	//! order in layer
 	unsigned int order;
 	//! Registerd ID
 	const int registerd;
+	//! delete data with destructor
+	bool IsDeleteData;
 	/**
 	*@brief	Register this in the RenderingManager
 	*/
-	void Register();
+	virtual void Register();
+	/**
+	*@brief 
+	*/
+	virtual void Release();
 public:
 	//! TextureData
-	Texture* texture;
+	CTexture* texture;
 	//! Transform
-	Transform* transform;
+	CTransform* transform;
 	//! Color
-	Color* color;
+	CColor* color;
 	/**
 	*@brief	constructor
 	*@param[in] bool flag Register in the drawing system
 	*@param[in] int registerd Registerd To Number
 	*/
-	explicit Sprite(const bool flag = true, const int registerd = REGISTERD_CANVAS);
+	explicit CSprite(const bool flag = true, const int registerd = REGISTERD_CANVAS);
 	/**
 	*@brief	destructor
 	*/
-	virtual ~Sprite();
+	virtual ~CSprite();
 	/**
 	*@brief	ï`âÊÇçsÇ§
 	*/
@@ -41,7 +48,7 @@ public:
 	*@brief	SetShaderValue
 	*@param[in] Shader* shader Use Shader
 	*/
-	virtual void SetShaderData(Shader* shader);
+	virtual void SetShaderData(CShader* shader);
 	/**
 	*@brief Set Draw Order
 	*@param[in] unsigned int order Order
@@ -53,7 +60,7 @@ public:
 	*@param[in] Sprite* second Sprite
 	*@return bool true if second is freater than first
 	*/
-	static bool Comparison(const Sprite* first, const Sprite* second);
+	static bool Comparison(const CSprite* first, const CSprite* second);
 	/**
 	*@brief New 3 Member
 	*/
@@ -63,10 +70,10 @@ public:
 	*/
 	void DeleteData();
 
-	const static int REGISTERD_CANVAS = 0x01;
-	const static int REGISTERD_UI = 0x02;
-	const static int REGISTERD_BACK = 0x03;
+	const static uint8 REGISTERD_CANVAS = 0x01;
+	const static uint8 REGISTERD_UI = 0x02;
+	const static uint8 REGISTERD_BACK = 0x03;
 };
-const int Sprite::REGISTERD_CANVAS;
-const int Sprite::REGISTERD_UI;
-const int Sprite::REGISTERD_BACK;
+const uint8 CSprite::REGISTERD_CANVAS;
+const uint8 CSprite::REGISTERD_UI;
+const uint8 CSprite::REGISTERD_BACK;

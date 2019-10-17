@@ -1,6 +1,6 @@
 #include "ResourceLoad.h"
 #include "ResourceManager\ResourceManager.h"
-ResourceLoad::ResourceLoad(std::ifstream& ifs)
+CResourceLoad::CResourceLoad(std::ifstream& ifs)
 {
 	std::string lineText;
 	while (std::getline(ifs, lineText))
@@ -13,11 +13,11 @@ ResourceLoad::ResourceLoad(std::ifstream& ifs)
 		DataCreate(lineText);
 	}
 }
-ResourceLoad::~ResourceLoad()
+CResourceLoad::~CResourceLoad()
 {
 
 }
-void ResourceLoad::DataCreate(const std::string& text)
+void CResourceLoad::DataCreate(const std::string& text)
 {
 	//'>'の前と後でstringデータをわける
 	std::string::size_type t = text.find(">");
@@ -36,17 +36,17 @@ void ResourceLoad::DataCreate(const std::string& text)
 	if (dataPath == "Texture")
 	{
 		ss >> path >> name;
-		ResourceManager::Get()->CreateTexture(name, path);
+		CResourceManager::Get()->CreateTexture(name, path);
 	}
 	else if (dataPath == "Sound")
 	{
 		ss >> path >> name;
-		ResourceManager::Get()->CreateSound(name, path);
+		CResourceManager::Get()->CreateSound(name, path);
 	}
 	else if (dataPath == "Shader")
 	{
 		ss >> path >> name;
-		ResourceManager::Get()->CreateShader(name, path);
+		CResourceManager::Get()->CreateShader(name, path);
 	}
 	else
 	{

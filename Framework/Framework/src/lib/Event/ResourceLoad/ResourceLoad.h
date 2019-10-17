@@ -8,7 +8,7 @@
 /**
 *@brief	リソースを読み込むイベントclass
 */
-class ResourceLoad
+class CResourceLoad
 {
 	//!	ファイルの中身のデータ
 	std::string textData;
@@ -26,9 +26,9 @@ public:
 	*@brief	constructor
 	*@param[in]	ifstream ifs ファイルデータ
 	*/
-	explicit ResourceLoad(std::ifstream& ifs);
+	explicit CResourceLoad(std::ifstream& ifs);
 	/**
 	*@brief	destructor
 	*/
-	virtual ~ResourceLoad();
+	virtual ~CResourceLoad();
 };

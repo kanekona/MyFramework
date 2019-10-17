@@ -1,10 +1,12 @@
 #pragma once
-#include "Scene.h"
+#include "NonCopyable\NonCopyable.hpp"
 
-class SceneManager : private NonCopyable
+class CScene;
+
+class CSceneManager : private CNonCopyable
 {
-	Scene* nowScene;
-	Scene* nextScene;
+	CScene* nowScene;
+	CScene* nextScene;
 	/**
 	*@brief Scene Change Adaptation
 	*/
@@ -14,7 +16,7 @@ public:
 	*@brief	Scene Change
 	*@param[in] Scene* nextScene NextScene
 	*/
-	void ChangeScene(Scene* nextScene);
+	void ChangeScene(CScene* nextScene);
 	/**
 	*@brief Scene Update
 	*/
@@ -23,14 +25,14 @@ public:
 	*@brief Get Now Scene
 	*@return Scene* Now Scene
 	*/
-	Scene* Get();
+	CScene* Get();
 	/**
 	*@brief	constructor
 	*@param[in] Scene* begin Start Scene
 	*/
-	explicit SceneManager(Scene* begin);
+	explicit CSceneManager(CScene* begin);
 	/**
 	*@brief	destructor
 	*/
-	virtual ~SceneManager();
+	virtual ~CSceneManager();
 };

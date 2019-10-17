@@ -1,9 +1,9 @@
 #pragma once
 #include "Scene\Scene.h"
 
-class StartScene : public Scene
+class StartScene : public CScene
 {
-	void Enter() override;
+	void Entry() override;
 public:
 	explicit StartScene();
 	virtual ~StartScene();

@@ -6,7 +6,7 @@
 *
 *一括読み込みをしている
 */
-class Sound
+class CSound
 {
 private:
 	//! ループ再生
@@ -20,24 +20,24 @@ private:
 	//! 現在のファイルパス
 	std::string path;
 	//! bufferData
-	std::shared_ptr<Buffer> buffer;
+	std::shared_ptr<CBuffer> buffer;
 	//! sourceData
-	std::shared_ptr<Source> source;
+	std::shared_ptr<CSource> source;
 public:
 	/**
 	*@brief	constructor
 	*/
-	explicit Sound();
+	explicit CSound();
 	/**
 	*@brief	constructor
 	*@param[in]	string path_ ファイルのパス
 	*@param[in]	bool loop ループ再生
 	*/
-	explicit Sound(const std::string& path_, const bool loop = false);
+	explicit CSound(const std::string& path_, const bool loop = false);
 	/**
 	*brief	destructor
 	*/
-	virtual ~Sound();
+	virtual ~CSound();
 	/**
 	*@brief	サウンドの読み込み
 	*@param[in]	string path_ ファイル名
@@ -101,12 +101,12 @@ public:
 	*@brief Get Buffer
 	*@return Buffer* BufferPtr
 	*/
-	Buffer* GetBuffer() const;
+	CBuffer* GetBuffer() const;
 	/**
 	*@brief Get Source
 	*@return Source* SourcePtr
 	*/
-	Source* GetSource() const;
+	CSource* GetSource() const;
 	/*
 	*@brief	指定フレームへスキップする
 	*@param[in] time スキップする再生時間

@@ -9,7 +9,7 @@ StartScene::~StartScene()
 {
 
 }
-void StartScene::Enter()
+void StartScene::Entry()
 {
 	SetEntity(new WinConfig());
 }

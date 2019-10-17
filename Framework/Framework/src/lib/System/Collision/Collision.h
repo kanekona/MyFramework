@@ -1,12 +1,12 @@
 #pragma once
 #include "System\System.h"
 
-class Collider;
-class BoxCollider;
-class CircleCollider;
-class PointCollider;
-class LineCollider;
-class CapsuleCollider;
+class CCollider;
+class CBoxCollider;
+class CCircleCollider;
+class CPointCollider;
+class CLineCollider;
+class CCapsuleCollider;
 
 /**
 *@file Collision.h
@@ -20,62 +20,62 @@ class CapsuleCollider;
 *@brief Collider Class
 *@details Collider Base
 */
-class Collider
+class CCollider
 {
 protected:
 	//! Vertex Number
 	const unsigned short VERTEX_NUM;
 	//! Transform
-	Transform* transform;
+	CTransform* transform;
 public:
 	/**
 	*@brief	constructor
 	*@param[in]	unsigned short vertex VertexNumber
 	*/
-	explicit Collider(const unsigned short vertex,Transform* transform);
+	explicit CCollider(const unsigned short vertex,CTransform* transform);
 	/**
 	*@brief	当たり判定を返す
 	*@param[in] CollisionBase* collision 判定相手
 	*@return bool true hit
 	*/
-	virtual bool Hit(Collider* collision) = 0;
+	virtual bool Hit(CCollider* collision) = 0;
 	//! Radius
-	Vec2 radius;
+	CVec2 radius;
 	/**
 	*@brief	矩形との判定
 	*@param[in] CollisionBox* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(BoxCollider* b) = 0;
+	virtual bool GetHit(CBoxCollider* b) = 0;
 	/**
 	*@brief	円との判定
 	*@param[in] CollisionCircle* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(CircleCollider*b) = 0;
+	virtual bool GetHit(CCircleCollider*b) = 0;
 	/**
 	*@brief	点との判定
 	*@param[in] CollisionPointer* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(PointCollider* b) = 0;
+	virtual bool GetHit(CPointCollider* b) = 0;
 	/**
 	*@brief	カプセルとの判定
 	*@param[in]	CollisionCapsule* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(CapsuleCollider* b) = 0;
+	virtual bool GetHit(CCapsuleCollider* b) = 0;
 	/**
 	*@brief	線との判定
 	*@param[in]	CollisionLine* b 相手のオブジェクト
 	*@returnbool 当たっていればtrue
 	*/
-	virtual bool GetHit(LineCollider* b) = 0;
+	virtual bool GetHit(CLineCollider* b) = 0;
 };
 /**
 *@brief	矩形判定
 */
-class BoxCollider : public Collider
+class CBoxCollider : public CCollider
 {
 	//! 回転値
 	float angle;
@@ -83,9 +83,9 @@ public:
 	/**
 	*@brief	constructor
 	*/
-	explicit BoxCollider(Transform* transform);
+	explicit CBoxCollider(CTransform* transform);
 	//!	当たり判定
-	Box2D hitBase;
+	CBox2D hitBase;
 	/**
 	*@brief	回転値を変更する
 	*@param[in] float _angle 回転値
@@ -105,50 +105,50 @@ public:
 	*@param[in]	CollisionBase* collision 判定相手
 	*@return bool true hit
 	*/
-	bool Hit(Collider* collision) override;
+	bool Hit(CCollider* collision) override;
 	/**
 	*@brief	矩形との判定
 	*@param[in] CollisionBox* b 相手のオブジェクト
 	*@return  bool 当たっていればtrue
 	*/
-	virtual bool GetHit(BoxCollider* b) override;
+	virtual bool GetHit(CBoxCollider* b) override;
 	/**
 	*@brief	円との判定
 	*@param[in] CollisionCircle* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(CircleCollider* b) override;
+	virtual bool GetHit(CCircleCollider* b) override;
 	/**
 	*@brief	点との判定
 	*@param[in] CollisionPointer* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(PointCollider* b) override;
+	virtual bool GetHit(CPointCollider* b) override;
 	/**
 	*@brief	点との判定(未完成)
 	*@param[in] CollisionLine* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(LineCollider* b) override;
+	virtual bool GetHit(CLineCollider* b) override;
 	/**
 	*@brief	カプセルとの判定(未完成)
 	*@param[in] CollisionCapsule* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(CapsuleCollider* b) override;
+	virtual bool GetHit(CCapsuleCollider* b) override;
 };
 /**
 *@brief	円判定
 */
-class CircleCollider : public Collider
+class CCircleCollider : public CCollider
 {
 public:
 	//! 当たり判定
-	Circle hitBase;
+	CCircle hitBase;
 	/**
 	*@brief	constructor
 	*/
-	explicit CircleCollider(Transform* transform);
+	explicit CCircleCollider(CTransform* transform);
 	/**
 	*@brief	当たり判定を生成する
 	*/
@@ -158,50 +158,50 @@ public:
 	*@param[in]	CollisionBase* collision 判定相手
 	*@return bool true hit
 	*/
-	bool Hit(Collider* collision) override;
+	bool Hit(CCollider* collision) override;
 	/**
 	*@brief	矩形との判定
 	*@param[in] CollisionBox* b 相手のオブジェクト
 	*@return  bool 当たっていればtrue
 	*/
-	virtual bool GetHit(BoxCollider* b) override;
+	virtual bool GetHit(CBoxCollider* b) override;
 	/**
 	*@brief	円との判定
 	*@param[in] CollisionCircle* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(CircleCollider* b) override;
+	virtual bool GetHit(CCircleCollider* b) override;
 	/**
 	*@brief	点との判定
 	*@param[in] CollisionPointer* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(PointCollider* b) override;
+	virtual bool GetHit(CPointCollider* b) override;
 	/**
 	*@brief	線との判定(未完成)
 	*@param[in] CollisionLine* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(LineCollider* b) override;
+	virtual bool GetHit(CLineCollider* b) override;
 	/**
 	*@brief	カプセルとの判定(未完成)
 	*@param[in] CollisionCapsule* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(CapsuleCollider* b) override;
+	virtual bool GetHit(CCapsuleCollider* b) override;
 };
 /**
 *@brief	点判定
 */
-class PointCollider : public Collider
+class CPointCollider : public CCollider
 {
 public:
 	//! 当たり判定
-	Vec2 hitBase;
+	CVec2 hitBase;
 	/**
 	*@brief	constructor
 	*/
-	explicit PointCollider(Transform* transform);
+	explicit CPointCollider(CTransform* transform);
 	/**
 	*@brief	当たり判定を生成する
 	*/
@@ -211,50 +211,50 @@ public:
 	*@param[in]	CollisionBase* collision 判定相手
 	*@return bool true hit
 	*/
-	bool Hit(Collider* collision) override;
+	bool Hit(CCollider* collision) override;
 	/**
 	*@brief	矩形との判定
 	*@param[in] CollisionBox* b 相手のオブジェクト
 	*@return  bool 当たっていればtrue
 	*/
-	virtual bool GetHit(BoxCollider* b) override;
+	virtual bool GetHit(CBoxCollider* b) override;
 	/**
 	*@brief	円との判定
 	*@param[in] CollisionCircle* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(CircleCollider* b) override;
+	virtual bool GetHit(CCircleCollider* b) override;
 	/**
 	*@brief	点との判定
 	*@param[in] CollisionPointer* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(PointCollider* b) override;
+	virtual bool GetHit(CPointCollider* b) override;
 	/**
 	*@brief	線との判定
 	*@param[in] CollisionLine* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(LineCollider* b) override;
+	virtual bool GetHit(CLineCollider* b) override;
 	/**
 	*@brief	カプセルとの判定(未完成)
 	*@param[in] CollisionCapsule* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(CapsuleCollider* b) override;
+	virtual bool GetHit(CCapsuleCollider* b) override;
 };
 /**
 *@brief	線判定
 */
-class LineCollider : public Collider
+class CLineCollider : public CCollider
 {
 public:
 	//! 当たり判定
-	Vec2 hitBase[2];
+	CVec2 hitBase[2];
 	/**
 	*@brief	constructor
 	*/
-	explicit LineCollider(Transform* transform);
+	explicit CLineCollider(CTransform* transform);
 	/**
 	*@brief	当たり判定を生成する
 	*/
@@ -264,85 +264,85 @@ public:
 	*@param[in]	CollisionBase* collision 判定相手
 	*@return bool true hit
 	*/
-	bool Hit(Collider* collision) override;
+	bool Hit(CCollider* collision) override;
 	/**
 	*@brief	矩形との判定
 	*@param[in] CollisionBox* b 相手のオブジェクト
 	*@return  bool 当たっていればtrue
 	*/
-	virtual bool GetHit(BoxCollider* b) override;
+	virtual bool GetHit(CBoxCollider* b) override;
 	/**
 	*@brief	円との判定
 	*@param[in] CollisionCircle* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(CircleCollider* b) override;
+	virtual bool GetHit(CCircleCollider* b) override;
 	/**
 	*@brief	点との判定
 	*@param[in] CollisionPointer* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(PointCollider* b) override;
+	virtual bool GetHit(CPointCollider* b) override;
 	/**
 	*@brief	線との判定
 	*@param[in] CollisionLine* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(LineCollider* b) override;
+	virtual bool GetHit(CLineCollider* b) override;
 	/**
 	*@brief	カプセルとの判定
 	*@param[in] CollisionCapsule* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(CapsuleCollider* b) override;
+	virtual bool GetHit(CCapsuleCollider* b) override;
 };
 /**
 *@brief	カプセル判定
 *! 未完成
 */
-class CapsuleCollider : public Collider
+class CCapsuleCollider : public CCollider
 {
 public:
 	//! 当たり判定
-	Vec2 hitBase[2];
+	CVec2 hitBase[2];
 	/**
 	*@brief	constructor
 	*/
-	explicit CapsuleCollider(Transform* transform);
+	explicit CCapsuleCollider(CTransform* transform);
 	/**
 	*@brief	当たり判定を返す
 	*@param[in]	CollisionBase* collision 判定相手
 	*@return bool true hit
 	*/
-	bool Hit(Collider* collision) override;
+	bool Hit(CCollider* collision) override;
 	/**
 	*@brief	矩形との判定
 	*@param[in] CollisionBox* b 相手のオブジェクト
 	*@return  bool 当たっていればtrue
 	*/
-	virtual bool GetHit(BoxCollider* b) override;
+	virtual bool GetHit(CBoxCollider* b) override;
 	/**
 	*@brief	円との判定
 	*@param[in] CollisionCircle* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(CircleCollider* b) override;
+	virtual bool GetHit(CCircleCollider* b) override;
 	/**
 	*@brief	点との判定
 	*@param[in] CollisionPointer* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(PointCollider* b) override;
+	virtual bool GetHit(CPointCollider* b) override;
 	/**
 	*@brief	線との判定
 	*@param[in] CollisionLine* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(LineCollider* b) override;
+	virtual bool GetHit(CLineCollider* b) override;
 	/**
 	*@brief	カプセルとの判定
 	*@param[in] CollisionCapsule* b 相手のオブジェクト
 	*@return bool 当たっていればtrue
 	*/
-	virtual bool GetHit(CapsuleCollider* b) override;
+	virtual bool GetHit(CCapsuleCollider* b) override;
 };

@@ -2,14 +2,14 @@
 #include "Input\Input.h"
 #include "ResourceManager\ResourceManager.h"
 #include "Collision\Collision.h"
-Button::Button(const Transform& t)
+CButton::CButton(const CTransform& t)
 	:back(true)
 {
 	transform = t;
 	tag = "Button";
-	layer = Layer::Button;
-	hitBase = new BoxCollider(&transform);
-	back.texture = ResourceManager::Get()->GetTextureData("button");
+	layer = ELayer::Button;
+	hitBase = new CBoxCollider(&transform);
+	back.texture = CResourceManager::Get()->GetTextureData("button");
 	back.transform = &transform;
 	back.color = &notSelect;
 	font.transform = &transform;
@@ -18,17 +18,17 @@ Button::Button(const Transform& t)
 	SetDrawOrder(0);
 }
 
-Button::~Button()
+CButton::~CButton()
 {
 	delete hitBase;
 }
 
-bool Button::Enable(Collider* collision)
+bool CButton::Enable(CCollider* collision)
 {
 	return hitBase->Hit(collision);
 }
 
-void Button::ChangeColor(const bool flag)
+void CButton::ChangeColor(const bool flag)
 {
 	if (flag)
 	{
@@ -39,26 +39,26 @@ void Button::ChangeColor(const bool flag)
 		back.color = &notSelect;
 	}
 }
-void Button::Update()
+void CButton::Update()
 {
-	bool hit = Enable(Input::Get()->mouse->GetCollision());
+	bool hit = Enable(CInput::Get()->mouse->GetCollision());
 	ChangeColor(hit);
-	if (hit && Input::Get()->mouse->down(Mouse::LEFT))
+	if (hit && CInput::Get()->mouse->down(In::MOUSE_LEFT))
 	{
 		Decision();
 	}
 }
-void Button::Decision()
+void CButton::Decision()
 {
 
 }
 
-Font* Button::GetFont()
+CFont* CButton::GetFont()
 {
 	return &font;
 }
 
-void Button::SetDrawOrder(const unsigned int o)
+void CButton::SetDrawOrder(const unsigned int o)
 {
 	order = o;
 	font.SetDrawOrder(order + 1);

@@ -1,7 +1,7 @@
 #include "Shader.h"
 #include "Engine\EngineMacro.h"
 
-GLuint Shader::Compile(GLuint type, const std::string &text)
+GLuint CShader::Compile(GLuint type, const std::string &text)
 {
 	//shaderの生成
 	GLuint shader = glCreateShader(type);
@@ -29,7 +29,7 @@ GLuint Shader::Compile(GLuint type, const std::string &text)
 #endif // _DEBUG
 	return shader;
 }
-void Shader::Setup(const GLuint program, const std::string &v_source, const std::string &f_source) {
+void CShader::Setup(const GLuint program, const std::string &v_source, const std::string &f_source) {
 	//シェーダーのコンパイル
 	GLint status;
 	GLuint vertex_shader = Compile(GL_VERTEX_SHADER, v_source);
@@ -88,7 +88,7 @@ void Shader::Setup(const GLuint program, const std::string &v_source, const std:
 	}
 }
 	//読み込み
-GLuint Shader::Read(const std::string &file) {
+GLuint CShader::Read(const std::string &file) {
 	//vertexshaderの読み込み(.vsh)
 	std::string vsh_path = "./data/shader/" + file + ".vsh";
 	std::ifstream vsh_fs(vsh_path);
@@ -117,21 +117,21 @@ GLuint Shader::Read(const std::string &file) {
 	id = program;
 	return program;
 }
-GLint Shader::Attrib(const std::string &name) {
+GLint CShader::Attrib(const std::string &name) {
 	return glGetAttribLocation(id, name.c_str());
 }
 //シェーダー内ユニフォーム変数の識別子を取得
-GLint Shader::Uniform(const std::string &name) {
+GLint CShader::Uniform(const std::string &name) {
 	return glGetUniformLocation(id, name.data());
 }
 //シェーダープログラムの使用開始
-void Shader::Use() {
+void CShader::Use() {
 	glUseProgram(id);
 }
-GLuint Shader::GetID() const
+GLuint CShader::GetID() const
 {
 	return id;
 }
-Shader::Shader()
+CShader::CShader()
 {
 }

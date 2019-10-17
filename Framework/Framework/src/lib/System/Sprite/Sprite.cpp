@@ -3,49 +3,37 @@
 #include "Texture\Texture.h"
 #include "Engine\OGF.hpp"
 #include "Engine\EngineMacro.h"
-Sprite::Sprite(const bool flag,const int r)
+CSprite::CSprite(const bool flag,const int r)
 	:registerd(r)
 {
 	if (flag)
 	{
 		Register();
 	}
+	IsDeleteData = false;
 }
-Sprite::~Sprite()
+CSprite::~CSprite()
 {
 	//登録解除
-	switch (registerd)
+	Release();
+	if (IsDeleteData)
 	{
-	case REGISTERD_CANVAS:
-		Framework::Get()->GetScene()->GetRenderingManager()->DeleteSpriteCanvas(this);
-		break;
-	case REGISTERD_UI:
-		Framework::Get()->GetScene()->GetRenderingManager()->DeleteSpriteUI(this);
-		break;
-	case REGISTERD_BACK:
-		Framework::Get()->GetScene()->GetRenderingManager()->DeleteSpriteBack(this);
-		break;
-	default:
-		//エラー出力
-#if DEBUG_ENABLE
-		std::cout << "削除ミス\n";
-#endif
-		break;
+		DeleteData();
 	}
 }
-void Sprite::Register()
+void CSprite::Register()
 {
 	//SceneManager経由でRenderingManagerに自分を登録する
 	switch (registerd)
 	{
 	case REGISTERD_CANVAS:
-		Framework::Get()->GetScene()->GetRenderingManager()->AddSpriteCanvas(this);
+		CFramework::Get()->GetScene()->GetRenderingManager()->AddSpriteCanvas(this);
 		break;
 	case REGISTERD_UI:
-		Framework::Get()->GetScene()->GetRenderingManager()->AddSpriteUI(this);
+		CFramework::Get()->GetScene()->GetRenderingManager()->AddSpriteUI(this);
 		break;
 	case REGISTERD_BACK:
-		Framework::Get()->GetScene()->GetRenderingManager()->AddSpriteBack(this);
+		CFramework::Get()->GetScene()->GetRenderingManager()->AddSpriteBack(this);
 		break;
 	default:
 		//エラー出力
@@ -55,31 +43,54 @@ void Sprite::Register()
 		break;
 	}
 }
-void Sprite::Draw()
+void CSprite::Release()
 {
-	OGF::Draw(this, transform, color);
+	switch (registerd)
+	{
+	case REGISTERD_CANVAS:
+		CFramework::Get()->GetScene()->GetRenderingManager()->DeleteSpriteCanvas(this);
+		break;
+	case REGISTERD_UI:
+		CFramework::Get()->GetScene()->GetRenderingManager()->DeleteSpriteUI(this);
+		break;
+	case REGISTERD_BACK:
+		CFramework::Get()->GetScene()->GetRenderingManager()->DeleteSpriteBack(this);
+		break;
+	default:
+		//エラー出力
+#if DEBUG_ENABLE
+		std::cout << "削除ミス\n";
+#endif
+		break;
+	}
 }
-void Sprite::SetShaderData(Shader* shader)
+void CSprite::Draw()
+{
+	COGF::Draw(this, transform, color);
+}
+void CSprite::SetShaderData(CShader* shader)
 {
 
 }
-void Sprite::SetDrawOrder(const unsigned int o)
+void CSprite::SetDrawOrder(const unsigned int o)
 {
 	order = o;
 }
-void Sprite::CreateData()
+void CSprite::CreateData()
 {
-	texture = new Texture();
-	transform = new Transform();
-	color = new Color();
+	texture = new CTexture();
+	transform = new CTransform();
+	color = new CColor();
+	IsDeleteData = true;
 }
-void Sprite::DeleteData()
+void CSprite::DeleteData()
 {
 	delete texture;
 	delete transform;
 	delete color;
+	IsDeleteData = false;
 }
-bool Sprite::Comparison(const Sprite* first, const Sprite* second)
+bool CSprite::Comparison(const CSprite* first, const CSprite* second)
 {
 	return first->order < second->order;
 }

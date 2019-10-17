@@ -6,34 +6,34 @@
 /**
 *@brief	âÊëúÇÃì«Ç›çûÇ›ÇçsÇ§class
 */
-class Texture
+class CTexture
 {
 	GLuint id;
-	Vec2Int size;
+	CVec2Int size;
 	int comp;
-	Shader* shader;
+	CShader* shader;
 public:
-	explicit Texture();
-	explicit Texture(const std::string& path);
-	virtual ~Texture();
+	explicit CTexture();
+	explicit CTexture(const std::string& path);
+	virtual ~CTexture();
 	GLuint GetID() const;
-	Vec2Int* GetSize();
+	CVec2Int* GetSize();
 	bool Load(const std::string& path);
 	bool Load(const cv::Mat& mat);
-	void SetShader(Shader* shader);
+	void SetShader(CShader* shader);
 	bool LoadShader(const std::string& name);
-	Shader* GetShader();
+	CShader* GetShader();
 	void SetBuffer(unsigned char* buffer, unsigned int w, unsigned int h);
 	
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Texture Pixel
 
-	static void GetPixels(const Texture* tex, Color* out);
-	static Color* NewPixels(const Texture* tex);
-	static std::vector<std::vector<Color>> VectorFromArray(const Texture* tex,const Color* in);
-	static std::vector<std::vector<Color>> VectorFromArray(const Texture* tex, const Color* in, int x, int y, int w, int h);
-	static Color ColorFromArray(const Texture* tex, const Color* in, int x, int y);
-	static void FreePixels(Color* in);
+	static void GetPixels(const CTexture* tex, CColor* out);
+	static CColor* NewPixels(const CTexture* tex);
+	static std::vector<std::vector<CColor>> VectorFromArray(const CTexture* tex,const CColor* in);
+	static std::vector<std::vector<CColor>> VectorFromArray(const CTexture* tex, const CColor* in, int x, int y, int w, int h);
+	static CColor ColorFromArray(const CTexture* tex, const CColor* in, int x, int y);
+	static void FreePixels(CColor* in);
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
 

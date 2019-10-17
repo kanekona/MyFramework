@@ -8,15 +8,30 @@
 #include <crtdbg.h>
 #define new ::new(_NORMAL_BLOCK, __FILE__, __LINE__)
 #endif
+#ifdef CONSOLE_BUILD
+#include "Console\ConsoleSystem.h"
+#endif
 /**
 *@brief	エントリーポイント
 */
 int main() {
 	//メモリリーク検知
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	StrIDSystem::Create();
+	CStrIDSystem::Create();
+#ifdef CONSOLE_BUILD
+	CConsoleSystem::Create();
+	//OpenGL,OpenFW Initialize
+	glfwInit();
+	CConsoleSystem* CY = CConsoleSystem::Get();
+	while (!CY->Update())
+	{
+	}
+	CConsoleSystem::Delete();
+	glfwTerminate();
+	system("pause");
+#else
 	//Declaration Engine
-	Engine* engine = nullptr;
+	CEngine* engine = nullptr;
 	try
 	{
 		//Create Engine
@@ -38,5 +53,6 @@ int main() {
 	}
 	//Delete Engine
 	delete engine;
-	StrIDSystem::Delete();
+#endif
+	CStrIDSystem::Delete();
 }

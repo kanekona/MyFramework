@@ -4,7 +4,7 @@
 /**
 *@brief	シェーダーの生成と使用を行うclass
 */
-class Shader
+class CShader
 {
 	//! 生成したShaderのID
 	GLuint id;
@@ -54,5 +54,5 @@ public:
 	/**
 	*@brief	constructor
 	*/
-	explicit Shader();
+	explicit CShader();
 };

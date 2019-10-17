@@ -3,11 +3,11 @@
 //--------------------------------------------------
 //@:Camera2Dclass									
 //--------------------------------------------------
-Camera2D::Camera2D()
+CCamera2D::CCamera2D()
 	: collision(&transform)
 {
 }
-Camera2D::Camera2D(const Box2D& pos)
+CCamera2D::CCamera2D(const CBox2D& pos)
 	: collision(&transform)
 {
 	//各値をセットする
@@ -15,25 +15,25 @@ Camera2D::Camera2D(const Box2D& pos)
 	position = { 0,0 };
 	scale = { pos.w,pos.h };
 }
-Camera2D::~Camera2D()
+CCamera2D::~CCamera2D()
 {
 
 }
-void Camera2D::Initialize(const Box2D& pos)
+void CCamera2D::Initialize(const CBox2D& pos)
 {
 	//各値をセットする
 	cameraPos = pos;
 	position = { 0,0 };
 	scale = { pos.w,pos.h };
 }
-void Camera2D::Update()
+void CCamera2D::Update()
 {
 	//行列をプロジェクションモードに変更
 	glMatrixMode(GL_PROJECTION);
 	//行列の初期化
 	glLoadIdentity();
 	//元データが書き換わらないよう値の代入
-	Box2D _camera(cameraPos);
+	CBox2D _camera(cameraPos);
 	//初期設定値からの変更値
 	_camera.x += position.x;
 	_camera.y += position.y;
@@ -46,53 +46,53 @@ void Camera2D::Update()
 	glOrtho(_camera.x, _camera.w, _camera.h, _camera.y, -1.0f, 1.0f);
 	SetProjectionMatrix(_camera.x, _camera.w, _camera.h, _camera.y, -1.0, 1.0f);
 }
-void Camera2D::MovePos(const Vec2& est)
+void CCamera2D::MovePos(const CVec2& est)
 {
 	//位置を加算する
 	position += est;
 }
-void Camera2D::SetPos(const Vec2& est)
+void CCamera2D::SetPos(const CVec2& est)
 {
 	//位置を上書きする
 	position = est;
 }
-void Camera2D::SetSize(const Vec2& size_)
+void CCamera2D::SetSize(const CVec2& size_)
 {
 	//サイズを上書きする
 	scale = size_;
 }
-void Camera2D::MoveSize(const Vec2& size_)
+void CCamera2D::MoveSize(const CVec2& size_)
 {
 	//サイズを加算する
 	scale += size_;
 }
-void Camera2D::SetPos_x(const float& x_)
+void CCamera2D::SetPos_x(const float& x_)
 {
 	position.x = x_;
 }
-void Camera2D::SetPos_y(const float& y_)
+void CCamera2D::SetPos_y(const float& y_)
 {
 	position.y = y_;
 }
-void Camera2D::SetSize_w(const float& w_)
+void CCamera2D::SetSize_w(const float& w_)
 {
 	scale.x = w_;
 }
-void Camera2D::SetSize_h(const float& h_)
+void CCamera2D::SetSize_h(const float& h_)
 {
 	scale.y = h_;
 }
-const Vec2& Camera2D::GetPos() const
+const CVec2& CCamera2D::GetPos() const
 {
 	//位置を返す
 	return position;
 }
-const Vec2& Camera2D::GetSize() const
+const CVec2& CCamera2D::GetSize() const
 {
 	//サイズを返す
 	return scale;
 }
-void Camera2D::SetProjectionMatrix(float cl, float cr, float cb, float ct, float cn, float cf)
+void CCamera2D::SetProjectionMatrix(float cl, float cr, float cb, float ct, float cn, float cf)
 {
 	projectionMatrix[0] = 2.f / (cr - cl);
 	projectionMatrix[1] = 0.f;
@@ -111,11 +111,39 @@ void Camera2D::SetProjectionMatrix(float cl, float cr, float cb, float ct, float
 	projectionMatrix[14] = 0.f;
 	projectionMatrix[15] = 1.0f;
 }
-GLfloat* Camera2D::GetProjectionMatrix()
+const GLfloat* CCamera2D::GetProjectionMatrix() const
 {
 	return projectionMatrix;
 }
-CircleCollider* Camera2D::GetCollision()
+const CCircleCollider* CCamera2D::GetCollision() const
 {
 	return &collision;
+}
+
+void CCamera2D::ReverseProjectionMatrix(GLfloat* out)
+{
+	//元データが書き換わらないよう値の代入
+	CBox2D _camera(cameraPos);
+	//初期設定値からの変更値
+	_camera.x += position.x;
+	_camera.y += position.y;
+	_camera.w = scale.x;
+	_camera.h = scale.y;
+	_camera.OffsetSize();
+	out[0] = 2.f / (_camera.w - _camera.x);
+	out[1] = 0.f;
+	out[2] = 0.f;
+	out[3] = (_camera.w + _camera.x) / (_camera.w - _camera.x) * -1;
+	out[4] = 0.f;
+	out[5] = 2.f / (_camera.h - _camera.y);
+	out[6] = 0.f;
+	out[7] = (_camera.h + _camera.y) / (_camera.h - _camera.y) * -1;
+	out[8] = 0.f;
+	out[9] = 0.f;
+	out[10] = 2.f / (1.f - (-1.f));
+	out[11] = (1.f + (-1.f)) / (1.f - (-1.f)) * -1;
+	out[12] = 0.f;
+	out[13] = 0.f;
+	out[14] = 0.f;
+	out[15] = 1.0f;
 }

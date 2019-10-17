@@ -1,13 +1,14 @@
 #include "Entity.h"
-
-Entity::Entity()
+#include "System\System.h"
+CEntity::CEntity()
+	:tag(KL::ClassFromName<CEntity>())
+	,active(true)
+	,state(EState::NORMAL)
+	,layer(ELayer::Default)
+	,parent(nullptr)
 {
-	active = true;
-	stateCount = KL_ENTITY_NORMAL;
-	layer = Layer::Default;
-	tag = typeid(*this).name();
 }
-Entity::~Entity()
+CEntity::~CEntity()
 {
 	//Žq‚Ì‰ð•ú
 	for (auto& it : childs)
@@ -21,32 +22,32 @@ Entity::~Entity()
 	}
 	plansChilds.clear();
 }
-void Entity::Update()
+void CEntity::Update()
 {
 
 }
-void Entity::Enter()
+void CEntity::Entry()
 {
 
 }
-void Entity::Destroy()
+void CEntity::Destroy()
 {
-	stateCount = KL_ENTITY_KILL;
+	state = EState::KILL;
 }
-void Entity::SetActive(const bool isActive)
+void CEntity::SetActive(const bool isActive)
 {
 	active = isActive;
 }
-bool Entity::GetActive() const
+bool CEntity::GetActive() const
 {
 	return active;
 }
-void Entity::RegisterChildren()
+void CEntity::RegisterChildren()
 {
 	/*for (auto id : plansChilds)
 	{
 		childs.emplace_back(id);
-		id->Enter();
+		id->Entry();
 
 		id->RegisterChildren();
 	}
@@ -54,16 +55,17 @@ void Entity::RegisterChildren()
 	for (auto it = plansChilds.begin(); it != plansChilds.end();)
 	{
 		childs.emplace_back(*it);
-		(*it)->Enter();
+		(*it)->Entry();
 		(*it)->RegisterChildren();
 		it = plansChilds.erase(it);
 	}
 }
-void Entity::KillChildren()
+void CEntity::KillChildren()
 {
 	for (auto id = childs.begin(); id != childs.end();)
 	{
-		if (Entity::GetStateCount(*id) == KL_ENTITY_KILL)
+		//if (CEntity::GetStateCount(*id) == KL_ENTITY_KILL)
+		if ((*id)->state == EState::KILL)
 		{
 			delete *id;
 			id = childs.erase(id);
@@ -76,74 +78,157 @@ void Entity::KillChildren()
 		}
 	}
 }
-void Entity::SetChildren(Entity* child)
+void CEntity::SetChildren(CEntity* child)
 {
 	plansChilds.emplace_back(child);
+	child->parent = this;
 }
-int Entity::GetStateCount(Entity* entity)
-{
-	return entity->stateCount;
-}
-void Entity::Destroy(Entity* entity)
+void CEntity::Destroy(CEntity* entity)
 {
 	entity->Destroy();
 }
-void Entity::Update(Entity* entity)
+void CEntity::Update(CEntity* entity)
 {
 	if (entity->active)
 	{
 		entity->Update();
 	}
 }
-void Entity::Enter(Entity* entity)
+void CEntity::Entry(CEntity* entity)
 {
-	entity->Enter();
+	entity->Entry();
 }
-void Entity::ChildrenUpdate(Entity* entity)
+void CEntity::ChildrenUpdate(CEntity* entity)
 {
 	for (auto id : entity->childs)
 	{
 		if (id->active)
 		{
-			Entity::Update(id);
-			Entity::ChildrenUpdate(id);
+			CEntity::Update(id);
+			CEntity::ChildrenUpdate(id);
 		}
 	}
 }
-void Entity::ChildrenStateAdaptation(Entity* entity)
+void CEntity::ChildrenStateAdaptation(CEntity* entity)
 {
 	//íœ—\’è‚ðíœ
 	entity->KillChildren();
 	//“o˜^—\’è‚ð“o˜^
 	entity->RegisterChildren();
 }
-size_t Entity::ChildCount() const
+size_t CEntity::ChildCount() const
 {
 	return childs.size();
 }
-Entity* Entity::GetChild(const size_t index)
+CEntity* CEntity::GetChild(const size_t index)
 {
 	return childs[index];
 }
-Entity* Entity::GetChild(const Layer key)
+std::vector<CEntity*>* CEntity::GetChilds()
 {
-	for (auto& it : childs)
+	return &childs;
+}
+
+CEntity * CEntity::GetChildren(CEntity * inEntity, const CStrID & tag)
+{
+	for (auto& it : inEntity->childs)
 	{
-		if (it->layer == key)
-		{
-			return it;
-		}
-	}
-	for (auto& it : plansChilds)
-	{
-		if (it->layer == key)
+		if (it->tag == tag)
 		{
 			return it;
 		}
 	}
 	return nullptr;
 }
-std::vector<Entity*>* Entity::GetChilds()
+
+CEntity * CEntity::GetChildren(CEntity * inEntity, const ELayer layer)
 {
-	return &childs;
+	for (auto& it : inEntity->childs)
+	{
+		if (it->layer == layer)
+		{
+			return it;
+		}
+	}
+	return nullptr;
+}
+
+CEntity * CEntity::GetChildrenAll(CEntity * inEntity, const CStrID & tag)
+{
+	for (auto&it : inEntity->childs)
+	{
+		if (it->tag == tag)
+		{
+			return it;
+		}
+		CEntity* Return = GetChildrenAll(it, tag);
+		if (Return != nullptr)
+		{
+			return Return;
+		}
+	}
+	return nullptr;
+}
+
+CEntity * CEntity::GetChildrenAll(CEntity * inEntity, const ELayer layer)
+{
+	for (auto&it : inEntity->childs)
+	{
+		if (it->layer == layer)
+		{
+			return it;
+		}
+		CEntity* Return = GetChildrenAll(it, layer);
+		if (Return != nullptr)
+		{
+			return Return;
+		}
+	}
+	return nullptr;
+}
+
+void CEntity::GetChildrens(CEntity * inEntity, const CStrID & tag, std::vector<CEntity*>* out)
+{
+	for (auto& it : inEntity->childs)
+	{
+		if (it->tag == tag)
+		{
+			out->emplace_back(it);
+		}
+	}
+}
+
+void CEntity::GetChildrens(CEntity * inEntity, const ELayer layer, std::vector<CEntity*>* out)
+{
+	for (auto& it : inEntity->childs)
+	{
+		if (it->layer == layer)
+		{
+			out->emplace_back(it);
+		}
+	}
+}
+
+void CEntity::GetChildrensAll(CEntity * inEntity, const CStrID & tag, std::vector<CEntity*>* out)
+{
+	for (auto& it : inEntity->childs)
+	{
+		if (it->tag == tag)
+		{
+			out->emplace_back(it);
+		}
+		GetChildrensAll(it, tag, out);
+	}
+}
+
+void CEntity::GetChildrensAll(CEntity * inEntity, const ELayer layer, std::vector<CEntity*>* out)
+{
+	for (auto& it : inEntity->childs)
+	{
+		if (it->layer == layer)
+		{
+			out->emplace_back(it);
+		}
+		GetChildrensAll(it, layer, out);
+	}
 }

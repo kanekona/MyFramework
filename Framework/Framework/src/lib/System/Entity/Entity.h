@@ -2,173 +2,47 @@
 #include "NonCopyable\NonCopyable.hpp"
 #include <vector>
 #include <string>
+#include "Engine\EngineTypedef.h"
 #include "EntityLayer.h"
-#define KL_ENTITY_NORMAL 0x00
-#define KL_ENTITY_KILL 0x01
+#include "StrID\StrID.h"
 /**
 *@brief Šî‘bclass
 *•`‰æ‚ÆXV‚Ì‹@”\‚Ì‚İ
 */
-class Entity : private NonCopyable
+class CEntity : private CNonCopyable
 {
+public:
+	enum class EState : uint8
+	{
+		NORMAL,
+		KILL,
+	};
+
+	//! tag
+	CStrID tag;
+	//! Layer
+	ELayer layer;
+private:
 	//! Enable Active
 	bool active;
-	//! Entity StateCount
-	unsigned int stateCount;
+	//! Entity State
+	EState state;
 	//! Children
-	std::vector<Entity*> childs;
+	std::vector<CEntity*> childs;
 	//! Plans Children
-	std::vector<Entity*> plansChilds;
-	/**
-	*@brief Entity Update
-	*/
-	virtual void Update();
-	/**
-	*@brief Entity System Enter
-	*/
-	virtual void Enter();
-	/**
-	*@brief	Register registration schedule
-	*/
-	void RegisterChildren();
-	/**
-	*@brief Kill Check Children
-	*/
-	void KillChildren();
-	/**
-	*@brief	Get Children
-	*@tparam T assigment class
-	*@param[in] std::vector<Entity*>* entity Entity Childrens
-	*@return T* assigment class
-	*/
-	template <class T> static T* GetChildren(std::vector<Entity*>* entity)
-	{
-		for (auto it : *entity)
-		{
-			if ((typeid(*it) == typeid(T)))
-			{
-				return static_cast<T*>(it);
-			}
-			T* t = GetChildren<T>(&it->childs);
-			if (t != nullptr)
-			{
-				return t;
-			}
-		}
-		return nullptr;
-	}
-	/**
-	*@brief	Get Children
-	*@tparam T assigment class
-	*@param[in] std::vector<Entity*>* entity Entity Childrens
-	*@param[in] std::string tag Entity Tag
-	*@return T* assigment class
-	*/
-	template <class T> static T* GetChildren(std::vector<Entity*>* entity,const std::string& tag)
-	{
-		for (auto it : *entity)
-		{
-			if (it->tag == tag)
-			{
-				return static_cast<T*>(it);
-			}
-			T* t = GetChildren<T>(&it->childs, tag);
-			if (t != nullptr)
-			{
-				return t;
-			}
-		}
-		return nullptr;
-	}
-	/**
-	*@brief	Get Children
-	*@tparam T assigment class
-	*@param[in] std::vector<Entity*>* entity Entity Childrens
-	*@param[in] Layer layer Entity Layer
-	*@return T* assigment class
-	*/
-	template <class T> static T* GetChildren(std::vector<Entity*>* entity,const Layer& layer)
-	{
-		for (auto it : *entity)
-		{
-			if (it->layer == layer)
-			{
-				return static_cast<T*>(it);
-			}
-			T* t = GetChildren<T>(&it->childs, layer);
-			if (t != nullptr)
-			{
-				return t;
-			}
-		}
-		return nullptr;
-	}
-	/**
-	*@brief	Get Children
-	*@tparam T assigment class
-	*@param[in] std::vector<Entity*>* entity Entity Childrens
-	*@param[out] std::vector<T*>* vector Entitys Box
-	*/
-	template <class T> static void GetChildrens(std::vector<Entity*>* entity, std::vector<T*>* vector)
-	{
-		for (auto it : *entity)
-		{
-			if ((typeid(*it) == typeid(T)))
-			{
-				vector->emplace_back(static_cast<T*>(it));
-			}
-			GetChildrens<T>(&it->childs, vector);
-		}
-	}
-	/**
-	*@brief	Get Children
-	*@tparam T assigment class
-	*@param[in] std::vector<Entity*>* entity Entity Childrens
-	*@param[in] std::string tag Entity Tag
-	*@param[out] std::vector<T*>* vector Entitys Box
-	*/
-	template <class T> static void GetChildrens(std::vector<Entity*>* entity, const std::string& tag,std::vector<T*>* vector)
-	{
-		for (auto it : *entity)
-		{
-			if (it->tag == tag)
-			{
-				vector->emplace_back(static_cast<T*>(it));
-			}
-			GetChildrens<T>(&it->childs, tag, vector);
-		}
-	}
-	/**
-	*@brief	Get Children
-	*@tparam T assigment class
-	*@param[in] std::vector<Entity*>* entity Entity Childrens
-	*@param[in] Layer layer Entity Layer0
-	*@param[out] std::vector<T*>* vector Entitys Box
-	*/
-	template <class T> static void GetChildrens(std::vector<Entity*>* entity, const Layer& layer,std::vector<T*>* vector)
-	{
-		for (auto it : *entity)
-		{
-			if (it->layer == layer)
-			{
-				vector->emplace_back(static_cast<T*>(it));
-			}
-			GetChildrens<T>(&it->childs, layer, vector);
-		}
-	}
+	std::vector<CEntity*> plansChilds;
+	//! Parent Entity
+	CEntity* parent;
+
 public:
-	//! tag
-	std::string tag;
-	//! Layer
-	Layer layer;
 	/**
 	*@brief	constructor
 	*/
-	explicit Entity();
+	explicit CEntity();
 	/**
 	*@brief	destructor
 	*/
-	virtual ~Entity();
+	virtual ~CEntity();
 	/**
 	*@brief	Entity Set Active
 	*@param[in] bool isActive EntityActive
@@ -183,42 +57,56 @@ public:
 	*@brief	This Entity Children to Registration
 	*@param[in] Entity* child Children
 	*/
-	void SetChildren(Entity* child);
-	/**
-	*@brief Get Entity State
-	*@param[in] Entity* entity this
-	*@return int EntityStateCount
-	*/
-	static int GetStateCount(Entity* entity);
+	void SetChildren(CEntity* child);
 	/**
 	*@brief	Entity Destroy
 	*@param[in] Entity* entity this
 	*/
-	static void Destroy(Entity* entity);
+	static void Destroy(CEntity* entity);
 	/**
 	*@brief	Entity Update
 	*@param[in] Entity* entity this
 	*/
-	static void Update(Entity* entity);
+	static void Update(CEntity* entity);
 	/**
-	*@brief	Entity Enter
+	*@brief	Entity Entry
 	*@param[in] Entity* entity this
 	*/
-	static void Enter(Entity* entity);
+	static void Entry(CEntity* entity);
 	/**
 	*@brief	Entity Children Update
 	*@parma[in] Entity* entity this
 	*/
-	static void ChildrenUpdate(Entity* entity);
+	static void ChildrenUpdate(CEntity* entity);
 	/**
 	*@brief	Entity Children Kill Check
 	*@param[in] Entity* entity this
 	*/
-	static void ChildrenStateAdaptation(Entity* entity);
+	static void ChildrenStateAdaptation(CEntity* entity);
 	/**
 	*@brief	Entity Delete
 	*/
 	void Destroy();
+private:
+
+	/**
+	*@brief Entity Update
+	*/
+	virtual void Update();
+	/**
+	*@brief Entity System Entry
+	*/
+	virtual void Entry();
+	/**
+	*@brief	Register registration schedule
+	*/
+	void RegisterChildren();
+	/**
+	*@brief Kill Check Children
+	*/
+	void KillChildren();
+
+public:
 	/**
 	*@brief Get Children Count
 	*@return size_t This Children Size
@@ -229,16 +117,12 @@ public:
 	*@param[in] size_t index Children Number
 	*@return Entity* Children
 	*/
-	Entity* GetChild(const size_t index);
-	/**
-	*@brief Get Children
-	*/
-	Entity* GetChild(const Layer key);
+	CEntity* GetChild(const size_t index);
 	/**
 	*@brief Get Childrens
 	*@return std::vector<Entity*>* All Children
 	*/
-	std::vector<Entity*>* GetChilds();
+	std::vector<CEntity*>* GetChilds();
 	/**
 	*@brief	Get Children
 	*@tparam T assignment class
@@ -246,126 +130,109 @@ public:
 	*@detail ‘¶İ‚µ‚È‚¢ê‡‚Ínullptr‚ğ•Ô‚·
 	*@detail “o˜^‚µ‚Ä‚¢‚é‚à‚Ì‚Æ“o˜^—\’è‚Ì‚à‚Ì‚©‚çŒŸõ‚·‚é
 	*/
-	template <class T> T* GetChild()
+	template <class T> CEntity* GetChild()
 	{
-		T* t = Entity::GetChildren<T>(&childs);
-		if (t != nullptr) {
-			return t;
+		return CEntity::GetChildren<T>(this);
+	}
+	template <class T> CEntity* GetChildAll()
+	{
+		return CEntity::GetChildrenAll<T>(this);
+	}
+	CEntity* GetChild(const CStrID& inTag)
+	{
+		return CEntity::GetChildren(this, inTag);
+	}
+	CEntity* GetChildAll(const CStrID& inTag)
+	{
+		return CEntity::GetChildrenAll(this, inTag);
+	}
+	CEntity* GetChild(const ELayer& inLayer)
+	{
+		return CEntity::GetChildren(this, inLayer);
+	}
+	CEntity* GetChildAll(const ELayer& inLayer)
+	{
+		return CEntity::GetChildrenAll(this, inLayer);
+	}
+	template <class T> void GetChilds(std::vector<CEntity*>* out)
+	{
+		GetChildrens<T>(this, out);
+	}
+	template <class T> void GetChildsAll(std::vector<CEntity*>* out)
+	{
+		GetChildrensAll(this, out);
+	}
+	void GetChilds(const CStrID& inTag, std::vector<CEntity*>* out)
+	{
+		GetChildrens(this, inTag, out);
+	}
+	void GetChildsAll(const CStrID& inTag, std::vector<CEntity*>* out)
+	{
+		GetChildrensAll(this, inTag, out);
+	}
+	void GetChilds(const ELayer& inLayer, std::vector<CEntity*>* out)
+	{
+		GetChildrens(this, inLayer, out);
+	}
+	void GetChildsAll(const ELayer& inLayer, std::vector<CEntity*>* out)
+	{
+		GetChildrensAll(this, inLayer, out);
+	}
+private:
+	template <class T> static CEntity* GetChildren(CEntity* inEntity)
+	{
+		for (auto& it : inEntity->childs)
+		{
+			if (typeid(*it) == typeid(T))
+			{
+				return it;
+			}
 		}
-		t = Entity::GetChildren<T>(&plansChilds);
-		return t;
-		//return Entity::GetChildren<T>(&childs) || Entity::GetChildren<T>(&plansChilds);
+		return nullptr;
 	}
-	/**
-	*@brief	Get Children
-	*@tparam T assignment class
-	*@param[in] std::string tag Entity Tag
-	*@return T* assignment class Children
-	*@detail ‘¶İ‚µ‚È‚¢ê‡‚Ínullptr‚ğ•Ô‚·
-	*@detail “o˜^‚µ‚Ä‚¢‚é‚à‚Ì‚Æ“o˜^—\’è‚Ì‚à‚Ì‚©‚çŒŸõ‚·‚é
-	*/
-	template <class T> T* GetChild(const std::string& tag)
+	static CEntity* GetChildren(CEntity* inEntity, const CStrID& tag);
+	static CEntity* GetChildren(CEntity* inEntity, const ELayer layer);
+	template <class T> static CEntity* GetChildrenAll(CEntity* inEntity)	
 	{
-		T* t = Entity::GetChildren<T>(&childs, tag);
-		if (t != nullptr) {
-			return t;
+		for (auto&it : inEntity->childs)
+		{
+			if (typeid(*it) == typeid(T))
+			{
+				return it;
+			}
+			CEntity* Return = GetChildrenAll<T>(it);
+			if (Return != nullptr)
+			{
+				return Return;
+			}
 		}
-		t = Entity::GetChildren<T>(&plansChilds, tag);
-		return t;
-		//return Entity::GetChildren<T>(&childs) || Entity::GetChildren<T>(&plansChilds);
+		return nullptr;
 	}
-	/**
-	*@brief	Get Children
-	*@tparam T assignment class
-	*@param[in] Layer layer Entity Layer
-	*@return T* assignment class Children
-	*@detail ‘¶İ‚µ‚È‚¢ê‡‚Ínullptr‚ğ•Ô‚·
-	*@detail “o˜^‚µ‚Ä‚¢‚é‚à‚Ì‚Æ“o˜^—\’è‚Ì‚à‚Ì‚©‚çŒŸõ‚·‚é
-	*/
-	template <class T> T* GetChild(const Layer& layer)
+	static CEntity* GetChildrenAll(CEntity* inEntity, const CStrID& tag);
+	static CEntity* GetChildrenAll(CEntity* inEntity, const ELayer layer);
+	template <class T> static void GetChildrens(CEntity* inEntity, std::vector<CEntity*>* out)
 	{
-		T* t = Entity::GetChildren<T>(&childs, layer);
-		if (t != nullptr) {
-			return t;
+		for (auto& it : inEntity->childs)
+		{
+			if (typeid(*it) == typeid(T))
+			{
+				out->emplace_back(it);
+			}
 		}
-		t = Entity::GetChildren<T>(&plansChilds, layer);
-		return t;
-		//return Entity::GetChildren<T>(&childs) || Entity::GetChildren<T>(&plansChilds);
 	}
-	/**
-	*@brief	Get Childrens
-	*@tparam T assignment class
-	*@return std::vector<T*> assignment class Childrens
-	*@detail “o˜^‚µ‚Ä‚¢‚é‚à‚Ì‚Æ“o˜^—\’è‚Ì‚à‚Ì‚©‚çŒŸõ‚·‚é
-	*/
-	template <class T> std::vector<T*> GetChilds()
+	static void GetChildrens(CEntity* inEntity, const CStrID& tag, std::vector<CEntity*>* out);
+	static void GetChildrens(CEntity* inEntity, const ELayer layer, std::vector<CEntity*>* out);
+	template <class T> static void GetChildrensAll(CEntity* inEntity, std::vector<CEntity*>* out)
 	{
-		std::vector<T*> vector;
-		Entity::GetChildrens<T>(&childs, &vector);
-		Entity::GetChildrens<T>(&plansChilds, &vector);
-		return vector;
+		for (auto& it : inEntity->childs)
+		{
+			if (typeid(*it) == typeid(T))
+			{
+				out->emplace_back(it);
+			}
+			GetChildrensAll<T>(it);
+		}
 	}
-	/**
-	*@brief	Get Childrens
-	*@tparam T assignment class
-	*@param[in] std::string tag Entity Tag
-	*@return std::vector<T*> assignment class Childrens
-	*@detail “o˜^‚µ‚Ä‚¢‚é‚à‚Ì‚Æ“o˜^—\’è‚Ì‚à‚Ì‚©‚çŒŸõ‚·‚é
-	*/
-	template <class T> std::vector<T*> GetChilds(const std::string& tag)
-	{
-		std::vector<T*> vector;
-		Entity::GetChildrens<T>(&childs, tag, &vector);
-		Entity::GetChildrens<T>(&plansChilds, tag, &vector);
-		return vector;
-	}
-	/**
-	*@brief	Get Childrens
-	*@tparam T assignment class
-	*@param[in] Layer layer Entity Layer
-	*@return std::vector<T*> assignment class Childrens
-	*@detail “o˜^‚µ‚Ä‚¢‚é‚à‚Ì‚Æ“o˜^—\’è‚Ì‚à‚Ì‚©‚çŒŸõ‚·‚é
-	*/
-	template <class T> std::vector<T*> GetChilds(const Layer& layer)
-	{
-		std::vector<T*> vector;
-		Entity::GetChildrens<T>(&childs, layer, &vector);
-		Entity::GetChildrens<T>(&plansChilds, layer, &vector);
-		return vector;
-	}
-	/**
-	*@brief	Get Childrens
-	*@tparam T assignment class
-	*@param[out] std::vector<T*>* vector Entity Box
-	*@detail “o˜^‚µ‚Ä‚¢‚é‚à‚Ì‚Æ“o˜^—\’è‚Ì‚à‚Ì‚©‚çŒŸõ‚·‚é
-	*/
-	template <class T> void GetChilds(std::vector<T*>* vector)
-	{
-		Entity::GetChildrens<T>(&childs, vector);
-		Entity::GetChildrens<T>(&plansChilds, vector);
-	}
-	/**
-	*@brief	Get Childrens
-	*@tparam T assignment class
-	*@param[in] std::string tag Entity Tag
-	*@param[out] std::vector<T*>* vector Entity Box
-	*@detail “o˜^‚µ‚Ä‚¢‚é‚à‚Ì‚Æ“o˜^—\’è‚Ì‚à‚Ì‚©‚çŒŸõ‚·‚é
-	*/
-	template <class T> void GetChilds(const std::string& tag, std::vector<T*>* vector)
-	{
-		Entity::GetChildrens<T>(&childs, tag, vector);
-		Entity::GetChildrens<T>(&plansChilds, tag, vector);
-	}
-	/**
-	*@brief	Get Childrens
-	*@tparam T assignment class
-	*@param[in] Layer layer Entity Layer
-	*@param[out] std::vector<T*>* vector Entity Box
-	*@detail “o˜^‚µ‚Ä‚¢‚é‚à‚Ì‚Æ“o˜^—\’è‚Ì‚à‚Ì‚©‚çŒŸõ‚·‚é
-	*/
-	template <class T> void GetChilds(const Layer& layer, std::vector<T*>* vector)
-	{
-		Entity::GetChildrens<T>(&childs, layer, vector);
-		Entity::GetChildrens<T>(&plansChilds, layer, vector);
-	}
+	static void GetChildrensAll(CEntity* inEntity, const CStrID& tag, std::vector<CEntity*>* out);
+	static void GetChildrensAll(CEntity* inEntity, const ELayer layer, std::vector<CEntity*>* out);
 };

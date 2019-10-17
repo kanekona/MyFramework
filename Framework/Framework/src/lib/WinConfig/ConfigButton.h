@@ -1,11 +1,11 @@
 #pragma once
 #include "Button\Button.h"
 
-class ConfigButton : public Button
+class ConfigButton : public CButton
 {
 	void Decision() override;
 	bool enable;	
 public:
-	explicit ConfigButton(const Transform& transform, const bool enableFullscreen);
+	explicit ConfigButton(const CTransform& transform, const bool enableFullscreen);
 	virtual ~ConfigButton();
 };

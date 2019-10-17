@@ -1,25 +1,25 @@
 #include "SoundManager.h"
-SoundManager::SoundManager()
+CSoundManager::CSoundManager()
 {
 	MaxVolume = 1.0f;
 }
-void SoundManager::SetMaxVolume(const float volume_)
+void CSoundManager::SetMaxVolume(const float volume_)
 {
 	MaxVolume = volume_;
 }
-float SoundManager::GetMaxVolume() const
+float CSoundManager::GetMaxVolume() const
 {
 	return MaxVolume;
 }
-void SoundManager::SetVolume(const Sound* s, const float value_)
+void CSoundManager::SetVolume(const CSound* s, const float value_)
 {
 	s->Volume(value_ * MaxVolume);
 }
-void SoundManager::SetSound(Sound* s) 
+void CSoundManager::SetSound(CSound* s) 
 {
 	sounddata.emplace_back(s);
 }
-bool SoundManager::DeleteSound(const Sound* s) 
+bool CSoundManager::DeleteSound(const CSound* s) 
 {
 	for (auto id = sounddata.begin(); id != sounddata.end(); ++id)
 	{
@@ -31,15 +31,15 @@ bool SoundManager::DeleteSound(const Sound* s)
 	}
 	return false;
 }
-void SoundManager::AllDelete() 
+void CSoundManager::AllDelete() 
 {
 	sounddata.clear();
 }
-SoundManager::~SoundManager()
+CSoundManager::~CSoundManager()
 {
 	sounddata.clear();
 }
-void SoundManager::Application()
+void CSoundManager::Application()
 {
 	for (unsigned int i = 0; i < sounddata.size(); ++i)
 	{

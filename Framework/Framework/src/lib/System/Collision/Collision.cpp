@@ -2,7 +2,7 @@
 //--------------------------------------------------
 //@:CollisionBase
 //--------------------------------------------------
-Collider::Collider(const unsigned short vertex,Transform* t)
+CCollider::CCollider(const unsigned short vertex,CTransform* t)
 	:VERTEX_NUM(vertex)
 {
 	transform = t;
@@ -11,23 +11,23 @@ Collider::Collider(const unsigned short vertex,Transform* t)
 //--------------------------------------------------
 //@:CollisionBox
 //--------------------------------------------------
-BoxCollider::BoxCollider(Transform* t)
-	:Collider(4,t)
+CBoxCollider::CBoxCollider(CTransform* t)
+	:CCollider(4,t)
 {
 }
 //矩形×矩形
-bool BoxCollider::GetHit(BoxCollider* b)
+bool CBoxCollider::GetHit(CBoxCollider* b)
 {
 	CreateCollision();
 	b->CreateCollision();
 	//頂点情報のセット
-	Vec2 _ver[4] = {
+	CVec2 _ver[4] = {
 		{ b->hitBase.x,b->hitBase.y },
 	{ b->hitBase.w - 1,b->hitBase.y },
 	{ b->hitBase.w - 1,b->hitBase.h },
 	{ b->hitBase.x,b->hitBase.h }
 	};
-	Vec2 _v[4] = {
+	CVec2 _v[4] = {
 		{ hitBase.x,hitBase.y },
 	{ hitBase.w - 1,hitBase.y },
 	{ hitBase.w - 1,hitBase.h },
@@ -59,12 +59,12 @@ bool BoxCollider::GetHit(BoxCollider* b)
 	for (int i = 0; i < 4; ++i)
 	{
 		//オブジェクトAの終点-始点の方向ベクトル
-		Vec2 mainvec = _v[(i + 1) % 4] - _v[i % 4];
+		CVec2 mainvec = _v[(i + 1) % 4] - _v[i % 4];
 		for (int j = 0; j < 4; ++j)
 		{
 			//オブジェクトBの終点-始点の方向ベクトル
-			Vec2 subvec = _ver[(j + 1) % 4] - _ver[j % 4];
-			Vec2 v = _ver[j % 4] - _v[i % 4];
+			CVec2 subvec = _ver[(j + 1) % 4] - _ver[j % 4];
+			CVec2 v = _ver[j % 4] - _v[i % 4];
 			//外積計算
 			float crs = KL::cross(mainvec, subvec);
 			if (crs == 0.0f)
@@ -86,15 +86,15 @@ bool BoxCollider::GetHit(BoxCollider* b)
 	return false;
 }
 //矩形×円
-bool BoxCollider::GetHit(CircleCollider* b)
+bool CBoxCollider::GetHit(CCircleCollider* b)
 {
 	CreateCollision();
 	b->CreateCollision();
 	//頂点情報のセット
-	Vec2 _ver[1] = {
-		{ b->hitBase.center_x,b->hitBase.center_y }
+	CVec2 _ver[1] = {
+		{ b->hitBase.cEntry_x,b->hitBase.cEntry_y }
 	};
-	Vec2 _v[4] = {
+	CVec2 _v[4] = {
 		{ hitBase.x,hitBase.y },
 	{ hitBase.w - 1,hitBase.y },
 	{ hitBase.w - 1,hitBase.h },
@@ -119,11 +119,11 @@ bool BoxCollider::GetHit(CircleCollider* b)
 	return false;
 }
 //矩形×点
-bool BoxCollider::GetHit(PointCollider* b)
+bool CBoxCollider::GetHit(CPointCollider* b)
 {
 	CreateCollision();
 	b->CreateCollision();
-	Vec2 _v[4] = {
+	CVec2 _v[4] = {
 		{ hitBase.x,hitBase.y },
 	{ hitBase.w - 1,hitBase.y },
 	{ hitBase.w - 1,hitBase.h },
@@ -144,21 +144,21 @@ bool BoxCollider::GetHit(PointCollider* b)
 	return true;
 }
 //矩形×線
-bool BoxCollider::GetHit(LineCollider* b)
+bool CBoxCollider::GetHit(CLineCollider* b)
 {
 	CreateCollision();
 	b->CreateCollision();
 	return false;
 }
 //矩形×カプセル
-bool BoxCollider::GetHit(CapsuleCollider* b)
+bool CBoxCollider::GetHit(CCapsuleCollider* b)
 {
 	return false;
 }
 //判定生成
-void BoxCollider::CreateCollision()
+void CBoxCollider::CreateCollision()
 {
-	Vec2 scaleSize = { transform->scale.x * radius.x,transform->scale.y * radius.y };
+	CVec2 scaleSize = { transform->scale.x * radius.x,transform->scale.y * radius.y };
 	hitBase = {
 		transform->position.x - (scaleSize.x / 2.f),
 		transform->position.y - (scaleSize.y / 2.f),
@@ -168,37 +168,37 @@ void BoxCollider::CreateCollision()
 	Rotate(transform->angle);
 }
 //回転適用
-void BoxCollider::Rotate(const float _angle) {
+void CBoxCollider::Rotate(const float _angle) {
 	//回転の値を格納
 	angle = _angle;
 }
 //回転取得
-float BoxCollider::Rotate() const
+float CBoxCollider::Rotate() const
 {
 	return angle;
 }
 //判定
-bool BoxCollider::Hit(Collider* collision)
+bool CBoxCollider::Hit(CCollider* collision)
 {
 	return collision->GetHit(this);
 }
 //--------------------------------------------------
 //@:CollisionCircle
 //--------------------------------------------------
-CircleCollider::CircleCollider(Transform* t)
-	:Collider(1,t)
+CCircleCollider::CCircleCollider(CTransform* t)
+	:CCollider(1,t)
 {
 }
 //円×矩形
-bool CircleCollider::GetHit(BoxCollider* b)
+bool CCircleCollider::GetHit(CBoxCollider* b)
 {
 	CreateCollision();
 	b->CreateCollision();
 	//頂点情報のセット
-	Vec2 _ver[1] = {
-		{ hitBase.center_x,hitBase.center_y }
+	CVec2 _ver[1] = {
+		{ hitBase.cEntry_x,hitBase.cEntry_y }
 	};
-	Vec2 _v[4] = {
+	CVec2 _v[4] = {
 		{ b->hitBase.x,b->hitBase.y },
 	{ b->hitBase.w - 1,b->hitBase.y },
 	{ b->hitBase.w - 1,b->hitBase.h },
@@ -222,15 +222,15 @@ bool CircleCollider::GetHit(BoxCollider* b)
 	return false;
 }
 //円×円
-bool CircleCollider::GetHit(CircleCollider* b)
+bool CCircleCollider::GetHit(CCircleCollider* b)
 {
 	CreateCollision();
 	b->CreateCollision();
 	//円の範囲内に相手の円の範囲が存在する場合TRUEを返す
-	if (((b->hitBase.center_x - hitBase.center_x)*
-		(b->hitBase.center_x - hitBase.center_x)) +
-		((b->hitBase.center_y - hitBase.center_y)*
-		(b->hitBase.center_y - hitBase.center_y)) <=
+	if (((b->hitBase.cEntry_x - hitBase.cEntry_x)*
+		(b->hitBase.cEntry_x - hitBase.cEntry_x)) +
+		((b->hitBase.cEntry_y - hitBase.cEntry_y)*
+		(b->hitBase.cEntry_y - hitBase.cEntry_y)) <=
 			(b->hitBase.r + hitBase.r)*(b->hitBase.r + hitBase.r))
 	{
 		return true;
@@ -238,15 +238,15 @@ bool CircleCollider::GetHit(CircleCollider* b)
 	return false;
 }
 //円×点
-bool CircleCollider::GetHit(PointCollider* b)
+bool CCircleCollider::GetHit(CPointCollider* b)
 {
 	CreateCollision();
 	b->CreateCollision();
 	//頂点情報のセット
-	Vec2 _ver[1] = {
-		{ hitBase.center_x,hitBase.center_y }
+	CVec2 _ver[1] = {
+		{ hitBase.cEntry_x,hitBase.cEntry_y }
 	};
-	Vec2 _v[1] = {
+	CVec2 _v[1] = {
 		{ b->hitBase.x,b->hitBase.y },
 	};
 	//円の中に頂点が存在する場合TRUEを返す
@@ -257,17 +257,17 @@ bool CircleCollider::GetHit(PointCollider* b)
 	return false;
 }
 //円×線
-bool CircleCollider::GetHit(LineCollider* b)
+bool CCircleCollider::GetHit(CLineCollider* b)
 {
 	return false;
 }
 //円×カプセル
-bool CircleCollider::GetHit(CapsuleCollider* b)
+bool CCircleCollider::GetHit(CCapsuleCollider* b)
 {
 	return false;
 }
 //判定生成
-void CircleCollider::CreateCollision()
+void CCircleCollider::CreateCollision()
 {
 	hitBase = {
 		transform->position.x,
@@ -276,23 +276,23 @@ void CircleCollider::CreateCollision()
 	};
 }
 //判定
-bool CircleCollider::Hit(Collider* collision)
+bool CCircleCollider::Hit(CCollider* collision)
 {
 	return collision->GetHit(this);
 }
 //--------------------------------------------------
 //@:CollisionPointer
 //--------------------------------------------------
-PointCollider::PointCollider(Transform* t)
-	:Collider(1,t)
+CPointCollider::CPointCollider(CTransform* t)
+	:CCollider(1,t)
 {
 }
 //点×矩形
-bool PointCollider::GetHit(BoxCollider* b)
+bool CPointCollider::GetHit(CBoxCollider* b)
 {
 	CreateCollision();
 	b->CreateCollision();
-	Vec2 _v[4] = {
+	CVec2 _v[4] = {
 	{ b->hitBase.x,b->hitBase.y },
 	{ b->hitBase.w - 1,b->hitBase.y },
 	{ b->hitBase.w - 1,b->hitBase.h },
@@ -313,15 +313,15 @@ bool PointCollider::GetHit(BoxCollider* b)
 	return true;
 }
 //点×円
-bool PointCollider::GetHit(CircleCollider* b)
+bool CPointCollider::GetHit(CCircleCollider* b)
 {
 	CreateCollision();
 	b->CreateCollision();
 	//頂点情報のセット
-	Vec2 _ver[1] = {
-		{ b->hitBase.center_x,b->hitBase.center_y }
+	CVec2 _ver[1] = {
+		{ b->hitBase.cEntry_x,b->hitBase.cEntry_y }
 	};
-	Vec2 _v[1] = {
+	CVec2 _v[1] = {
 		{ hitBase.x,hitBase.y },
 	};
 	//円の中に頂点が存在する場合TRUEを返す
@@ -332,14 +332,14 @@ bool PointCollider::GetHit(CircleCollider* b)
 	return false;
 }
 //点×点
-bool PointCollider::GetHit(PointCollider* b)
+bool CPointCollider::GetHit(CPointCollider* b)
 {
 	CreateCollision();
 	b->CreateCollision();
 	return hitBase == b->hitBase;
 }
 //点×線
-bool PointCollider::GetHit(LineCollider* b)
+bool CPointCollider::GetHit(CLineCollider* b)
 {
 	CreateCollision();
 	b->CreateCollision();
@@ -362,45 +362,45 @@ bool PointCollider::GetHit(LineCollider* b)
 	return false;
 }
 //点×カプセル
-bool PointCollider::GetHit(CapsuleCollider* b)
+bool CPointCollider::GetHit(CCapsuleCollider* b)
 {
 	return false;
 }
 //判定生成
-void PointCollider::CreateCollision()
+void CPointCollider::CreateCollision()
 {
 	hitBase = transform->position;
 }
 //判定
-bool PointCollider::Hit(Collider* collision)
+bool CPointCollider::Hit(CCollider* collision)
 {
 	return collision->GetHit(this);
 }
 //--------------------------------------------------
 //@:CollisionLine
 //--------------------------------------------------
-LineCollider::LineCollider(Transform* t)
-	:Collider(2,t)
+CLineCollider::CLineCollider(CTransform* t)
+	:CCollider(2,t)
 {
 
 }
 //線×矩形
-bool LineCollider::GetHit(BoxCollider* b)
+bool CLineCollider::GetHit(CBoxCollider* b)
 {
 	return false;
 }
 //線×円
-bool LineCollider::GetHit(CircleCollider* b)
+bool CLineCollider::GetHit(CCircleCollider* b)
 {
 	return false;
 }
 //線×線
-bool LineCollider::GetHit(LineCollider* b)
+bool CLineCollider::GetHit(CLineCollider* b)
 {
 	return false;
 }
 //線×点
-bool LineCollider::GetHit(PointCollider* b)
+bool CLineCollider::GetHit(CPointCollider* b)
 {
 	b->CreateCollision();
 	CreateCollision();
@@ -423,56 +423,56 @@ bool LineCollider::GetHit(PointCollider* b)
 	return false;
 }
 //線×カプセル
-bool LineCollider::GetHit(CapsuleCollider* b)
+bool CLineCollider::GetHit(CCapsuleCollider* b)
 {
 	return false;
 }
 //判定生成
-void LineCollider::CreateCollision()
+void CLineCollider::CreateCollision()
 {
 	hitBase[0] = transform->position;
 	hitBase[1] = transform->scale;
 }
 //判定
-bool LineCollider::Hit(Collider* collision)
+bool CLineCollider::Hit(CCollider* collision)
 {
 	return collision->GetHit(this);
 }
 //--------------------------------------------------
 //@:CollisionCapsule
 //--------------------------------------------------
-CapsuleCollider::CapsuleCollider(Transform* t)
-	:Collider(6,t)
+CCapsuleCollider::CCapsuleCollider(CTransform* t)
+	:CCollider(6,t)
 {
 
 }
 //カプセル×カプセル
-bool CapsuleCollider::GetHit(CapsuleCollider* b)
+bool CCapsuleCollider::GetHit(CCapsuleCollider* b)
 {
 	return false;
 }
 //カプセル×矩形
-bool CapsuleCollider::GetHit(BoxCollider* b)
+bool CCapsuleCollider::GetHit(CBoxCollider* b)
 {
 	return false;
 }
 //カプセル×円
-bool CapsuleCollider::GetHit(CircleCollider* b)
+bool CCapsuleCollider::GetHit(CCircleCollider* b)
 {
 	return false;
 }
 //カプセル×点
-bool CapsuleCollider::GetHit(PointCollider* b)
+bool CCapsuleCollider::GetHit(CPointCollider* b)
 {
 	return false;
 }
 //カプセル×線
-bool CapsuleCollider::GetHit(LineCollider* b)
+bool CCapsuleCollider::GetHit(CLineCollider* b)
 {
 	return false;
 }
 //判定
-bool CapsuleCollider::Hit(Collider* collision)
+bool CCapsuleCollider::Hit(CCollider* collision)
 {
 	return collision->Hit(this);
 }

@@ -1,21 +1,21 @@
 #include "StrID.h"
 #include <tuple>
-StrIDSystem::StrIDSystem()
+CStrIDSystem::CStrIDSystem()
 {
 	strIDData.clear();
-	AddData(StrID::defaultID);
+	AddData(CStrID::defaultID);
 }
-StrIDSystem::~StrIDSystem()
+CStrIDSystem::~CStrIDSystem()
 {
 	strData.clear();
 	strIDData.clear();
 }
-void StrIDSystem::AddData(const std::string & str)
+void CStrIDSystem::AddData(const std::string & str)
 {
-	strIDData.insert(std::make_pair(str, static_cast<int>(strData.size())));
+	strIDData.insert(std::make_pair(str, static_cast<uint32>(strData.size())));
 	strData.emplace_back(str);
 }
-int StrIDSystem::GetID(const std::string & str)
+uint32 CStrIDSystem::GetID(const std::string & str)
 {
 	if (instance->strIDData.count(str) == 0)
 	{
@@ -24,29 +24,29 @@ int StrIDSystem::GetID(const std::string & str)
 	return instance->strIDData[str];
 }
 
-int StrIDSystem::GetID(const std::string * str)
+uint32 CStrIDSystem::GetID(const std::string * str)
 {
 	return GetID(*str);
 }
 
-const std::string & StrIDSystem::GetStr(const StrID & strID)
+const std::string & CStrIDSystem::GetStr(const CStrID & CStrID)
 {
-	return instance->strData[(int)strID];
+	return instance->strData[(uint32)CStrID];
 }
 
-const std::string & StrIDSystem::GetStr(const StrID * strID)
+const std::string & CStrIDSystem::GetStr(const CStrID * CStrID)
 {
-	return GetStr(*strID);
+	return GetStr(*CStrID);
 }
 
-void StrIDSystem::Create()
+void CStrIDSystem::Create()
 {
 	if (!instance)
 	{
-		instance = new StrIDSystem();
+		instance = new CStrIDSystem();
 	}
 }
-void StrIDSystem::Delete()
+void CStrIDSystem::Delete()
 {
 	if (instance)
 	{
@@ -54,41 +54,46 @@ void StrIDSystem::Delete()
 		instance = nullptr;
 	}
 }
-StrIDSystem* StrIDSystem::instance = nullptr;
+CStrIDSystem* CStrIDSystem::instance = nullptr;
 
-StrID::StrID()
+CStrID::CStrID()
 {
-	id = StrIDSystem::GetID(defaultID);
+	id = CStrIDSystem::GetID(defaultID);
 }
 
-StrID::StrID(const std::string & str)
+CStrID::CStrID(const std::string & str)
 {
-	id = StrIDSystem::GetID(str);
+	id = CStrIDSystem::GetID(str);
 }
 
-StrID::StrID(const StrID & strID)
+CStrID::CStrID(const char * str)
 {
-	id = strID.id;
+	id = CStrIDSystem::GetID(str);
 }
 
-const std::string & StrID::ToString() const
+CStrID::CStrID(const CStrID & CStrID)
 {
-	return StrIDSystem::GetStr(this);
+	id = CStrID.id;
 }
 
-bool StrID::operator==(const StrID& strID)
+const std::string & CStrID::ToString() const
 {
-	return id == strID.id;
+	return CStrIDSystem::GetStr(this);
 }
 
-bool StrID::operator<(const StrID& strID)
+bool CStrID::operator==(const CStrID& CStrID)
 {
-	return std::tie(id) < std::tie(strID.id);
+	return id == CStrID.id;
 }
 
-StrID::operator int() const
+bool CStrID::operator<(const CStrID& CStrID)
+{
+	return std::tie(id) < std::tie(CStrID.id);
+}
+
+CStrID::operator uint32() const
 {
 	return id;
 }
 
-const std::string StrID::defaultID = "None";
+const std::string CStrID::defaultID = "None";

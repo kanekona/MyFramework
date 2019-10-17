@@ -1,11 +1,12 @@
 #include "WindowsEvent.h"
+#if WINDOWS_BUILD
 #include "System\System.h"
-WindowsEvent::WindowsEvent()
+CWindowsEvent::CWindowsEvent()
 {
 	loadPath = nullptr;
 	notLoadFileName = nullptr;
 }
-WindowsEvent::~WindowsEvent()
+CWindowsEvent::~CWindowsEvent()
 {
 	if (loadPath)
 	{
@@ -16,7 +17,7 @@ WindowsEvent::~WindowsEvent()
 		delete notLoadFileName;
 	}
 }
-void WindowsEvent::SetLoadPath(const std::string& path)
+void CWindowsEvent::SetLoadPath(const std::string& path)
 {
 	if (loadPath)
 	{
@@ -28,7 +29,7 @@ void WindowsEvent::SetLoadPath(const std::string& path)
 		loadPath->emplace_back(path);
 	}
 }
-void WindowsEvent::SetNotLoadFileName(const std::string& name)
+void CWindowsEvent::SetNotLoadFileName(const std::string& name)
 {
 	if (notLoadFileName)
 	{
@@ -41,7 +42,7 @@ void WindowsEvent::SetNotLoadFileName(const std::string& name)
 	}
 }
 
-std::vector<std::string> WindowsEvent::ResourceFileNameLoad(const std::string& filepath)
+std::vector<std::string> CWindowsEvent::ResourceFileNameLoad(const std::string& filepath)
 {
 	std::vector<std::string> filename;
 	FileLoad(filepath, &filename);
@@ -49,7 +50,7 @@ std::vector<std::string> WindowsEvent::ResourceFileNameLoad(const std::string& f
 }
 
 
-void WindowsEvent::FileLoad(const std::string& filepath, std::vector<std::string>* vec)
+void CWindowsEvent::FileLoad(const std::string& filepath, std::vector<std::string>* vec)
 {
 	WIN32_FIND_DATA findData;
 	std::string allFilePath =  filepath + "\\*.*";
@@ -110,3 +111,4 @@ void WindowsEvent::FileLoad(const std::string& filepath, std::vector<std::string
 	} while (FindNextFile(hfile, &findData));
 	FindClose(hfile);
 }
+#endif

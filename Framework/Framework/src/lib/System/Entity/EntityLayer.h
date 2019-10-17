@@ -1,6 +1,6 @@
 #pragma once
-
-enum class Layer : unsigned short
+#include "Engine\EngineTypedef.h"
+enum class ELayer : uint8
 {
 	Default = 0,
 	Button = 1,

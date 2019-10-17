@@ -1,19 +1,19 @@
 #include "ConfigInputEvent.h"
 #include "Input\Input.h"
 #include "System\System.h"
-void ConfigInputEvent::ChangeInputConfig(std::string& text)
+void CConfigInputEvent::ChangeInputConfig(std::string& text)
 {
 	KL::Trim(&text, " ");
 	std::string first;
 	std::string second;
 	KL::Split(text, "=", &first, &second);
-	StrID Key(first);
+	CStrID Key(first);
 	int keyNumber;
 	KL::StringFromNumber(second, &keyNumber);
-	Input::Get()->SetPadConfig(Key, keyNumber);
+	CInput::Get()->SetPadConfig(Key, keyNumber);
 }
 
-ConfigInputEvent::ConfigInputEvent(std::ifstream& ifs)
+CConfigInputEvent::CConfigInputEvent(std::ifstream& ifs)
 {
 	std::string lineText;
 	while (std::getline(ifs, lineText))
@@ -25,9 +25,9 @@ ConfigInputEvent::ConfigInputEvent(std::ifstream& ifs)
 		}
 		ChangeInputConfig(lineText);
 	}
-	Input::Get()->RegisterPadConfig();
+	CInput::Get()->RegisterPadConfig();
 }
 
-ConfigInputEvent::~ConfigInputEvent()
+CConfigInputEvent::~CConfigInputEvent()
 {
 }

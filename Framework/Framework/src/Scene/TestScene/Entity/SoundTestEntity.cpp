@@ -4,28 +4,23 @@ SoundTestEntity::SoundTestEntity()
 {
 	tag = "SoundTestEntity";
 	angle = 0.0f;
-	Source::SetListenerPosition(Vec3());
-	Source::SetListenerGain(1.0f);
+	CSource::SetListenerPosition(CVec3());
+	CSource::SetListenerGain(1.0f);
 	float ListenOri[6] = { 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f };
-	Source::SetOrientation(ListenOri);
+	CSource::SetOrientation(ListenOri);
 }
 SoundTestEntity::~SoundTestEntity()
 {
 
 }
-void SoundTestEntity::Enter()
+void SoundTestEntity::Entry()
 {
 	//sound.Create("./data/not/bgm/4.wav");
 	sound.Create("./data/not/bgm/mezamashi_kriitan.wav", true);
 #if ENGINE_DEBUG
 	sound.Test();
-#endif ENGINE_DEBUG
+#endif //ENGINE_DEBUG
 	sound.Play();
-	Vec2 vec2;
-	Vec2Int veci2;
-	vec2 = veci2;
-	//sound.GetSource()->SetSourceRelative(true);
-	//sound.GetSource()->SetConeOuterGain(1.0f);
 }
 void SoundTestEntity::Update()
 {
@@ -49,7 +44,7 @@ void SoundTestEntity::ChangePosition()
 	{
 		pos.z += 1.0f;
 	}*/
-	Vec3 pos;
+	CVec3 pos;
 	angle += 0.2f;
 	pos.x = cosf(angle);
 	pos.z = sinf(angle);
@@ -57,14 +52,14 @@ void SoundTestEntity::ChangePosition()
 }
 void SoundTestEntity::ChangeDirection()
 {
-	Vec3 pos = sound.GetSource()->GetDirection();
-	pos.x += Input::Get()->axis(In::AXIS_LEFT_X);
-	pos.y += Input::Get()->axis(In::AXIS_LEFT_Y);
-	if (Input::Get()->down(In::L1))
+	CVec3 pos = sound.GetSource()->GetDirection();
+	pos.x += CInput::Get()->axis(In::AXIS_LEFT_X);
+	pos.y += CInput::Get()->axis(In::AXIS_LEFT_Y);
+	if (CInput::Get()->down(In::L1))
 	{
 		pos.z -= 1.0f;
 	}
-	else if (Input::Get()->down(In::R1))
+	else if (CInput::Get()->down(In::R1))
 	{
 		pos.z += 1.0f;
 	}
@@ -72,11 +67,11 @@ void SoundTestEntity::ChangeDirection()
 }
 void SoundTestEntity::ChangeVelocity()
 {
-	Vec3 vel = sound.GetSource()->GetVelocity();
-	vel.x += Input::Get()->axis(In::AXIS_RIGHT_X);
-	vel.y += Input::Get()->axis(In::AXIS_RIGHT_Y);
-	vel.z -= Input::Get()->axis(In::AXIS_L2);
-	vel.z += Input::Get()->axis(In::AXIS_R2);
+	CVec3 vel = sound.GetSource()->GetVelocity();
+	vel.x += CInput::Get()->axis(In::AXIS_RIGHT_X);
+	vel.y += CInput::Get()->axis(In::AXIS_RIGHT_Y);
+	vel.z -= CInput::Get()->axis(In::AXIS_L2);
+	vel.z += CInput::Get()->axis(In::AXIS_R2);
 	sound.GetSource()->SetVelocity(vel);
 }
 void SoundTestEntity::Rotation()
@@ -91,7 +86,7 @@ void SoundTestEntity::UpdateReferenceDistance()
 }
 void SoundTestEntity::DebugCout()
 {
-#if DEBUG
+#if ENGINE_DEVELOP
 	system("cls");
 	std::cout << "Sound.BufferID          = " << sound.GetSource()->GetBufferID() << std::endl;
 	std::cout << "Sound.SourceRelative    = " << sound.GetSource()->GetSourceRelative() << std::endl;

@@ -1,23 +1,23 @@
 #include "glTimer.h"
 
-Time::Time()
+CTime::CTime()
 {
 	Init();
 }
 
-Time::~Time()
+CTime::~CTime()
 {
 
 }
 
-void Time::Init()
+void CTime::Init()
 {
 	InitNumber();
 	isPlay = false;
 	behavior = false;
 }
 
-void  Time::InitNumber()
+void  CTime::InitNumber()
 {
 	initTime = 0.0f;
 	nowTime = 0.0f;
@@ -25,7 +25,7 @@ void  Time::InitNumber()
 	addTime = 0.0f;
 }
 
-void Time::Start()
+void CTime::Start()
 {
 	if (!isPlay && !behavior) {
 		initTime = (float)glfwGetTime() + addTime;
@@ -34,14 +34,14 @@ void Time::Start()
 	}
 }
 
-void Time::Stop()
+void CTime::Stop()
 {
 	if (isPlay && behavior) {
 		Init();
 	}
 }
 
-void Time::Pause(const bool isPause)
+void CTime::Pause(const bool isPause)
 {
 	if (behavior) {
 		if (isPlay != isPause)
@@ -63,7 +63,7 @@ void Time::Pause(const bool isPause)
 	}
 }
 
-float Time::GetTime()
+float CTime::GetTime()
 {
 	if (!behavior) { return 0.0f; }
 	if (isPlay) {
@@ -72,17 +72,17 @@ float Time::GetTime()
 	return nowTime;
 }
 
-void Time::InitTime(const float time_)
+void CTime::InitTime(const float time_)
 {
 	addTime = time_;
 }
 
-bool Time::IsPlay() const
+bool CTime::IsPlay() const
 {
 	return isPlay;
 }
 
-void Time::Reset(const float time)
+void CTime::Reset(const float time)
 {
 	InitNumber();
 	InitTime(time);

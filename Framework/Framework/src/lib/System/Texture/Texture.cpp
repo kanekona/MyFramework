@@ -6,23 +6,23 @@
 //--------------------------------------------------
 //@:Textureclass									
 //--------------------------------------------------
-Texture::Texture()
+CTexture::CTexture()
 {
 	glGenTextures(1, &id);
-	shader = ResourceManager::Get()->GetShaderData("simple");
+	shader = CResourceManager::Get()->GetShaderData("simple");
 }
-Texture::Texture(const std::string& path)
+CTexture::CTexture(const std::string& path)
 {
 	glGenTextures(1, &id);
-	shader = ResourceManager::Get()->GetShaderData("simple");
+	shader = CResourceManager::Get()->GetShaderData("simple");
 	Load(path);
 }
-Texture::~Texture()
+CTexture::~CTexture()
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDeleteTextures(1, &id);
 }
-bool Texture::Load(const std::string& path)
+bool CTexture::Load(const std::string& path)
 {
 	glBindTexture(GL_TEXTURE_2D, id);
 	unsigned char* data = stbi_load(path.c_str(), &size.x, &size.y, &comp, 0);
@@ -45,7 +45,7 @@ bool Texture::Load(const std::string& path)
 	glBindTexture(GL_TEXTURE_2D, 0);
 	return true;
 }
-bool Texture::Load(const cv::Mat& mat)
+bool CTexture::Load(const cv::Mat& mat)
 {
 	glBindTexture(GL_TEXTURE_2D, id);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -59,28 +59,28 @@ bool Texture::Load(const cv::Mat& mat)
 	glBindTexture(GL_TEXTURE_2D, 0);
 	return true;
 }
-GLuint Texture::GetID() const
+GLuint CTexture::GetID() const
 {
 	return id;
 }
-Vec2Int* Texture::GetSize()
+CVec2Int* CTexture::GetSize()
 {
 	return &size;
 }
-void Texture::SetShader(Shader* addShader)
+void CTexture::SetShader(CShader* addShader)
 {
 	shader = addShader;
 }
-bool Texture::LoadShader(const std::string& name)
+bool CTexture::LoadShader(const std::string& name)
 {
-	shader = ResourceManager::Get()->GetShaderData(name);
+	shader = CResourceManager::Get()->GetShaderData(name);
 	return (shader != nullptr) ? true : false;
 }
-Shader* Texture::GetShader()
+CShader* CTexture::GetShader()
 {
 	return shader;
 }
-void Texture::SetBuffer(unsigned char* buffer, unsigned int w, unsigned int h)
+void CTexture::SetBuffer(unsigned char* buffer, unsigned int w, unsigned int h)
 {
 	glBindTexture(GL_TEXTURE_2D, id);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -91,7 +91,7 @@ void Texture::SetBuffer(unsigned char* buffer, unsigned int w, unsigned int h)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	size.Set((int)w, (int)h);
 }
-void Texture::GetPixels(const Texture * tex, Color * out)
+void CTexture::GetPixels(const CTexture * tex, CColor * out)
 {
 	unsigned char* data = new unsigned char[tex->size.x*tex->size.y * 4];
 	glBindTexture(GL_TEXTURE_2D, tex->id);
@@ -110,17 +110,17 @@ void Texture::GetPixels(const Texture * tex, Color * out)
 	glBindTexture(GL_TEXTURE_2D, 0);
 	delete[] data;
 }
-Color* Texture::NewPixels(const Texture* tex)
+CColor* CTexture::NewPixels(const CTexture* tex)
 {
-	return (Color*)malloc(tex->size.x * tex->size.y * sizeof(Color));
+	return (CColor*)malloc(tex->size.x * tex->size.y * sizeof(CColor));
 }
-std::vector<std::vector<Color>> Texture::VectorFromArray(const Texture * tex, const Color * in)
+std::vector<std::vector<CColor>> CTexture::VectorFromArray(const CTexture * tex, const CColor * in)
 {
 	return VectorFromArray(tex, in, 0, 0, tex->size.x, tex->size.y);
 }
-std::vector<std::vector<Color>> Texture::VectorFromArray(const Texture * tex, const Color * in, int x, int y, int w, int h)
+std::vector<std::vector<CColor>> CTexture::VectorFromArray(const CTexture * tex, const CColor * in, int x, int y, int w, int h)
 {
-	std::vector<std::vector<Color>> result;
+	std::vector<std::vector<CColor>> result;
 	result.resize(h);
 	for (int i = 0; i < h; ++i)
 	{
@@ -135,16 +135,16 @@ std::vector<std::vector<Color>> Texture::VectorFromArray(const Texture * tex, co
 	}
 	return result;
 }
-Color Texture::ColorFromArray(const Texture * tex, const Color * in, int x, int y)
+CColor CTexture::ColorFromArray(const CTexture * tex, const CColor * in, int x, int y)
 {
-	return Color(in[y * tex->size.y + x]);;
+	return CColor(in[y * tex->size.y + x]);;
 }
-void Texture::FreePixels(Color* in)
+void CTexture::FreePixels(CColor* in)
 {
 	free(in);
 }
 #if ENGINE_DEBUG
-void Texture::OutputPixcelData()
+void CTexture::OutputPixcelData()
 {
 	printf("===OutputPixcelData===\n");
 	unsigned char* data = new unsigned char[size.x*size.y * 4];

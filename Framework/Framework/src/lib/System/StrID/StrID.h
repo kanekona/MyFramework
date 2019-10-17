@@ -1,48 +1,50 @@
 #pragma once
 #include <string>
 #include <unordered_map>
+#include "Engine\EngineTypedef.h"
 #include "NonCopyable\NonCopyable.hpp"
 
-class StrID;
-class StrIDSystem;
+class CStrID;
+class CStrIDSystem;
 
-class StrIDSystem : private NonCopyable
+class CStrIDSystem : private CNonCopyable
 {
-	std::unordered_map<std::string, int> strIDData;
+	std::unordered_map<std::string, uint32> strIDData;
 	std::vector<std::string> strData;
-	static StrIDSystem* instance;
-	explicit StrIDSystem();
-	virtual ~StrIDSystem();
+	static CStrIDSystem* instance;
+	explicit CStrIDSystem();
+	virtual ~CStrIDSystem();
 	void AddData(const std::string& str);
 public:
-	static int GetID(const std::string& str);
-	static int GetID(const std::string* str);
-	static const std::string& GetStr(const StrID& strID);
-	static const std::string& GetStr(const StrID* strID);
+	static uint32 GetID(const std::string& str);
+	static uint32 GetID(const std::string* str);
+	static const std::string& GetStr(const CStrID& CStrID);
+	static const std::string& GetStr(const CStrID* CStrID);
 	static void Create();
 	static void Delete();
 };
 
-class StrID
+class CStrID
 {
-	int id;
+	uint32 id;
 public:
-	StrID();
-	StrID(const std::string& str);
-	StrID(const StrID& strID);
+	CStrID();
+	CStrID(const std::string& str);
+	CStrID(const char* str);
+	CStrID(const CStrID& CStrID);
 	const std::string& ToString() const;
-	bool operator==(const StrID& strID);
-	bool operator<(const StrID& strID);
-	operator int() const;
+	bool operator==(const CStrID& CStrID);
+	bool operator<(const CStrID& CStrID);
+	operator uint32() const;
 	static const std::string defaultID;
 };
 
 
 namespace std
 {
-	template<> class hash<StrID>
+	template<> class hash<CStrID>
 	{
 	public:
-		std::size_t operator()(const StrID& strID) const { return (int)strID; }
+		std::size_t operator()(const CStrID& CStrID) const { return (uint32)CStrID; }
 	};
 }

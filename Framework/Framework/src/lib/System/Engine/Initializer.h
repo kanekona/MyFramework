@@ -2,22 +2,22 @@
 #include "NonCopyable\NonCopyable.hpp"
 #include "Window\Window.h"
 
-class Scene;
+class CScene;
 
 /**
 *@brief	‰Šú‰»class
 *‰Šú‰»‚É•K—v‚È’l‚ğ“n‚µ‚½‚è‚·‚éclass
 */
-class Initializer : private NonCopyable
+class CInitializer : private CNonCopyable
 {
 public:
 	/**
 	*@brief	Window‚Ìİ’è‚ğ“n‚·
 	*@return WindowParameter Window Parameter
 	*/
-	WindowParameter ConfigWindow();
+	CWindowParameter ConfigWindow();
 	/**
 	*@brief	Begin Scene Adaptation
 	*/
-	Scene* SceneAdaptation();
+	CScene* SceneAdaptation();
 };

@@ -2,10 +2,10 @@
 #include <fstream>
 #include <sstream>
 
-class ConfigInputEvent
+class CConfigInputEvent
 {
 	void ChangeInputConfig(std::string& text);
 public:
-	explicit ConfigInputEvent(std::ifstream& ifs);
-	virtual ~ConfigInputEvent();
+	explicit CConfigInputEvent(std::ifstream& ifs);
+	virtual ~CConfigInputEvent();
 };

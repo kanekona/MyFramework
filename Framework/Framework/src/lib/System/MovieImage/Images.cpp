@@ -1,28 +1,28 @@
 #include "Images.h"
 
-Images::Images()
+CImages::CImages()
 {
 	preTime = 0.0f;
 }
-Images::Images(const std::string& path, const format& movie)
+CImages::CImages(const std::string& path, const TFormat& movie)
 {
 	preTime = 0.0f;
 	Load(path, movie);
 }
-Images::~Images()
+CImages::~CImages()
 {
 
 }
-bool Images::Load(const std::string& path, const format& movie)
+bool CImages::Load(const std::string& path, const TFormat& movie)
 {
 	CV_Open(path + movie);
 	return true;
 }
-void Images::Enter()
+void CImages::Entry()
 {
 	time.Start();
 }
-void Images::Update()
+void CImages::Update()
 {
 	if (!enablePlay)
 	{
@@ -31,24 +31,24 @@ void Images::Update()
 	CV_SetFrame(videoFramerate*GetTime());
 	SetMatToTexture();
 }
-void Images::Play()
+void CImages::Play()
 {
 	time.Pause(false);
 }
-void Images::Pause()
+void CImages::Pause()
 {
 	time.Pause(true);
 }
-void Images::SetTime(const float t)
+void CImages::SetTime(const float t)
 {
 	time.InitTime(t);
 	time.Start();
 }
-float Images::GetTime()
+float CImages::GetTime()
 {
 	return preTime + (time.GetTime() * magnification);
 }
-void Images::SetSpeed(const float speed)
+void CImages::SetSpeed(const float speed)
 {
 	preTime += time.GetTime()*magnification;
 	__super::SetSpeed(speed);

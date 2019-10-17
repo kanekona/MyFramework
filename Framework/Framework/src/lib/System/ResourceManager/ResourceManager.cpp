@@ -1,6 +1,10 @@
 #include "ResourceManager.h"
 
-void ResourceManager::SetSoundData(const std::string& dataname,Sound* sound)
+#include "Audio\Sound.h"
+#include "Texture\Texture.h"
+#include "Shader\Shader.h"
+
+void CResourceManager::SetSoundData(const std::string& dataname,CSound* sound)
 {
 	for (auto id = soundData.begin(); id != soundData.end(); ++id)
 	{
@@ -9,13 +13,13 @@ void ResourceManager::SetSoundData(const std::string& dataname,Sound* sound)
 			return;
 		}
 	}
-	std::pair<std::string, Sound*> d;
+	std::pair<std::string, CSound*> d;
 	d.first = dataname;
 	d.second = sound;
 	soundData.emplace_back(d);
 }
 
-bool ResourceManager::CreateSound(const std::string& name,const std::string& path)
+bool CResourceManager::CreateSound(const std::string& name,const std::string& path)
 {
 	for (auto id = soundData.begin(); id != soundData.end(); ++id)
 	{
@@ -24,16 +28,16 @@ bool ResourceManager::CreateSound(const std::string& name,const std::string& pat
 			return false;
 		}
 	}
-	Sound* so = new Sound();
+	CSound* so = new CSound();
 	so->Create(path);
-	std::pair<std::string, Sound*> d;
+	std::pair<std::string, CSound*> d;
 	d.first = name;
 	d.second = so;
 	soundData.emplace_back(d);
 	return true;
 }
 
-void ResourceManager::SetTextureData(const std::string& dataname, Texture* texture)
+void CResourceManager::SetTextureData(const std::string& dataname, CTexture* texture)
 {
 	for (auto id = textureData.begin(); id != textureData.end(); ++id)
 	{
@@ -42,13 +46,13 @@ void ResourceManager::SetTextureData(const std::string& dataname, Texture* textu
 			return;
 		}
 	}
-	std::pair<std::string, Texture*> d;
+	std::pair<std::string, CTexture*> d;
 	d.first = dataname;
 	d.second = texture;
 	textureData.emplace_back(d);
 }
 
-bool ResourceManager::CreateTexture(const std::string& name, const std::string& path)
+bool CResourceManager::CreateTexture(const std::string& name, const std::string& path)
 {
 	for (auto id = textureData.begin(); id != textureData.end(); ++id)
 	{
@@ -57,15 +61,15 @@ bool ResourceManager::CreateTexture(const std::string& name, const std::string& 
 			return false;
 		}
 	}
-	Texture* tex = new Texture(path);
-	std::pair<std::string, Texture*> d;
+	CTexture* tex = new CTexture(path);
+	std::pair<std::string, CTexture*> d;
 	d.first = name;
 	d.second = tex;
 	textureData.emplace_back(d);
 	return true;
 }
 
-Sound* ResourceManager::GetSoundData(const std::string& dataname)
+CSound* CResourceManager::GetSoundData(const std::string& dataname)
 {
 	for (auto id = soundData.begin(); id != soundData.end(); ++id)
 	{
@@ -77,7 +81,7 @@ Sound* ResourceManager::GetSoundData(const std::string& dataname)
 	return nullptr;
 }
 
-Texture* ResourceManager::GetTextureData(const std::string& dataname)
+CTexture* CResourceManager::GetTextureData(const std::string& dataname)
 {
 	for (auto id = textureData.begin(); id != textureData.end(); ++id)
 	{
@@ -89,7 +93,7 @@ Texture* ResourceManager::GetTextureData(const std::string& dataname)
 	return nullptr;
 }
 
-ResourceManager::~ResourceManager()
+CResourceManager::~CResourceManager()
 {
 	for (auto& d : soundData)
 	{
@@ -117,7 +121,7 @@ ResourceManager::~ResourceManager()
 	shaderData.clear();
 }
 
-bool ResourceManager::DeleteTexture(const std::string& name)
+bool CResourceManager::DeleteTexture(const std::string& name)
 {
 	for (auto id = textureData.begin(); id != textureData.end(); ++id)
 	{
@@ -134,7 +138,7 @@ bool ResourceManager::DeleteTexture(const std::string& name)
 	return false;
 }
 
-bool ResourceManager::DeleteSound(const std::string& name)
+bool CResourceManager::DeleteSound(const std::string& name)
 {
 	for (auto id = soundData.begin(); id != soundData.end(); ++id)
 	{
@@ -151,7 +155,7 @@ bool ResourceManager::DeleteSound(const std::string& name)
 	return false;
 }
 
-bool ResourceManager::CreateShader(const std::string& name, const std::string& path)
+bool CResourceManager::CreateShader(const std::string& name, const std::string& path)
 {
 	for (auto id = shaderData.begin(); id != shaderData.end(); ++id)
 	{
@@ -160,17 +164,17 @@ bool ResourceManager::CreateShader(const std::string& name, const std::string& p
 			return false;
 		}
 	}
-	Shader* shader = new Shader();
+	CShader* shader = new CShader();
 	shader->Read(path);
 	shader->Use();
-	std::pair<std::string, Shader*> d;
+	std::pair<std::string, CShader*> d;
 	d.first = name;
 	d.second = shader;
 	shaderData.emplace_back(d);
 	return true;
 }
 
-Shader* ResourceManager::GetShaderData(const std::string& dataname)
+CShader* CResourceManager::GetShaderData(const std::string& dataname)
 {
 	for (auto id = shaderData.begin(); id != shaderData.end(); ++id)
 	{
@@ -182,19 +186,19 @@ Shader* ResourceManager::GetShaderData(const std::string& dataname)
 	return nullptr;
 }
 
-ResourceManager* ResourceManager::Create()
+CResourceManager* CResourceManager::Create()
 {
 	if (instance == nullptr)
 	{
-		instance = new ResourceManager();
+		instance = new CResourceManager();
 	}
-	return ResourceManager::Get();
+	return CResourceManager::Get();
 }
-ResourceManager* ResourceManager::Get()
+CResourceManager* CResourceManager::Get()
 {
 	return instance;
 }
-void ResourceManager::Destroy()
+void CResourceManager::Destroy()
 {
 	if (instance)
 	{
@@ -202,4 +206,4 @@ void ResourceManager::Destroy()
 		instance = nullptr;
 	}
 }
-ResourceManager* ResourceManager::instance = nullptr;
+CResourceManager* CResourceManager::instance = nullptr;

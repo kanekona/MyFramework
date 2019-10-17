@@ -16,20 +16,20 @@
 *@details camera行列を扱う
 *@details Scene１つに１cameraの生成を行う
 */
-class Camera2D : private NonCopyable
+class CCamera2D : private CNonCopyable
 {
 	//!	実際位置
-	Box2D cameraPos;
+	CBox2D cameraPos;
 	//!	位置
-	Vec2 position;
+	CVec2 position;
 	//! サイズ
-	Vec2 scale;
+	CVec2 scale;
 	//! 投影行列を保存しておく配列
 	GLfloat projectionMatrix[16];
 	//! 判定用
-	CircleCollider collision;
+	CCircleCollider collision;
 	//! Collider値
-	Transform transform;
+	CTransform transform;
 	/**
 	*@brief	投影行列を登録する
 	*@param[in] float left 左
@@ -47,21 +47,21 @@ public:
 	/**
 	*@brief	constructor
 	*/
-	explicit Camera2D();
+	explicit CCamera2D();
 	/**
 	*@brief	constructor
 	*@param[in]	const Box2D& b 位置とサイズ
 	*/
-	explicit Camera2D(const Box2D& b);
+	explicit CCamera2D(const CBox2D& b);
 	/**
 	*@brief	destructor
 	*/
-	virtual ~Camera2D();
+	virtual ~CCamera2D();
 	/**
 	*@brief	初期化処理
 	*@param[in]	const Box2D& b 位置とサイズ
 	*/
-	void Initialize(const Box2D& b);
+	void Initialize(const CBox2D& b);
 	/**
 	*@brief	更新処理
 	*/
@@ -70,22 +70,22 @@ public:
 	*@brief	位置を移動させる
 	*@param[in] const Vec2& move 移動値
 	*/
-	void MovePos(const Vec2& move);
+	void MovePos(const CVec2& move);
 	/**
 	*@brief	位置を設定する
 	*@param[in]	const Vec2& pos 位置
 	*/
-	void SetPos(const Vec2& pos);
+	void SetPos(const CVec2& pos);
 	/**
 	*@brief	サイズを設定する
 	*@param[in]	const Vec2& size 大きさ
 	*/
-	void SetSize(const Vec2& size);
+	void SetSize(const CVec2& size);
 	/**
 	*@brief	サイズを動かす
 	*@param[in]	const Vec2& move 移動値
 	*/
-	void MoveSize(const Vec2& move);
+	void MoveSize(const CVec2& move);
 	/**
 	*@brief	カメラ位置のX座標を設定する
 	*@param[in]	float x 座標値
@@ -110,20 +110,25 @@ public:
 	*@brief	カメラの位置を返す
 	*@return Vec2 カメラ位置
 	*/
-	const Vec2& GetPos() const;
+	const CVec2& GetPos() const;
 	/**
 	*@brief	カメラのサイズを返す
 	*@return Vec2 カメラの大きさ
 	*/
-	const Vec2& GetSize() const;
+	const CVec2& GetSize() const;
 	/**
 	*@brief	投影行列を取得する
 	*@return GLfloat* 投影行列
 	*/
-	GLfloat* GetProjectionMatrix();
+	const GLfloat* GetProjectionMatrix() const;
 	/**
 	*@brief Camera判定を取得
 	*@return CollisionCircle* 判定
 	*/
-	CircleCollider* GetCollision();
+	const CCircleCollider* GetCollision() const;
+	/**
+	*@brief 上下反転カメラ行列を取得する
+	*@param[out] GLfloat* out 投影行列
+	*/
+	void ReverseProjectionMatrix(GLfloat* out);
 };

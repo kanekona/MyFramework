@@ -12,30 +12,30 @@ TestEntity::~TestEntity()
 {
 
 }
-void TestEntity::Enter()
+void TestEntity::Entry()
 {
-	Video* movie = new Video;
-	movie->Load("./data/not/videos/FrameworkTest", MovieFormat::MP4, MovieFormat::WAV);
+	CVideo* movie = new CVideo;
+	movie->Load("./data/not/videos/FrameworkTest", CMovieFormat::MP4, CMovieFormat::WAV);
 	/*Images* movie = new Images;
 	movie->Load("./data/not/videos/FrameworkTest", MovieFormat::MP4);*/
 	SetChildren(movie);
 }
 void TestEntity::Update()
 {
-	Video* movie = GetChild<Video>();
-	if (Input::Get()->key->down(In::UP))
+	CVideo* movie = static_cast<CVideo*>(GetChild<CVideo>());
+	if (CInput::Get()->key->down(In::UP))
 	{
 		movie->SetSpeed(movie->GetSpeed() * 2);
 	}
-	else if (Input::Get()->key->down(In::DOWN))
+	else if (CInput::Get()->key->down(In::DOWN))
 	{
 		movie->SetSpeed(movie->GetSpeed() / 2);
 	}
-	else if (Input::Get()->key->down(In::LEFT))
+	else if (CInput::Get()->key->down(In::LEFT))
 	{
 		movie->SetTime(movie->GetTime() - 10);
 	}
-	else if (Input::Get()->key->down(In::RIGHT))
+	else if (CInput::Get()->key->down(In::RIGHT))
 	{
 		movie->SetTime(movie->GetTime() + 10);
 	}

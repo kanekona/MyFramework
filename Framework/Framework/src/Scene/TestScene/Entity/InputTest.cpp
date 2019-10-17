@@ -5,11 +5,11 @@
 void InputTest::Update()
 {
 #if DEBUG_ENABLE
-	Input::Get()->DebugLog();
+	CInput::Get()->DebugLog();
 #endif
 }
 
-void InputTest::Enter()
+void InputTest::Entry()
 {
 }
 
@@ -17,7 +17,7 @@ InputTest::InputTest()
 {
 	KL::ClassFromName<InputTest>(&tag);
 	std::cout << tag << std::endl;
-	input = Input::Get();
+	input = CInput::Get();
 }
 
 InputTest::~InputTest()

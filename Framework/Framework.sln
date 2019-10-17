@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Framework", "Framework\Fram
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Console|x64 = Console|x64
+		Console|x86 = Console|x86
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
 		EngineDeveloperDebug|x64 = EngineDeveloperDebug|x64
@@ -17,6 +19,10 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.Console|x64.ActiveCfg = Console|x64
+		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.Console|x64.Build.0 = Console|x64
+		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.Console|x86.ActiveCfg = Console|Win32
+		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.Console|x86.Build.0 = Console|Win32
 		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.Debug|x64.ActiveCfg = Debug|x64
 		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.Debug|x64.Build.0 = Debug|x64
 		{A89E6746-BC91-4AB2-A253-1A7C1FEA2BB0}.Debug|x86.ActiveCfg = Debug|Win32

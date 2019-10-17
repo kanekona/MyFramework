@@ -1,7 +1,7 @@
 #include "WindowEvent.h"
 #include "Window/Window.h"
 #include "Engine/Framework.h"
-WindowEvent::WindowEvent(std::ifstream& ifs,int* x,int* y)
+CWindowEvent::CWindowEvent(std::ifstream& ifs,int* x,int* y)
 {
 	std::string lineText;
 	while (std::getline(ifs, lineText))
@@ -25,7 +25,7 @@ WindowEvent::WindowEvent(std::ifstream& ifs,int* x,int* y)
 		*y = size_y;
 	}
 }
-WindowEvent::WindowEvent(std::ifstream & ifs)
+CWindowEvent::CWindowEvent(std::ifstream & ifs)
 {
 	std::string lineText;
 	while (std::getline(ifs, lineText))
@@ -44,11 +44,11 @@ WindowEvent::WindowEvent(std::ifstream & ifs)
 		ss << lineText;
 		int size_x, size_y;
 		ss >> size_x >> size_y;
-		WindowParameter windowParameter(Vec2Int(), Vec2Int(size_x, size_y), "", false);
-		Framework::Get()->GetWindow()->Create(windowParameter);
+		CWindowParameter windowParameter(CVec2Int(), CVec2Int(size_x, size_y), "", false);
+		CFramework::Get()->GetWindow()->Create(windowParameter);
 	}
 }
-WindowEvent::~WindowEvent()
+CWindowEvent::~CWindowEvent()
 {
 
 }

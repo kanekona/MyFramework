@@ -6,7 +6,13 @@
 #include "NonCopyable\NonCopyable.hpp"
 #include "StrID\StrID.h"
 #include "Engine\EngineMacro.h"
+#include "Engine\EngineTypedef.h"
 #include <unordered_map>
+
+/**
+*全体的修正予定
+*各入力にDelegate機能を追加する
+*/
 
 /**
 *namespace In
@@ -18,7 +24,7 @@ namespace In
 	*enum Button
 	*@brief	仮装コントローラの入力設定
 	*/
-	enum Button
+	enum EButton : uint8
 	{
 		//!	1
 		BUTTON_A,		
@@ -53,7 +59,7 @@ namespace In
 	*enum AXIS
 	*@brief	コントローラのスティックと押し込み
 	*/
-	enum AXIS
+	enum EAxis : uint8
 	{
 		//! 左スティックX値
 		AXIS_LEFT_X,		
@@ -74,7 +80,7 @@ namespace In
 	*enum StickButton
 	*@brief	スティックをボタンButton入力にも対応
 	*/
-	enum StickButton
+	enum EStick : uint8
 	{
 		//! 左スティック左入力
 		LSTICK_LEFT,
@@ -103,68 +109,48 @@ namespace In
 	*enum IN
 	*@brief	仮想入力
 	*/
-	enum
+	enum EVirtual : uint8
 	{
-		B1,
-		B2,
-		B3,
-		B4,
-		CD,
-		CU,
-		CR,
-		CL,
-		L1,
-		R1,
-		D1,
-		D2,
-		SR,
-		SL,
-		LD,
-		LU,
-		LR,
-		LL,
-		RD,
-		RU,
-		RR,
-		RL,
-		L2,
-		R2,
+		B1,	B2,	B3,	B4,
+		CD,	CU,	CR,	CL,
+		L1,	R1,
+		D1,	D2,
+		SR,	SL,	
+		LD,	LU,	LR,	LL,
+		RD,	RU,	RR,	RL,
+		L2,	R2,
 	};
 	/**
 	*enum Key
 	*@brief	キーボード入力
 	*/
-	enum Key
+	enum EKey : uint8
 	{
 		A, S, D, W, Q, E, Z, X, C, R, F, V, T,
 		G, B, Y, H, N, U, J, M, I, K, O, L, P,
 		SPACE, ENTER, ESCAPE,
 		UP, DOWN, LEFT, RIGHT,
+		F01,F02,F03,F04,F05,F06,F07,F08,F09,F10,F11,F12,
+		N0,N1,N2,N3,N4,N5,N6,N7,N8,N9,
+		KEY_NUM
 	};
-}
-/**
-*namespace Mouse
-*@brief	マウス用簡易引数
-*/
-namespace Mouse
-{
 	/**
 	*enum Button
 	*@brief	Mouseのボタン
 	*/
-	enum Button
+	enum EMouse : uint8
 	{
 		//! 左
-		LEFT,
+		MOUSE_LEFT,
 		//! 右
-		RIGTH,
+		MOUSE_RIGHT,
 		//! 中心
-		CENTER,
-		BUTTON_4,
-		BUTTON_5,
-		BUTTON_6,
-		BUTTON_7,
-		BUTTON_8,
+		MOUSE_CENTER,
+		MOUSE_BUTTON_4,
+		MOUSE_BUTTON_5,
+		MOUSE_BUTTON_6,
+		MOUSE_BUTTON_7,
+		MOUSE_BUTTON_8,
 	};
 }
 /**
@@ -172,7 +158,7 @@ namespace Mouse
 *
 *既存GameEngineを使用している場合は自動で生成される
 */
-class Input : private NonCopyable
+class CInput : private CNonCopyable
 {
 public:
 	/**
@@ -203,125 +189,11 @@ public:
 		}
 	};
 	/**
-	*enum in
-	*@brief	入力用仮想入力
-	*/
-	enum in {
-		B1,
-		B2,
-		B3,
-		B4,
-		CD,
-		CU,
-		CR,
-		CL,
-		L1,
-		R1,
-		D1,
-		D2,
-		SR,
-		SL,
-		LD,
-		LU,
-		LR,
-		LL,
-		RD,
-		RU,
-		RR,
-		RL,
-		L2,
-		R2,
-	};
-	/**
 	*@brief	ゲームパッド入力
 	*/
 	class GamePad
 	{
 	public:
-		/**
-		*enum Pad
-		*@brief	仮装コントローラの入力設定
-		*/
-		enum Pad
-		{
-			//! 0
-			BUTTON_A,
-			//! 1
-			BUTTON_B,
-			//! 2
-			BUTTON_X,
-			//! 3
-			BUTTON_Y,		
-			//! 4
-			BUTTON_L1,		
-			//! 5
-			BUTTON_R1,		
-			//! 6
-			BUTTON_BACK,	
-			//! 7
-			BUTTON_START,	
-			//! 8
-			BUTTON_L3,		
-			//! 9
-			BUTTON_R3,		
-			//! 10
-			BUTTON_U,		
-			//! 11
-			BUTTON_R,	
-			//! 12
-			BUTTON_D,	
-			//! 13
-			BUTTON_L,
-		};
-		/**
-		*enum AXIS
-		*@brief	仮装コントローラの入力設定
-		*/
-		enum AXIS {
-			//! 左スティックX値
-			AXIS_LEFT_X,
-			//! 左スティックY値
-			AXIS_LEFT_Y,
-			//! 右スティックX値
-			AXIS_RIGHT_X,
-			//! 右スティックY値
-			AXIS_RIGHT_Y,
-			//!	R2
-			AXIS_R2,
-			//! L2
-			AXIS_L2,
-			//! ButtonNumber
-			AXIS_BUTTON_NUM,
-		};
-		/**
-		*enum AXISBUTTON
-		*@brief	仮装コントローラの入力設定
-		*/
-		enum AXISBUTTON
-		{
-			//! 左スティック左入力
-			LSTICK_LEFT,
-			//! 左スティック右入力
-			LSTICK_RIGHT,
-			//! 左スティック上入力
-			LSTICK_UP,
-			//! 左スティック下入力
-			LSTICK_DOWN,
-			//! 右スティック左入力
-			RSTICK_LEFT,
-			//! 右スティっク右入力
-			RSTICK_RIGHT,
-			//! 右スティック上入力	
-			RSTICK_UP,
-			//! 右スティック下入力
-			RSTICK_DOWN,
-			//! R2
-			BUTTON_R2,
-			//! L2
-			BUTTON_L2,
-			//! スティック数
-			STICK_NUM,
-		};
 		/**
 		*@brief	constructor
 		*@param[in]	int id ゲームパッド番号
@@ -396,7 +268,7 @@ public:
 		/**
 		*@brief	各値の初期化
 		*/
-		void SetConfig(std::unordered_map<StrID,Input::ConfigData>* ConfigData);
+		void SetConfig(std::unordered_map<CStrID,CInput::ConfigData>* ConfigData);
 		/**
 		*@brief	入力状態のリセット
 		*/
@@ -460,17 +332,6 @@ public:
 	class KeyBoard
 	{
 	public:
-		/**
-		*enum Key
-		*@brief	キーボードの仮装キー設定
-		*/
-		enum Key
-		{	
-			A, S, D, W, Q, E, Z, X, C, R, F, V, T,
-			G, B, Y, H, N, U, J, M, I, K, O, L, P,
-			SPACE, ENTER, ESCAPE,
-			UP, DOWN, LEFT, RIGHT, Num
-		};
 		/**
 		*@brief	constructor
 		*/
@@ -538,24 +399,6 @@ public:
 	{
 	public:
 		/**
-		*enum Mouse_
-		*@brief	マウスの入力設定
-		*/
-		enum Button
-		{
-			//! 右
-			LEFT,
-			//! 左
-			RIGHT,
-			//! 中心
-			CENTER,
-			BUTTON_4,
-			BUTTON_5,
-			BUTTON_6,
-			BUTTON_7,
-			BUTTON_8,
-		};
-		/**
 		*@brief	constructor
 		*/
 		explicit Mouse();
@@ -576,7 +419,7 @@ public:
 		*@brief	Windowからのマウスの位置を返す
 		*@return Vec2 マウスの位置
 		*/
-		Vec2 GetPos() const;
+		CVec2 GetPos() const;
 		/**
 		*@brief	押している判定を返す
 		*@param[in] int index 判定を行いたい入力番号
@@ -614,7 +457,7 @@ public:
 		*@brief	マウスのホイール値を返す
 		*@return Vec2 ホイールの値
 		*/
-		Vec2 GetScroll() const;
+		CVec2 GetScroll() const;
 		/**
 		*@brief	マウスの入力状況をリセットする
 		*/
@@ -623,7 +466,12 @@ public:
 		*@brief	マウスの判定を取得する
 		*@return CollisionPointer* マウスのCollision
 		*/
-		PointCollider* GetCollision() const;
+		CPointCollider* GetCollision() const;
+		/**
+		*@brief マウス位置のカラー取得
+		*@return Color Pixcel Color
+		*/
+		CColor GetPixcel();
 		//! マウスの有無
 		bool IsPresent;
 	private:
@@ -631,13 +479,13 @@ public:
 		int mouseData[8];
 		//! マウスの座標を保存する変数
 		//Vec2 position;
-		Transform transform;
+		CTransform transform;
 		//! Windowの情報を格納する
 		GLFWwindow* nowWindow;
 		//! ホイール値
-		Vec2 scrollValue;
+		CVec2 scrollValue;
 		//! マウスの判定
-		PointCollider* collision;
+		CPointCollider* collision;
 		//! buttonのonを格納する変数
 		std::vector<u_char> button_on;
 		//! buttonのdownを格納する変数
@@ -647,7 +495,7 @@ public:
 		//! Mouse位置取得時に使用するdouble型
 		double pos_x, pos_y;
 		//! ホイール獲得のコールバックで得た値をいれておく
-		static Vec2 scroll;
+		static CVec2 scroll;
 		/**
 		*@brief	マウスのホイール状態を獲得する
 		*@param[in]	GLFWWindow* w window情報
@@ -729,7 +577,7 @@ public:
 	/**
 	*
 	*/
-	void SetPadConfig(const StrID& key,const int padKey);
+	void SetPadConfig(const CStrID& key,const int padKey);
 	/**
 	 * 
 	 */
@@ -737,22 +585,22 @@ public:
 	/**
 	 * @brief constructor
 	 */
-	explicit Input();
+	explicit CInput();
 	/**
 	*@brief	destructor
 	*/
-	virtual ~Input();
+	virtual ~CInput();
 	/**
 	*@brief	Create Singleton
 	*@param[in] GLFWWindow* window Current Window
 	*@return Input* instance
 	*/
-	static Input* Create(GLFWwindow* window);
+	static CInput* Create(GLFWwindow* window);
 	/**
 	*@brief	Get Singleton
 	*@return Input* instance
 	*/
-	static Input* Get();
+	static CInput* Get();
 	/**
 	*@brief	Destroy Singleton
 	*/
@@ -768,12 +616,12 @@ private:
 	//! 入力データ
 	int inputData[256];
 	//! Singleton
-	static Input* instance;
+	static CInput* instance;
 	/**
 	*@brief	ゲームパッド初期化
 	*@return vetor<GamePad*> 生成したゲームパッド達
 	*/
-	std::vector<Input::GamePad*> InitGamePad();
+	std::vector<CInput::GamePad*> InitGamePad();
 	/**
 	*@brief	キーボード初期化
 	*return KeyBoard* 生成したキーボード
@@ -787,6 +635,6 @@ private:
 	//! in分のデータ
 	InputData inputdata[24];
 	//! コンフィグデータ
-	std::unordered_map<StrID, ConfigData> PadConfigData;
+	std::unordered_map<CStrID, ConfigData> PadConfigData;
 };
 //Input* Input::instance = nullptr;

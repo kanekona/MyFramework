@@ -2,12 +2,12 @@
 /**
 *@brief	•`‰æ‡‚ğŠÇ—‚·‚éstruct
 */
-struct OrderCheck
+struct COrderCheck
 {
 	/**
 	*@brief	constructor
 	*/
-	explicit OrderCheck();
+	explicit COrderCheck();
 	//! ObjectID
 	int id;
 	//! •`‰æ‡

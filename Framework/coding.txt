@@ -1,0 +1,6 @@
+enum E****
+class C****
+struct S****
+member variables abc
+member functions Abc
+constant ABC

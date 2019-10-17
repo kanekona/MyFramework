@@ -1,9 +1,9 @@
 #pragma once
 #include "Entity\Entity.h"
 
-class WinConfig : public Entity
+class WinConfig : public CEntity
 {
-	void Enter() override;
+	void Entry() override;
 	void Update() override;
 public:
 	explicit WinConfig();

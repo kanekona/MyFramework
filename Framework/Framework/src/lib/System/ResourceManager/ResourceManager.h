@@ -1,9 +1,13 @@
 
 #pragma once
 #include "NonCopyable\NonCopyable.hpp"
-#include "Audio\Sound.h"
-#include "Texture\Texture.h"
-#include "Shader\Shader.h"
+#include <string>
+#include <vector>
+
+class CSound;
+class CTexture;
+class CShader;
+
 /**
 *@brief	リソースを生成、解放、管理を行うclass
 *
@@ -13,23 +17,23 @@
 *
 *newせず登録したものは自分でDeleteResource呼んで消しておくこと
 */
-class ResourceManager : private NonCopyable
+class CResourceManager : private CNonCopyable
 {
 	//! サウンドデータ
-	std::vector<std::pair<std::string, Sound*>> soundData;
+	std::vector<std::pair<std::string, CSound*>> soundData;
 	//! テクスチャデータ
-	std::vector<std::pair<std::string, Texture*>> textureData;
+	std::vector<std::pair<std::string, CTexture*>> textureData;
 	//! シェーダーデータ
-	std::vector<std::pair<std::string, Shader*>> shaderData;
+	std::vector<std::pair<std::string, CShader*>> shaderData;
 	//! Singleton
-	static ResourceManager* instance;
+	static CResourceManager* instance;
 public:
 	/**
 	*@brief	存在するサウンドデータのポインタを登録する
 	*@param[in] string name 登録名
 	*@param[in]	Sound* sound サウンドデータのポインタ
 	*/
-	void SetSoundData(const std::string& name,Sound* sound);
+	void SetSoundData(const std::string& name,CSound* sound);
 	/**
 	*@brief	新しくサウンドを生成しデータに登録する
 	*@param[in] string name 登録名
@@ -42,13 +46,13 @@ public:
 	*@param[in] string name　登録名
 	*@return Sound* 登録されているサウンドを返す
 	*/
-	Sound* GetSoundData(const std::string& name);
+	CSound* GetSoundData(const std::string& name);
 	/**
 	*@brief	存在するテクスチャデータのポインタを登録する
 	*@param[in]	string 登録名
 	*@param[in]	Texture* tex テクスチャデータのポインタ
 	*/
-	void SetTextureData(const std::string& name,Texture* tex);
+	void SetTextureData(const std::string& name,CTexture* tex);
 	/**
 	*@brief	新しくテクスチャを生成しデータを登録する
 	*@param[in]	string name 登録名
@@ -61,7 +65,7 @@ public:
 	*@param[in] string name 登録名
 	*@return Sound* 登録されているテクスチャを返す
 	*/
-	Texture* GetTextureData(const std::string& name);
+	CTexture* GetTextureData(const std::string& name);
 	/**
 	*@brief	登録されているテクスチャデータを破棄,deleteする
 	*@param[in]	string name 登録名
@@ -86,22 +90,22 @@ public:
 	*@param[in] const string& name 登録名
 	*@return Shader* 登録されているシェーダーデータ
 	*/
-	Shader* GetShaderData(const std::string& name);
+	CShader* GetShaderData(const std::string& name);
 	/**
 	*@brief	destructor 
 	*全データを破棄,deleteする
 	*/
-	virtual ~ResourceManager();
+	virtual ~CResourceManager();
 	/**
 	*@brief	Create Singleton Instance
 	*@return ResourceManager* instance
 	*/
-	static ResourceManager* Create();
+	static CResourceManager* Create();
 	/**
 	*@brief	Get Instance
 	*@return ResourceManager* instance
 	*/
-	static ResourceManager* Get();
+	static CResourceManager* Get();
 	/**
 	*@brief	Destroy Instance
 	*/

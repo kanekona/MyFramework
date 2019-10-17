@@ -1,16 +1,16 @@
 #include "MovieImage.h"
 #include "Engine\Framework.h"
 #include "Texture\Texture.h"
-MovieImage::MovieImage()
-	:Sprite(true)
+CMovieImage::CMovieImage()
+	:CSprite(true)
 {
 	Init();
 }
-MovieImage::~MovieImage()
+CMovieImage::~CMovieImage()
 {
 	Delete();
 }
-void MovieImage::CV_Open(const std::string& path)
+void CMovieImage::CV_Open(const std::string& path)
 {
 	if (!videoCapture.open(path))
 	{
@@ -20,15 +20,15 @@ void MovieImage::CV_Open(const std::string& path)
 	videoCapture >> mat;
 	if (!texture)
 	{
-		texture = new Texture();
+		texture = new CTexture();
 	}
 	texture->Load(mat);
 }
-void MovieImage::CV_SetFrame(const float frame)
+void CMovieImage::CV_SetFrame(const float frame)
 {
 	videoCapture.set(CV_CAP_PROP_POS_FRAMES, frame);
 }
-bool MovieImage::SetMatToTexture()
+bool CMovieImage::SetMatToTexture()
 {
 	videoCapture >> mat;
 	if (!mat.empty())
@@ -38,17 +38,17 @@ bool MovieImage::SetMatToTexture()
 	}
 	return false;
 }
-void MovieImage::Init()
+void CMovieImage::Init()
 {
 	preEnablePlay = enablePlay = true;
 	loop = false;
-	transform = new Transform();
-	transform->position = Framework::Get()->GetPosition(2, 2, 3);
-	transform->scale = Framework::Get()->GetSize(1, 1);
-	color = &Color::one;
+	transform = new CTransform();
+	transform->position = CFramework::Get()->GetPosition(2, 2, 3);
+	transform->scale = CFramework::Get()->GetSize(1, 1);
+	color = &CColor::one;
 	magnification = 1.0f;
 }
-void MovieImage::Delete()
+void CMovieImage::Delete()
 {
 	if (texture)
 	{
@@ -61,7 +61,7 @@ void MovieImage::Delete()
 		transform = nullptr;
 	}
 }
-void MovieImage::SetPlay(const bool isPlay)
+void CMovieImage::SetPlay(const bool isPlay)
 {
 	enablePlay = isPlay;
 	if (enablePlay && !preEnablePlay)
@@ -76,27 +76,27 @@ void MovieImage::SetPlay(const bool isPlay)
 	}
 	preEnablePlay = enablePlay;
 }
-void MovieImage::Play()
+void CMovieImage::Play()
 {
 
 }
-void MovieImage::Pause()
+void CMovieImage::Pause()
 {
 
 }
-void MovieImage::SetSpeed(const float speed)
+void CMovieImage::SetSpeed(const float speed)
 {
 	magnification = speed;
 }
-void MovieImage::SetTime(const float time)
+void CMovieImage::SetTime(const float time)
 {
 	CV_SetFrame(time * videoFramerate);
 }
-void MovieImage::EnableLoop(const bool isLoop)
+void CMovieImage::EnableLoop(const bool isLoop)
 {
 	enablePlay = isLoop;
 }
-float MovieImage::GetSpeed() const
+float CMovieImage::GetSpeed() const
 {
 	return magnification;
 }

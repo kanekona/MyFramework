@@ -2,35 +2,35 @@
 #include "Data.h"
 #include "Scene\SceneManager.h"
 #include "Window\Window.h"
-Framework::Framework(bool* destroy)
+CFramework::CFramework(bool* destroy)
 {
 	sceneManager = nullptr;
 	enableEngineDestroy = destroy;
 	//Windowê∂ê¨
-	window = new Window();
+	window = new CWindow();
 	time.Start();
 	preTime = 0.0f;
 	deltaTime = 0.0f;
 }
-Framework::~Framework()
+CFramework::~CFramework()
 {
 	enableEngineDestroy = nullptr;
 	delete sceneManager;
 	delete window;
 }
-Framework* Framework::Create(bool* destroy)
+CFramework* CFramework::Create(bool* destroy)
 {
-	if (Framework::instance == nullptr)
+	if (CFramework::instance == nullptr)
 	{
-		Framework::instance = new Framework(destroy);
+		CFramework::instance = new CFramework(destroy);
 	}
-	return Framework::Get();
+	return CFramework::Get();
 }
-Framework* Framework::Get()
+CFramework* CFramework::Get()
 {
-	return Framework::instance;
+	return CFramework::instance;
 }
-void Framework::Destroy()
+void CFramework::Destroy()
 {
 	//OG::Destroy<Framework>(instance);
 	if (instance)
@@ -39,58 +39,58 @@ void Framework::Destroy()
 		instance = nullptr;
 	}
 }
-void Framework::ChangeScene(Scene* next)
+void CFramework::ChangeScene(CScene* next)
 {
 	sceneManager->ChangeScene(next);
 }
-Scene* Framework::GetScene()
+CScene* CFramework::GetScene()
 {
-	return sceneManager->Get();
+	return instance->sceneManager->Get();
 }
-void Framework::Update()
+void CFramework::Update()
 {
 	deltaTime = time.GetTime() - preTime;
 	preTime = time.GetTime();
 	sceneManager->SceneUpdate();
 }
-Window* Framework::GetWindow()
+CWindow* CFramework::GetWindow()
 {
-	return window;
+	return instance->window;
 }
-void Framework::EngineDestroy()
+void CFramework::EngineDestroy()
 {
 	*enableEngineDestroy = false;
 }
-void Framework::CreateSceneManager(Scene* begin)
+void CFramework::CreateSceneManager(CScene* begin)
 {
 	if (sceneManager == nullptr)
 	{
-		sceneManager = new SceneManager(begin);
+		sceneManager = new CSceneManager(begin);
 	}
 }
-Vec2Int Framework::GetPosition(const unsigned int x, const unsigned int y, const unsigned int number)
+CVec2Int CFramework::GetPosition(const unsigned int x, const unsigned int y, const unsigned int number)
 {
-	Vec2Int position(window->GetSize());
+	CVec2Int position(window->GetSize());
 	position.x /= x;
 	position.y /= y;
 	position.x *= number % x;
 	position.y *= number / x;
 	return position;
 }
-Vec2Int Framework::GetSize(const unsigned int x, const unsigned int y)
+CVec2Int CFramework::GetSize(const unsigned int x, const unsigned int y)
 {
-	Vec2Int size(window->GetSize());
+	CVec2Int size(window->GetSize());
 	size.x /= x;
 	size.y /= y;
 	return size;
 }
-void Framework::GetSize(float* out)
+void CFramework::GetSize(float* out)
 {
 	out[0] = (float)window->GetSize().x;
 	out[1] = (float)window->GetSize().y;
 }
-float Framework::DeltaTime() const
+float CFramework::DeltaTime() const
 {
 	return deltaTime;
 }
-Framework* Framework::instance = nullptr;
+CFramework* CFramework::instance = nullptr;

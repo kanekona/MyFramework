@@ -8,15 +8,15 @@
 #include "Initializer.h"
 #include "Framework.h"
 #include "Scene\Scene.h"
-Engine::Engine()
+CEngine::CEngine()
 {
 	//OpenGL,OpenFW Initialize
 	GLFWInitialize();
 	//Create Engine Initializer
-	initializer = new Initializer();
+	initializer = new CInitializer();
 	//GameFramework‚Ì¶¬
 	enable = true;
-	framework = Framework::Create(&enable);
+	framework = CFramework::Create(&enable);
 	//Get Framework Window Address
 	window = framework->GetWindow();
 	//Window Create
@@ -30,32 +30,32 @@ Engine::Engine()
 	//OutsideLibrary Initialize
 	OutsideLibraryInitialize();
 	//AudioDevice‚ÌÝ’è
-	audiodevice = new Audio();
+	audiodevice = new CAudio();
 	//ResourceManaget‚Ì¶¬
-	ResourceManager::Create();
+	CResourceManager::Create();
 	//Input‚Ì¶¬
-	Input::Create(framework->GetWindow()->GetFWWindow());
+	CInput::Create(framework->GetWindow()->GetFWWindow());
 	//Delete Engine Initializer
 	delete initializer;
-	EventTask ev;
-	ev.Load(Event::RESOURCE_LOAD, "./data/event/sampleLoad.og");
+	CEventTask ev;
+	ev.Load(EEvent::RESOURCE_LOAD, "./data/event/sampleLoad.og");
 	//Scene Start
-	framework->GetScene()->Enter();
+	framework->GetScene()->Entry();
 }
-Engine::~Engine()
+CEngine::~CEngine()
 {
 	//Delete Input
-	Input::Destroy();
+	CInput::Destroy();
 	//Delete ResourceManager
-	ResourceManager::Destroy();
+	CResourceManager::Destroy();
 	//Delete AudioDevice
 	delete audiodevice;
 	//Delete GameFramework
-	Framework::Destroy();
+	CFramework::Destroy();
 	//End GLFW
 	glfwTerminate();
 }
-void Engine::GLFWInitialize()
+void CEngine::GLFWInitialize()
 {
 	//GLFW Initialize
 	if (!glfwInit())
@@ -63,7 +63,7 @@ void Engine::GLFWInitialize()
 		throw ERROR_GLFE_INIT;
 	}
 }
-void Engine::OutsideLibraryInitialize()
+void CEngine::OutsideLibraryInitialize()
 {
 	//OpenGL Version
 	//‘½•ªWindow‚æ‚è‘O‚ÉéŒ¾‚·‚é‚Æ•`‰æ‚ª‚³‚ê‚È‚¢
@@ -96,7 +96,7 @@ void Engine::OutsideLibraryInitialize()
 	//Random Seed Initialize
 	Random::Init();
 }
-bool Engine::SystemUpdate()
+bool CEngine::SystemUpdate()
 {
 	//Update Check
 	if (fps.FrameCheck())
@@ -106,7 +106,7 @@ bool Engine::SystemUpdate()
 		//Device Update
 		glfwPollEvents();
 		//Device Class Update
-		Input::Get()->Update();
+		CInput::Get()->Update();
 		//Matrix Mode Change
 		glMatrixMode(GL_MODELVIEW);
 		//Clear Buffer

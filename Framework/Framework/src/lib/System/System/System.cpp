@@ -17,7 +17,7 @@ namespace KL {
 		v[1] *= m;
 		v[2] *= m;
 	}
-	void LineBoxDraw(const Box2D* _b, const Color& color, const float linewidth)
+	void LineBoxDraw(const CBox2D* _b, const CColor& color, const float linewidth)
 	{
 		glColor4f(color.red, color.green, color.blue, color.alpha);
 		glBegin(GL_LINES);
@@ -36,7 +36,7 @@ namespace KL {
 		glEnd();
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	}
-	void LineBoxDraw(const Box2D* _b, const float linewidth, const Color& color)
+	void LineBoxDraw(const CBox2D* _b, const float linewidth, const CColor& color)
 	{
 		glColor4f(color.red, color.green, color.blue, color.alpha);
 		glBegin(GL_LINES);
@@ -55,7 +55,7 @@ namespace KL {
 		glEnd();
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	}
-	void LineBoxDraw(const Vec2* _b, const Color& color, const float linewidth)
+	void LineBoxDraw(const CVec2* _b, const CColor& color, const float linewidth)
 	{
 		glColor4f(color.red, color.green, color.blue, color.alpha);
 		glBegin(GL_LINES);
@@ -74,7 +74,7 @@ namespace KL {
 		glEnd();
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	}
-	void LineBoxDraw(const Vec2* _b, const float linewidth, const Color& color)
+	void LineBoxDraw(const CVec2* _b, const float linewidth, const CColor& color)
 	{
 		glColor4f(color.red, color.green, color.blue, color.alpha);
 		glBegin(GL_LINES);
@@ -93,7 +93,7 @@ namespace KL {
 		glEnd();
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	}
-	void LineDraw(const Vec2* _b, const Color& color, const float linewidth)
+	void LineDraw(const CVec2* _b, const CColor& color, const float linewidth)
 	{
 		glColor4f(color.red, color.green, color.blue, color.alpha);
 		glBegin(GL_LINES);
@@ -103,7 +103,7 @@ namespace KL {
 		glEnd();
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	}
-	void LineDraw(const Vec2* _b, const float linewidth, const Color& color)
+	void LineDraw(const CVec2* _b, const float linewidth, const CColor& color)
 	{
 		glColor4f(color.red, color.green, color.blue, color.alpha);
 		glBegin(GL_LINES);
@@ -113,11 +113,11 @@ namespace KL {
 		glEnd();
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	}
-	void LineOvalDraw(const Vec2* pos, const Vec2* scale, const float linewidth, const Color& color)
+	void LineOvalDraw(const CVec2* pos, const CVec2* scale, const float linewidth, const CColor& color)
 	{
 		KL::LineOvalDraw(pos->x, pos->y, scale->x, scale->y, linewidth, color);
 	}
-	void LineOvalDraw(const int x, const int y, const float ovalx, const float ovaly, const float linewidth, const Color& color)
+	void LineOvalDraw(const int x, const int y, const float ovalx, const float ovaly, const float linewidth, const CColor& color)
 	{
 		glColor4f(color.red, color.green, color.blue, color.alpha);
 		for (float th1 = 0.0; th1 <= 360.0; th1 = th1 + 1.0)
@@ -139,7 +139,7 @@ namespace KL {
 		}
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	}
-	void PointDraw(const Vec2* pos, const Color& color, const float linewidth)
+	void PointDraw(const CVec2* pos, const CColor& color, const float linewidth)
 	{
 		glColor4f(color.red, color.green, color.blue, color.alpha);
 		glBegin(GL_POINTS);
@@ -148,7 +148,7 @@ namespace KL {
 		glEnd();
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	}
-	void PointDraw(const Vec2* pos, const float linewidth, const Color& color)
+	void PointDraw(const CVec2* pos, const float linewidth, const CColor& color)
 	{
 		glColor4f(color.red, color.green, color.blue, color.alpha);
 		glBegin(GL_POINTS);
@@ -157,19 +157,19 @@ namespace KL {
 		glEnd();
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	}
-	void Rotate(const float _ang, Vec2* _b)
+	void Rotate(const float _ang, CVec2* _b)
 	{
 		//ラジアンの値に変更
 		float tora = KL::ToRadian(_ang);
 		//原点を指定
-		Vec2 Center(((_b + 2)->x + (_b)->x) / 2, ((_b + 2)->y + (_b)->y) / 2);
+		CVec2 center(((_b + 2)->x + (_b)->x) / 2, ((_b + 2)->y + (_b)->y) / 2);
 		//回転軸の原点の値を導く
 		GLfloat v[]
 		{
-			_b->x - Center.x,_b->y - Center.y,
-			(_b + 1)->x - Center.x,(_b + 1)->y - Center.y,
-			(_b + 2)->x - Center.x,(_b + 2)->y - Center.y,
-			(_b + 3)->x - Center.x,(_b + 3)->y - Center.y,
+			_b->x - center.x,_b->y - center.y,
+			(_b + 1)->x - center.x,(_b + 1)->y - center.y,
+			(_b + 2)->x - center.x,(_b + 2)->y - center.y,
+			(_b + 3)->x - center.x,(_b + 3)->y - center.y,
 		};
 		//回転行列の生成
 		GLfloat ma[4] = {
@@ -190,20 +190,20 @@ namespace KL {
 		(_b + 3)->y = (*(v + 6)* *(ma + 2)) + (*(v + 7)* *(ma + 3));
 
 		//回転軸の原点の移動した分を元に戻す
-		(_b)->x = (_b)->x + Center.x;
-		(_b)->y = (_b)->y + Center.y;
+		(_b)->x = (_b)->x + center.x;
+		(_b)->y = (_b)->y + center.y;
 
-		(_b + 1)->x = (_b + 1)->x + Center.x;
-		(_b + 1)->y = (_b + 1)->y + Center.y;
+		(_b + 1)->x = (_b + 1)->x + center.x;
+		(_b + 1)->y = (_b + 1)->y + center.y;
 
-		(_b + 2)->x = (_b + 2)->x + Center.x;
-		(_b + 2)->y = (_b + 2)->y + Center.y;
+		(_b + 2)->x = (_b + 2)->x + center.x;
+		(_b + 2)->y = (_b + 2)->y + center.y;
 
-		(_b + 3)->x = (_b + 3)->x + Center.x;
-		(_b + 3)->y = (_b + 3)->y + Center.y;
+		(_b + 3)->x = (_b + 3)->x + center.x;
+		(_b + 3)->y = (_b + 3)->y + center.y;
 	}
 }
-void KL::BackColor(const Color& color)
+void KL::BackColor(const CColor& color)
 {
 	glClearColor((GLclampf)color.red, (GLclampf)color.green, (GLclampf)color.blue, (GLclampf)color.alpha);
 }
@@ -223,19 +223,19 @@ int KL::mbclen(const char* c)
 	}
 	return 0;
 }
-void KL::cout(const Box2D& b)
+void KL::cout(const CBox2D& b)
 {
 	std::cout << "x " << b.x << ":y " << b.y << ":w " << b.w << ":h " << b.h;
 }
-void KL::cout(const Vec2& v)
+void KL::cout(const CVec2& v)
 {
 	std::cout << "x " << v.x << ":y " << v.y;
 }
-void KL::cout(const Color& c)
+void KL::cout(const CColor& c)
 {
 	std::cout << "red " << c.red << ":green " << c.green << ":blue " << c.blue << ":alpha " << c.alpha;
 }
-void KL::cout(const Vec3& v)
+void KL::cout(const CVec3& v)
 {
 	std::cout << "x " << v.x << ":y " << v.y << ":z " << v.z;
 }
@@ -352,9 +352,9 @@ bool KL::StringFromNumber(const std::string & str, int * out)
 	*out = std::stoi(str);
 	return true;
 }
-bool KL::StringFromStrID(const std::string& str, StrID* out)
+bool KL::StringFromStrID(const std::string& str, CStrID* out)
 {
-	StrID id(str);
+	CStrID id(str);
 	*out = id;
 	return true;
 }

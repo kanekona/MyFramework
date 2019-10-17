@@ -25,9 +25,6 @@
     <Filter Include="ソース ファイル\Library">
       <UniqueIdentifier>{0dd2f149-de01-48b6-9116-e490e9669bf7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="リソース ファイル\Doxygen">
-      <UniqueIdentifier>{d2d74791-61b1-4096-b800-29109308d89f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="リソース ファイル\event">
       <UniqueIdentifier>{88e0c9d0-53f8-4b47-8a23-f3bce0cf4058}</UniqueIdentifier>
     </Filter>
@@ -72,9 +69,6 @@
     </Filter>
     <Filter Include="ソース ファイル\Library\System\Font">
       <UniqueIdentifier>{25477714-16ae-4417-b1b0-540a76cc49eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Library\System\FrameRate">
-      <UniqueIdentifier>{20e7f658-7eb7-49e6-ad2f-ca85e26e2be3}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Library\System\Icon">
       <UniqueIdentifier>{34f32bc7-4487-47f2-a2c3-5195ac6a355c}</UniqueIdentifier>
@@ -151,6 +145,15 @@
     <Filter Include="ソース ファイル\Library\System\StrID">
       <UniqueIdentifier>{4fed88e5-ef39-45b7-9eff-31302741d600}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Library\System\Graph">
+      <UniqueIdentifier>{bda82aa7-a8a7-4c26-855e-59a9414b5738}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Console">
+      <UniqueIdentifier>{9decdc7f-e045-4a1e-8da9-3a59b279be12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Library\System\Framerate">
+      <UniqueIdentifier>{20e7f658-7eb7-49e6-ad2f-ca85e26e2be3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\lib\System\randmais.h">
@@ -200,9 +203,6 @@
     </ClInclude>
     <ClInclude Include="src\lib\System\Font\Font.h">
       <Filter>ソース ファイル\Library\System\Font</Filter>
-    </ClInclude>
-    <ClInclude Include="src\lib\System\FPS\FPS.h">
-      <Filter>ソース ファイル\Library\System\FrameRate</Filter>
     </ClInclude>
     <ClInclude Include="src\lib\System\Input\Input.h">
       <Filter>ソース ファイル\Library\System\Input</Filter>
@@ -309,6 +309,36 @@
     <ClInclude Include="src\lib\System\Texture\ScreenShot.h">
       <Filter>ソース ファイル\Library\System\Texture</Filter>
     </ClInclude>
+    <ClInclude Include="src\lib\System\Graph\Graph.h">
+      <Filter>ソース ファイル\Library\System\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\TestScene\Entity\GraphTest.h">
+      <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Engine\EngineTypedef.h">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Engine\Delegate.h">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\TestScene\Entity\DelegateTest.h">
+      <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Engine\EngineMacro.h">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Console\ConsoleSystem.h">
+      <Filter>ソース ファイル\Library\System\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Framerate\Framerate.h">
+      <Filter>ソース ファイル\Library\System\Framerate</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Win\EntryConsole.h">
+      <Filter>ソース ファイル\Win</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Engine\GameManager.h">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Win\WinMain.cpp">
@@ -352,9 +382,6 @@
     </ClCompile>
     <ClCompile Include="src\lib\System\Font\Font.cpp">
       <Filter>ソース ファイル\Library\System\Font</Filter>
-    </ClCompile>
-    <ClCompile Include="src\lib\System\FPS\FPS.cpp">
-      <Filter>ソース ファイル\Library\System\FrameRate</Filter>
     </ClCompile>
     <ClCompile Include="src\lib\System\Input\Input.cpp">
       <Filter>ソース ファイル\Library\System\Input</Filter>
@@ -440,9 +467,6 @@
     <ClCompile Include="src\Scene\TestScene\Entity\SoundTestEntity.cpp">
       <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="src\lib\System\Engine\EngineMacro.h">
-      <Filter>ソース ファイル\Library\System\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\lib\System\StrID\StrID.cpp">
       <Filter>ソース ファイル\Library\System\StrID</Filter>
     </ClCompile>
@@ -457,6 +481,33 @@
     </ClCompile>
     <ClCompile Include="src\lib\System\Texture\ScreenShot.cpp">
       <Filter>ソース ファイル\Library\System\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Graph\Graph.cpp">
+      <Filter>ソース ファイル\Library\System\Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\TestScene\Entity\GraphTest.cpp">
+      <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Engine\Delegate.cpp">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\TestScene\Entity\DelegateTest.cpp">
+      <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Engine\EngineMacro.cpp">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Console\ConsoleSystem.cpp">
+      <Filter>ソース ファイル\Library\System\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Framerate\Framerate.cpp">
+      <Filter>ソース ファイル\Library\System\Framerate</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Win\EntryConsole.cpp">
+      <Filter>ソース ファイル\Win</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lib\System\Engine\GameManager.cpp">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -501,6 +552,12 @@
     <None Include="data\event\KeyConfig.ini">
       <Filter>リソース ファイル\event</Filter>
     </None>
+    <None Include="data\shader\line.fsh">
+      <Filter>リソース ファイル\shader</Filter>
+    </None>
+    <None Include="data\shader\line.vsh">
+      <Filter>リソース ファイル\shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="data\image\testicon.ico">
@@ -509,6 +566,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="data\TODO.txt">
+      <Filter>リソース ファイル</Filter>
+    </Text>
+    <Text Include="..\coding.txt">
       <Filter>リソース ファイル</Filter>
     </Text>
   </ItemGroup>

@@ -38,7 +38,7 @@
 //	/**
 //	*@brief 登録時処理
 //	*/
-//	void Enter() override;
+//	void Entry() override;
 //	/**
 //	*@brief サウンドと動画の再生速度を登録する
 //	*/
@@ -112,10 +112,10 @@
 //	float GetTime() const;
 //};
 
-class Video : public MovieImage
+class CVideo : public CMovieImage
 {
 	//! 音データ
-	Sound sound;
+	CSound sound;
 	/**
 	*@brief サウンドの読み込み
 	*@param[in] string path FilePath
@@ -124,7 +124,7 @@ class Video : public MovieImage
 	/**
 	*@brief 登録されたときに呼ばれる
 	*/
-	void Enter() override;
+	void Entry() override;
 	/**
 	*@brief 更新処理
 	*/
@@ -141,25 +141,25 @@ public:
 	/**
 	*@brief constructor
 	*/
-	explicit Video();
+	explicit CVideo();
 	/**
 	*@brief constructor
 	*@param[in] string path FilePath
 	*@param[in] format movie Movie Format
 	*@param[in] format sound Sound Format
 	*/
-	explicit Video(const std::string& path, const format& movie, const format& sound);
+	explicit CVideo(const std::string& path, const TFormat& movie, const TFormat& sound);
 	/**
 	*@brief destructor
 	*/
-	virtual ~Video();
+	virtual ~CVideo();
 	/**
 	*@brief Video And Sound Load
 	*@param[in] string path FilePath
 	*@param[in] format movie Movie Format
 	*@param[in] format sound Sound Format
 	*/
-	bool Load(const std::string& filePath, const format& movie, const format& sound);
+	bool Load(const std::string& filePath, const TFormat& movie, const TFormat& sound);
 	/**
 	*@brief 音量設定
 	*@param[in] float volume Sound Volume

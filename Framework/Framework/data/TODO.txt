@@ -1,2 +1,15 @@
 マウスのピクセル取得
 画面のスクリーンショット（全体、指定）
+
+Entityの修正（Parent、GetChild)
+
+GUI用Widget（Entity継承）
+
+全体使用メモリの管理class
+
+入力classの修正（Delegateの実装）
+入力classの非対応のキー入力の対応
+
+Entityの更新を更新システムでまとめる、描画をSpriteでまとめる
+
+dx12への移行

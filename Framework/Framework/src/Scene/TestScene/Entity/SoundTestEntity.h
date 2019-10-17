@@ -2,11 +2,11 @@
 #include "Entity\Entity.h"
 #include "Audio\Sound.h"
 
-class SoundTestEntity : public Entity
+class SoundTestEntity : public CEntity
 {
-	Sound sound;
+	CSound sound;
 	float angle;
-	void Enter() override;
+	void Entry() override;
 	void Update() override;
 	void ChangePosition();
 	void ChangeVelocity();

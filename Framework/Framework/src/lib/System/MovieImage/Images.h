@@ -4,15 +4,15 @@
 /**
 *”{‘¬‚ÆŠÔ”ò‚Î‚µ‚ÉƒoƒO
 */
-class Images : public MovieImage
+class CImages : public CMovieImage
 {
 	float preTime;
 	//! Movie Time
-	Time time;
+	CTime time;
 	/**
 	*@brief “o˜^ˆ—
 	*/
-	void Enter() override;
+	void Entry() override;
 	/**
 	*@brief XVˆ—
 	*/
@@ -29,23 +29,23 @@ public:
 	/**
 	*@brief constructor
 	*/
-	explicit Images();
+	explicit CImages();
 	/**
 	*@brief constructor
 	*@param[in] string path File Path
 	*@param[in] format movie Video Format
 	*/
-	explicit Images(const std::string& path, const format& movie);
+	explicit CImages(const std::string& path, const TFormat& movie);
 	/**
 	*@brief destructor
 	*/
-	virtual ~Images();
+	virtual ~CImages();
 	/**
 	*@brief Movie Load
 	*@param[in] string path File Path
 	*@param[in] format movie Video Format
 	*/
-	bool Load(const std::string& path, const format& movie);
+	bool Load(const std::string& path, const TFormat& movie);
 	/**
 	*@brief Set Movie Time
 	*@param[in] float time Movie Time

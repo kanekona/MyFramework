@@ -1,8 +1,8 @@
 #include "Font.h"
 #include "Engine\OGF.hpp"
 
-Font::Font()
-	:Sprite(Sprite::REGISTERD_CANVAS)
+CFont::CFont()
+	:CSprite(CSprite::REGISTERD_CANVAS)
 {
 	FT_Init_FreeType(&ft_library);
 	if (!ft_library)
@@ -15,7 +15,7 @@ Font::Font()
 	FT_New_Face(ft_library, "data/font/msgothic.ttc", 0, &face);
 	size = 8.0f;
 }
-Font::~Font()
+CFont::~CFont()
 {
 	for (auto& it : data)
 	{
@@ -25,7 +25,7 @@ Font::~Font()
 	FT_Done_Face(face);
 	FT_Done_FreeType(ft_library);
 }
-void Font::SetText(const std::wstring& t)
+void CFont::SetText(const std::wstring& t)
 {
 	text = t;
 	for (auto c : text)
@@ -38,9 +38,9 @@ void Font::SetText(const std::wstring& t)
 			FT_Render_Glyph(face->glyph, FT_Render_Mode::FT_RENDER_MODE_NORMAL);
 
 			FT_Bitmap bitmap = face->glyph->bitmap;
-			TextureData d;
+			STextureData d;
 			d.character = c;
-			d.texture = new Texture();
+			d.texture = new CTexture();
 			d.size = { (int)bitmap.width,(int)bitmap.rows };
 			d.bearing = { face->glyph->bitmap_left,face->glyph->bitmap_top };
 			d.texture->SetBuffer(bitmap.buffer, bitmap.width, bitmap.rows);
@@ -76,23 +76,23 @@ void Font::SetText(const std::wstring& t)
 	//	++i;
 	//}
 //}
-std::wstring Font::GetText() const
+std::wstring CFont::GetText() const
 {
 	return text;
 }
-void Font::SetSize(const unsigned int fontSize)
+void CFont::SetSize(const unsigned int fontSize)
 {
 	size = fontSize;
 }
-unsigned int Font::GetSize() const
+unsigned int CFont::GetSize() const
 {
 	return size;
 }
-std::map<wchar_t,Font::TextureData>* Font::GetData()
+std::map<wchar_t,CFont::STextureData>* CFont::GetData()
 {
 	return &data;
 }
-void Font::Draw()
+void CFont::Draw()
 {
-	OGF::Draw(this, &transform->position);
+	COGF::Draw(this, &transform->position);
 }

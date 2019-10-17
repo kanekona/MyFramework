@@ -1,28 +1,28 @@
 #pragma once
-#include "FPS\FPS.h"
+#include "Framerate\Framerate.h"
 #define ERROR_GLFE_INIT 0x01
 #define ERROR_GLEW_INIT 0x02
 
-class Framework;
-class Window;
-class Audio;
-class Initializer;
+class CFramework;
+class CWindow;
+class CAudio;
+class CInitializer;
 
 /**
 *@brief	Game Engine
 */
-class Engine : private NonCopyable
+class CEngine : private CNonCopyable
 {
 	//! frame rate
-	FPS fps;
+	CFramerate fps;
 	//! Main Framework
-	Framework* framework;
+	CFramework* framework;
 	//! MainFrame Window Address
-	Window* window;
+	CWindow* window;
 	//! Audiodevice
-	Audio* audiodevice;
+	CAudio* audiodevice;
 	//! Engine Initializer
-	Initializer* initializer;
+	CInitializer* initializer;
 	//! Enable
 	bool enable;
 	/**
@@ -37,11 +37,11 @@ public:
 	/**
 	*@brief	constructor
 	*/
-	explicit Engine();
+	explicit CEngine();
 	/**
 	*@brief	destructor
 	*/
-	virtual ~Engine();
+	virtual ~CEngine();
 	/**
 	*@brief	システム更新
 	*@return bool System Continuation

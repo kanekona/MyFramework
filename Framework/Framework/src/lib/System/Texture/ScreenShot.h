@@ -1,17 +1,18 @@
 #pragma once
 #include "Engine\Data.h"
 #include "NonCopyable\NonCopyable.hpp"
+#include "Engine\EngineTypedef.h"
 
-enum class ScreenShotFormat : unsigned char
+enum class EScreenShotFormat : uint8
 {
-	RGB = 3,
+	//RGB = 3,
 	RGBA = 4,
 };
 
-class ScreenShot : private NonCopyable
+class CScreenShot : private CNonCopyable
 {
 public:
-	static void Capture(const ScreenShotFormat InFormat = ScreenShotFormat::RGBA);
+	static void Capture(const EScreenShotFormat InFormat = EScreenShotFormat::RGBA);
 
-	static void Capture(const Box2D& WinPos, const ScreenShotFormat InFormat);
+	static void Capture(const CBox2D& WinPos, const EScreenShotFormat InFormat = EScreenShotFormat::RGBA);
 };

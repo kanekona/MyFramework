@@ -4,12 +4,13 @@
 #include <string>
 #include <vector>
 #include "System\System.h"
-typedef int FileFormat;
-class File final
+#include "Engine\EngineTypedef.h"
+typedef uint8 TFileFormat;
+class CFile final
 {
 public:
-	static const FileFormat KL_MALLOC;
-	static const FileFormat KL_NEW;
+	static const TFileFormat KL_MALLOC = 0x00;
+	static const TFileFormat KL_NEW = 0x01;
 	// Reading files
 	static std::string Load(std::ifstream& ifs)
 	{
@@ -21,7 +22,7 @@ public:
 	static std::string Load(const std::string& path)
 	{
 		std::ifstream ifs(path, std::ios::in | std::ios::binary);
-		return File::Load(ifs);
+		return CFile::Load(ifs);
 	}
 	// File Output
 	static void Output(const std::string& path, const std::string& text)
@@ -91,11 +92,11 @@ public:
 	
 	static unsigned int Count(const std::string& path)
 	{
-		std::string str = File::Load(path);
+		std::string str = CFile::Load(path);
 		return KL::Count(str, '\n');
 	}
 	// One line String Attay
-	static std::string* LoadStrings(const std::string& path, const unsigned int count, const FileFormat config = KL_NEW)
+	static std::string* LoadStrings(const std::string& path, const unsigned int count, const TFileFormat config = KL_NEW)
 	{
 		std::ifstream ifs(path, std::ios::in);
 		if (!ifs)
@@ -105,10 +106,10 @@ public:
 		std::string* texts = nullptr;
 		switch (config)
 		{
-		case 0x00:
+		case CFile::KL_MALLOC:
 			texts = (std::string*)malloc(count);
 			break;
-		case 0x01:
+		case CFile::KL_NEW:
 			texts = new std::string[count];
 			break;
 		default:
@@ -124,11 +125,11 @@ public:
 		}
 		return texts;
 	}
-	static std::string* LoadStrings(const std::string& path, const FileFormat config = KL_NEW)
+	static std::string* LoadStrings(const std::string& path, const TFileFormat config = KL_NEW)
 	{
 		return LoadStrings(path, Count(path) + 1, config);
 	}
-	static std::string* LoadStrings(const std::string& path, unsigned int * out, const FileFormat config = KL_NEW)
+	static std::string* LoadStrings(const std::string& path, unsigned int * out, const TFileFormat config = KL_NEW)
 	{
 		*out = Count(path) + 1;
 		return LoadStrings(path, *out, config);

@@ -1,13 +1,13 @@
 #pragma once
 #include "Entity\Entity.h"
 
-class Input;
+class CInput;
 
-class InputTest : public Entity
+class InputTest : public CEntity
 {
-	Input* input;
+	CInput* input;
 	void Update() override;
-	void Enter() override;
+	void Entry() override;
 public:
 	explicit InputTest();
 	virtual ~InputTest();

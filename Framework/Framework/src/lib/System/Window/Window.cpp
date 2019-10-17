@@ -2,7 +2,7 @@
 #include "stb_image.h"
 #include "Scene\Scene.h"
 #include "Engine\Framework.h"
-Window::Window()
+CWindow::CWindow()
 {
 	//Default
 	widht = 640;
@@ -12,9 +12,9 @@ Window::Window()
 	enableIcon = false;
 	isVisualization = false;
 	window = nullptr;
-	position = Vec2Int(0, 30);
+	position = CVec2Int(0, 30);
 }
-Window::Window(const int wi, const int he, const char* windowname, const bool screen,const Vec2Int& pos)
+CWindow::CWindow(const int wi, const int he, const char* windowname, const bool screen,const CVec2Int& pos)
 	:widht(wi)
 	, height(he)
 	, name(windowname)
@@ -28,12 +28,12 @@ Window::Window(const int wi, const int he, const char* windowname, const bool sc
 	}
 	glfwSetWindowPos(window, position.x, position.y);
 }
-Window::~Window()
+CWindow::~CWindow()
 {
 	glfwSetWindowIcon(window, 0, NULL);
 }
 
-bool Window::Create(const int wi, const int he, char* windowname, const bool screen,const Vec2Int& pos)
+bool CWindow::Create(const int wi, const int he, char* windowname, const bool screen,const CVec2Int& pos)
 {
 	widht = wi;
 	height = he;
@@ -48,7 +48,7 @@ bool Window::Create(const int wi, const int he, char* windowname, const bool scr
 	glfwSetWindowPos(window, position.x, position.y);
 	return true;
 }
-bool Window::Create()
+bool CWindow::Create()
 {
 	window = glfwCreateWindow(widht, height, name.c_str(), enableFullScreen ? glfwGetPrimaryMonitor() : NULL, window ? window : NULL);
 	if (!window) {
@@ -58,7 +58,7 @@ bool Window::Create()
 	glfwSetWindowPos(window, position.x, position.y);
 	return true;
 }
-bool Window::Create(const WindowParameter& parameter)
+bool CWindow::Create(const CWindowParameter& parameter)
 {
 	widht = parameter.size.x;
 	height = parameter.size.y;
@@ -73,7 +73,7 @@ bool Window::Create(const WindowParameter& parameter)
 	glfwSetWindowPos(window, (int)position.x, (int)position.y);
 	return true;
 }
-void Window::SetIcon(const std::string& path)
+void CWindow::SetIcon(const std::string& path)
 {
 	//stbimageを使って画像を読み込む
 	image[0].pixels = stbi_load(path.c_str(), &image[0].width, &image[0].height, 0, 4);
@@ -82,7 +82,7 @@ void Window::SetIcon(const std::string& path)
 	//データの解放
 	stbi_image_free(image[0].pixels);
 }
-void Window::Limits()
+void CWindow::Limits()
 {
 	//Windowのサイズを固定化させる
 	glfwSetWindowSizeLimits(window, widht, height, widht, height);
@@ -91,7 +91,7 @@ void Window::Limits()
 	//windowのサイズを変更する(固定化されている場合変更はできない)
 	//glfwSetWindowSize(window, 1920, 1080);
 }
-void Window::Limits(const int w,const int h)
+void CWindow::Limits(const int w,const int h)
 {
 	//Windowのサイズを固定化させる
 	glfwSetWindowSizeLimits(window, w, h, w, h);
@@ -100,7 +100,7 @@ void Window::Limits(const int w,const int h)
 	//windowのサイズを変更する(固定化されている場合変更はできない)
 	//glfwSetWindowSize(window, 1920, 1080);
 }
-void Window::Enable()
+void CWindow::Enable()
 {
 	if (enableIcon)
 	{
@@ -116,7 +116,7 @@ void Window::Enable()
 	}
 }
 
-void Window::Visualization()
+void CWindow::Visualization()
 {
 	if (isVisualization)
 	{
@@ -132,77 +132,77 @@ void Window::Visualization()
 	}
 }
 
-void Window::InMouseMode(const bool index)
+void CWindow::InMouseMode(const bool index)
 {
 	glfwSetInputMode(window, GLFW_CURSOR, index ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_HIDDEN);
 }
-Vec2Int Window::GetSize() const
+CVec2Int CWindow::GetSize() const
 {
 	int w, h;
 	glfwGetWindowSize(window, &w, &h);
-	return Vec2Int(w, h);
+	return CVec2Int(w, h);
 }
-Vec2Int Window::GetPos() const
+CVec2Int CWindow::GetPos() const
 {
 	int x, y;
 	glfwGetWindowPos(window, &x, &y);
-	return Vec2Int(x, y);
+	return CVec2Int(x, y);
 }
-void Window::CreatePosition(const Vec2Int& pos)
+void CWindow::CreatePosition(const CVec2Int& pos)
 {
 	position = pos;
 }
-GLFWwindow* Window::GetFWWindow() const
+GLFWwindow* CWindow::GetFWWindow() const
 {
 	return window;
 }
-void Window::SetPos(const Vec2Int& pos)
+void CWindow::SetPos(const CVec2Int& pos)
 {
 	glfwSetWindowPos(window, pos.x, pos.y);
 }
-void Window::SetPos(const int x, const int y)
+void CWindow::SetPos(const int x, const int y)
 {
 	glfwSetWindowPos(window, x, y);
 }
-void Window::SetSize(const Vec2Int& size)
+void CWindow::SetSize(const CVec2Int& size)
 {
 	Limits(size.x, size.y);
 	glfwSetWindowSize(window, size.x, size.y);
 }
-void Window::SetSize(const int w, const int h)
+void CWindow::SetSize(const int w, const int h)
 {
 	Limits(w, h);
 	glfwSetWindowSize(window, w, h);
 }
-void Window::ChengeTitle(const char* windowname)
+void CWindow::ChengeTitle(const char* windowname)
 {
 	name = windowname;
 	glfwSetWindowTitle(window, name.c_str());
 }
-void Window::ChangeMode(const int x, const int y, const int w, const int h, const bool flag)
+void CWindow::ChangeMode(const int x, const int y, const int w, const int h, const bool flag)
 {
 	SetPos(x, y);
 	SetSize(w, h);
 	glfwSetWindowMonitor(window, flag ? glfwGetPrimaryMonitor() : NULL, x, y, w, h, GLFW_DONT_CARE);
 	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
-	Framework::Get()->GetScene()->GetCamera()->Initialize(Box2D(0, 0, w, h));
+	CFramework::Get()->GetScene()->GetCamera()->Initialize(CBox2D(0, 0, w, h));
 
 }
-void Window::ChangeMode(const int x, const int y, const int w, const int h, const char* n, const bool flag)
+void CWindow::ChangeMode(const int x, const int y, const int w, const int h, const char* n, const bool flag)
 {
 	ChengeTitle(n);
 	ChangeMode(x, y, w, h, flag);
 }
-const std::string& Window::GetTitle() const
+const std::string& CWindow::GetTitle() const
 {
 	return name;
 }
-void Window::ChangeMode(const Vec2Int& pos, const Vec2Int& size, const bool flag)
+void CWindow::ChangeMode(const CVec2Int& pos, const CVec2Int& size, const bool flag)
 {
 	ChangeMode(pos.x, pos.y, size.x, size.y, flag);
 }
 
-WindowParameter::WindowParameter(const Vec2Int& p, const Vec2Int& s, const char* n, const bool f)
+CWindowParameter::CWindowParameter(const CVec2Int& p, const CVec2Int& s, const char* n, const bool f)
 {
 	position = p;
 	size = s;

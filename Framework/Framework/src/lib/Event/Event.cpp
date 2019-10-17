@@ -2,15 +2,15 @@
 #include "ResourceLoad\ResourceLoad.h"
 #include "WindowEvent\WindowEvent.h"
 #include "ConfigInput\ConfigInputEvent.h"
-EventTask::EventTask()
+CEventTask::CEventTask()
 {
 
 }
-EventTask::~EventTask()
+CEventTask::~CEventTask()
 {
 
 }
-bool EventTask::Load(const Event& eventType, const std::string& path)
+bool CEventTask::Load(const EEvent& eventType, const std::string& path)
 {
 	//もしそのファイルがほかで開かれているなら閉じる
 	if (ifs.is_open())
@@ -27,22 +27,22 @@ bool EventTask::Load(const Event& eventType, const std::string& path)
 	//読み込んだファイルを指定した種類のEventで実行する
 	switch (eventType)
 	{
-	case Event::RESOURCE_LOAD:
+	case EEvent::RESOURCE_LOAD:
 	{
 		//constructorで処理が終わるので生成してdeleteする
-		ResourceLoad* rl = new ResourceLoad(ifs);
+		CResourceLoad* rl = new CResourceLoad(ifs);
 		delete rl;
 	}
 	break;
-	case Event::WINDOW_CHANGE:
+	case EEvent::WINDOW_CHANGE:
 	{
-		WindowEvent* we = new WindowEvent(ifs);
+		CWindowEvent* we = new CWindowEvent(ifs);
 		delete we;
 	}
 	break;
-	case Event::INPUT_CONFIG:
+	case EEvent::INPUT_CONFIG:
 	{
-		ConfigInputEvent* ci = new ConfigInputEvent(ifs);
+		CConfigInputEvent* ci = new CConfigInputEvent(ifs);
 		delete ci;
 	}
 	break;

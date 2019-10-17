@@ -1,36 +1,56 @@
 #include "TextureTest.h"
 #include "ResourceManager\ResourceManager.h"
+#include "Texture\Texture.h"
 #include "Texture\ScreenShot.h"
 #include "Input\Input.h"
 #include "Sprite\Sprite.h"
+#include "Engine\EngineMacro.h"
+#include "Engine\Framework.h"
+#include "Window\Window.h"
 
 void TextureTestEntity::Update()
 {
-	if (Input::Get()->down(In::B4))
+	if (CInput::Get()->down(In::B4))
 	{
-		ScreenShot::Capture();
+		CVec2Int Size = CFramework::Get()->GetWindow()->GetSize();
+		CScreenShot::Capture(CBox2D(0, 0, Size.x, Size.y / 2));
 	}
+	CColor MousePixcel = CInput::Get()->mouse->GetPixcel();
+	printf("[Pos:%f:%f][%f][%f][%f][%f]\n", CInput::Get()->mouse->GetPos().x, CInput::Get()->mouse->GetPos().y, MousePixcel.red, MousePixcel.green, MousePixcel.blue, MousePixcel.alpha);
 }
 
-void TextureTestEntity::Enter()
+void TextureTestEntity::Entry()
 {
+#if DEBUG_ENABLE
+	ENSUREMSG(true, "aiueo");
+	ENSURE(true);
+#endif
 	std::string texID = "colortest";
 	//std::string texID = "back";
 	//data\not\image\2.装飾\使用例\20.たんこぶ.png
-	Sprite* sprite = new Sprite();
+	CSprite* sprite = new CSprite();
 	sprite->tag = "testSprite";
 	SetChildren(sprite);
 	sprite->CreateData();
 	sprite->texture->Load("./data/not/image/2.装飾/使用例/20.たんこぶ.png");
 	sprite->transform->scale = *sprite->texture->GetSize();
 
-	ResourceManager::Get()->GetTextureData(texID)->OutputPixcelData();
+	sprite = new CSprite();
+	sprite->tag = "testSprite";
+	SetChildren(sprite);
+	sprite->CreateData();
+	sprite->texture->Load("./data/not/image/4.服装・髪型/3.ワンピース/1.png");
+	sprite->transform->position.x += 500;
+	sprite->transform->scale = *sprite->texture->GetSize();
 
-	Texture* tex = ResourceManager::Get()->GetTextureData(texID);
+#if ENGINE_DEBUG
+	CResourceManager::Get()->GetTextureData(texID)->OutputPixcelData();
+#endif
+	CTexture* tex = CResourceManager::Get()->GetTextureData(texID);
 
-	Color* color = Texture::NewPixels(tex);
+	CColor* color = CTexture::NewPixels(tex);
 
-	Texture::GetPixels(tex, color);
+	CTexture::GetPixels(tex, color);
 
 	for (int y = 0; y < tex->GetSize()->y; ++y)
 	{
@@ -46,7 +66,7 @@ void TextureTestEntity::Enter()
 		printf("\n");
 	}
 
-	std::vector<std::vector<Color>> data = Texture::VectorFromArray(tex, color);
+	std::vector<std::vector<CColor>> data = CTexture::VectorFromArray(tex, color);
 
 	for (int y = 0; y < data.size(); ++y)
 	{
@@ -62,7 +82,7 @@ void TextureTestEntity::Enter()
 		printf("\n");
 	}
 
-	data = Texture::VectorFromArray(tex, color, 1, 1, 2, 2);
+	data = CTexture::VectorFromArray(tex, color, 1, 1, 2, 2);
 
 	for (int y = 0; y < data.size(); ++y)
 	{
@@ -79,7 +99,7 @@ void TextureTestEntity::Enter()
 	}
 
 
-	Color point = Texture::ColorFromArray(tex, color, 1, 1);
+	CColor point = CTexture::ColorFromArray(tex, color, 1, 1);
 	printf("[%.0f:%.0f:%.0f:%.0f] \n"
 		, point.red
 		, point.green
@@ -87,7 +107,7 @@ void TextureTestEntity::Enter()
 		, point.alpha
 	);
 
-	Texture::FreePixels(color);
+	CTexture::FreePixels(color);
 }
 
 TextureTestEntity::TextureTestEntity()
@@ -96,5 +116,5 @@ TextureTestEntity::TextureTestEntity()
 
 TextureTestEntity::~TextureTestEntity()
 {
-	GetChild<Sprite>("testSprite")->DeleteData();
+
 }

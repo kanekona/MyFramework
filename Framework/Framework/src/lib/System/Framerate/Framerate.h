@@ -1,26 +1,29 @@
 
 #pragma once
 #include "NonCopyable\NonCopyable.hpp"
+#include "Engine\EngineTypedef.h"
 #include "System\System.h"
 /**
 *@brief	フレームレートを計算,制限するclass
 *
 *既存GameEngineを使用している場合はUpdateをDEBUG時のみ行う
 */
-class FPS : private NonCopyable 
+class CFramerate : private CNonCopyable 
 {
+#if DEBUG_ENABLE
 	//! 全フレームタイム
 	float lastTime;
 	//! カウント数
-	int count;
+	uint32 count;
+#endif
 	//! fps値
 	GLfloat fps;
 	//! frame rate
-	int framerate;
+	uint8 framerate;
 	//! oneframetime
 	float oneFrameTime;
 	//! FrameCount
-	unsigned int frameCount;
+	uint64 frameCount;
 	//! StartDeltaTime
 	float startDeltaTime;
 	//! DeltaTime
@@ -33,21 +36,21 @@ class FPS : private NonCopyable
 	*@brief Initialize
 	*@param[in] float rate Framerate
 	*/
-	void Init(const float rate);
+	void Init(const uint8 rate);
 public:
 	/**
 	*@brief	constructor
 	*/
-	explicit FPS();			
+	explicit CFramerate();			
 	/**
 	*@brief constructor
 	*@param[in] float rate Framerate
 	*/
-	explicit FPS(const float rate);
+	explicit CFramerate(const uint8 rate);
 	/**
 	*@brief	destructor
 	*/
-	virtual ~FPS();
+	virtual ~CFramerate();
 	/**
 	*@brief	更新処理
 	*/
@@ -56,7 +59,7 @@ public:
 	*@bried	フレームレート指定
 	*@param[in]	int rate frame rate
 	*/
-	void SetFrameRate(const int rate);
+	void SetFrameRate(const uint8 rate);
 	/**
 	*@brief	フレームチェック
 	*@return 秒間フレームに達しているならtrue

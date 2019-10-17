@@ -1,34 +1,34 @@
 #include "State.h"
-StateParam::StateParam(const unsigned int i)
+CStateParam::CStateParam(const unsigned int i)
 	:id(i)
 {
 
 }
-unsigned int StateParam::GetTime() const
+unsigned int CStateParam::GetTime() const
 {
 	return timeCnt;
 }
-void StateParam::TimeUp(const unsigned int cnt)
+void CStateParam::TimeUp(const unsigned int cnt)
 {
 	timeCnt += cnt;
 }
-void StateParam::ResetTime()
+void CStateParam::ResetTime()
 {
 	timeCnt = 0;
 }
-unsigned int StateParam::GetID() const
+unsigned int CStateParam::GetID() const
 {
 	return id;
 }
 
-StateManager::StateManager(const unsigned int i, StateParam* state)
+CStateManager::CStateManager(const unsigned int i, CStateParam* state)
 {
 	list[i] = state;
 	nowState = i;
-	list[i]->Enter(this);
+	list[i]->Entry(this);
 }
 
-StateManager::~StateManager()
+CStateManager::~CStateManager()
 {
 	auto id = list.begin();
 	while (id != list.end())
@@ -38,20 +38,20 @@ StateManager::~StateManager()
 	}
 }
 
-StateParam* StateManager::GetState(const unsigned int i)
+CStateParam* CStateManager::GetState(const unsigned int i)
 {
 	return list[i];
 }
-bool StateManager::SetState(const unsigned int i, StateParam* state)
+bool CStateManager::SetState(const unsigned int i, CStateParam* state)
 {
 	list[i] = state;
 	return true;
 }
-void StateManager::NextState(const unsigned int i)
+void CStateManager::NextState(const unsigned int i)
 {
 	nextState = i;
 }
-void StateManager::Update()
+void CStateManager::Update()
 {
 	//Param(list[nowState]->Param());
 	while(list[nowState]->ChangeState(this))
@@ -60,17 +60,17 @@ void StateManager::Update()
 	}
 	list[nowState]->Update();
 }
-void StateManager::ChangeState(const unsigned int i)
+void CStateManager::ChangeState(const unsigned int i)
 {
 	preState = nowState;
 	list[preState]->Exit(this);
 	nowState = i;
-	list[nowState]->Enter(this);
+	list[nowState]->Entry(this);
 }
-void StateManager::ChangeState()
+void CStateManager::ChangeState()
 {
 	list[nowState]->Exit(this);
 	preState = nowState;
 	nowState = nextState;
-	list[nowState]->Enter(this);
+	list[nowState]->Entry(this);
 }

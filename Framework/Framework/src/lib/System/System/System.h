@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine\EngineMacro.h"
+#include "Engine\EngineTypedef.h"
 
 #if !DEBUG_ENABLE
 // Degub版のみコンソールを表示する設定
@@ -61,7 +62,9 @@
 //GLM
 //#include <glm/glm.hpp>
 
+#if WINDOWS_BUILD
 #include <Windows.h>
+#endif
 
 #if defined(_MSC_VER)
 //EWを先にインクルードする必要がある。
@@ -90,24 +93,24 @@ namespace KL
 {
 	void MulitMatrixf(GLfloat*, GLfloat*, GLfloat*);
 	void Normalize(GLfloat*);
-	void Rotate(const float _angle, Vec2*);
-	void LineBoxDraw(const Box2D* box, const Color& color = { 1,1,1,1 }, const float linewidth = 1.0f);
-	void LineBoxDraw(const Box2D* box, const float linewidth, const Color& color = { 1,1,1,1 });
-	void LineBoxDraw(const Vec2* vec, const Color& color = { 1,1,1,1 }, const float linewidth = 1.0f);
-	void LineBoxDraw(const Vec2* vec, const float linewidth, const Color& color = { 1,1,1,1 });
-	void LineDraw(const Vec2* vec, const Color& color = { 1,1,1,1 }, const float linewidth = 1.0f);
-	void LineDraw(const Vec2* vec, const float linewidth, const Color& color = { 1,1,1,1 });
-	void LineOvalDraw(const int x, const int y, const float ovalx, const float ovaly, const float linewidth = 1.0f, const Color& color = { 1,1,1,1 });
-	void LineOvalDraw(const Vec2* pos, const Vec2* scale, const float linewidth = 1.0f, const Color& color = { 1,1,1,1 });
-	void PointDraw(const Vec2* pos, const float linewidth, const Color& color = { 1,1,1,1 });
-	void PointDraw(const Vec2* pos, const Color& color = { 1,1,1,1 }, const float linewidth = 1.0f);
-	void BackColor(const Color& color);
+	void Rotate(const float _angle, CVec2*);
+	void LineBoxDraw(const CBox2D* box, const CColor& color = { 1,1,1,1 }, const float linewidth = 1.0f);
+	void LineBoxDraw(const CBox2D* box, const float linewidth, const CColor& color = { 1,1,1,1 });
+	void LineBoxDraw(const CVec2* vec, const CColor& color = { 1,1,1,1 }, const float linewidth = 1.0f);
+	void LineBoxDraw(const CVec2* vec, const float linewidth, const CColor& color = { 1,1,1,1 });
+	void LineDraw(const CVec2* vec, const CColor& color = { 1,1,1,1 }, const float linewidth = 1.0f);
+	void LineDraw(const CVec2* vec, const float linewidth, const CColor& color = { 1,1,1,1 });
+	void LineOvalDraw(const int x, const int y, const float ovalx, const float ovaly, const float linewidth = 1.0f, const CColor& color = { 1,1,1,1 });
+	void LineOvalDraw(const CVec2* pos, const CVec2* scale, const float linewidth = 1.0f, const CColor& color = { 1,1,1,1 });
+	void PointDraw(const CVec2* pos, const float linewidth, const CColor& color = { 1,1,1,1 });
+	void PointDraw(const CVec2* pos, const CColor& color = { 1,1,1,1 }, const float linewidth = 1.0f);
+	void BackColor(const CColor& color);
 	void BackColor(const float&red, const float&green, const float&blue, const float&alpha);
 	int mbclen(const char* c);
-	void cout(const Box2D&);
-	void cout(const Vec2&);
-	void cout(const Color&);
-	void cout(const Vec3&);
+	void cout(const CBox2D&);
+	void cout(const CVec2&);
+	void cout(const CColor&);
+	void cout(const CVec3&);
 	bool Data_Cipher(const std::string& in_path, const std::string& out_path);
 	std::string Data_Composite(std::ifstream& ifs);
 	void OutDebugData(const std::string& out_path, const std::string& text);
@@ -117,7 +120,7 @@ namespace KL
 	bool StringisNumber(const std::string& str);
 	bool StringFromNumber(const std::string& str, float* out);
 	bool StringFromNumber(const std::string& str, int* out);
-	bool StringFromStrID(const std::string& str, StrID* out);
+	bool StringFromStrID(const std::string& str, CStrID* out);
 	unsigned int Count(const std::string& str, const char c);
 	std::string* SplitString(const std::string& text, const char c, int* out);
 	void SplitString(std::vector<std::string>* out, const std::string& text, const char c);
@@ -135,6 +138,13 @@ namespace KL
 	{
 		*out = typeid(T).name();
 		Trim(out, "class ");
+	}
+	template<class T> void ClassFromName(CStrID* out)
+	{
+		std::string classname;
+		classname = typeid(T).name();
+		Trim(&classname, "class ");
+		*out = CStrID(classname);
 	}
 	template<typename T> void StructFromName(std::string* out)
 	{

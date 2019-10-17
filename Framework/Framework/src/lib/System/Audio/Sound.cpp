@@ -2,13 +2,13 @@
 //---------------------------------
 //@:Sound class
 //---------------------------------
-Sound::Sound()
+CSound::CSound()
 {
 
 };
-Sound::Sound(const std::string& path_, const bool loop) :
-	buffer(std::make_shared<Buffer>(path_)),
-	source(std::make_shared<Source>()),
+CSound::CSound(const std::string& path_, const bool loop) :
+	buffer(std::make_shared<CBuffer>(path_)),
+	source(std::make_shared<CSource>()),
 	path(path_)
 {
 	source->BindBuffer(*buffer);
@@ -19,14 +19,14 @@ Sound::Sound(const std::string& path_, const bool loop) :
 	oneSecondWaveformData = buffer->sampleRate;
 	allWaveformData = (unsigned int)buffer->waveformData.size();
 }
-Sound::~Sound()
+CSound::~CSound()
 {
 
 };
-bool Sound::Create(const std::string& path_, const bool loop)
+bool CSound::Create(const std::string& path_, const bool loop)
 {
-	buffer = std::make_shared<Buffer>(path_);
-	source = std::make_shared<Source>();
+	buffer = std::make_shared<CBuffer>(path_);
+	source = std::make_shared<CSource>();
 	path = path_;
 	source->BindBuffer(*buffer);
 	Looping(loop);
@@ -37,64 +37,64 @@ bool Sound::Create(const std::string& path_, const bool loop)
 	allWaveformData = (unsigned int)buffer->waveformData.size();
 	return true;
 }
-void Sound::Play() const
+void CSound::Play() const
 {
 	source->Play();
 }
-void Sound::Stop() const
+void CSound::Stop() const
 {
 	source->Stop();
 }
-void Sound::Pause() const
+void CSound::Pause() const
 {
 	source->Pause();
 }
-void Sound::Volume(const float value_) const
+void CSound::Volume(const float value_) const
 {
 	source->SetVolume(value_);
 }
-void Sound::Pitch(const float value_) const
+void CSound::Pitch(const float value_) const
 {
 	source->SetPitch(value_);
 }
-void Sound::Looping(const bool loop_) const
+void CSound::Looping(const bool loop_) const
 {
 	source->SetLoop(loop_);
 }
-bool Sound::IsPlay() const
+bool CSound::IsPlay() const
 {
 	return source && source->IsPlay();
 }
-float Sound::CurrentTime() const
+float CSound::CurrentTime() const
 {
 	return source->GetTime();
 }
-float Sound::Duration() const
+float CSound::Duration() const
 {
 	return buffer->GetTime();
 }
-void Sound::SetVolume(float maxVolume_)
+void CSound::SetVolume(float maxVolume_)
 {
 	volume_ = maxVolume_;
 }
-float Sound::GetVolume() const
+float CSound::GetVolume() const
 {
 	return volume_;
 }
-Buffer* Sound::GetBuffer() const
+CBuffer* CSound::GetBuffer() const
 {
 	return &*buffer;
 }
-Source* Sound::GetSource() const
+CSource* CSound::GetSource() const
 {
 	return &*source;
 }
-void Sound::Skip(const float time)
+void CSound::Skip(const float time)
 {
 	source->SetTime(time);
 }
 #if ENGINE_DEBUG
-void Sound::Test()
+void CSound::Test()
 {
 	fftwf_complex* in;
 	fftwf_complex* out;

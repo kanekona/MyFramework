@@ -2,24 +2,24 @@
 #include "Sprite\Sprite.h"
 #include "System\System.h"
 
-typedef std::string format;
+typedef std::string TFormat;
 /**
 *@brief	MovieImage Format
 */
-class MovieFormat
+class CMovieFormat
 {
 public:
 	//! MP3
-	const static format MP3;
+	const static TFormat MP3;
 	//! MP3
-	const static format MP4;
+	const static TFormat MP4;
 	//! AVI
-	const static format AVI;
+	const static TFormat AVI;
 	//! WAV
-	const static format WAV;
+	const static TFormat WAV;
 };
 
-class MovieImage : public Sprite
+class CMovieImage : public CSprite
 {
 protected:
 	//! OpenCVçsóÒ
@@ -70,11 +70,11 @@ public:
 	/**
 	*@brief constructor
 	*/
-	explicit MovieImage();
+	explicit CMovieImage();
 	/**
 	*@brief destructor
 	*/
-	virtual ~MovieImage();
+	virtual ~CMovieImage();
 	/**
 	*@brief Set Play Video
 	*@param[in] bool isPlay enable video play

@@ -2,12 +2,14 @@
 #pragma once
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "Engine\EngineTypedef.h"
+
 /**
 *@brief	Easingを扱うclass
 *
 *各詳細はEasing表を確認
 */
-class Easing
+class CEasing
 {
 private:
 	//! TimeCount
@@ -23,7 +25,7 @@ public:
 	*enum class Name
 	*@brief	EasingName
 	*/
-	enum class Name
+	enum class EName : uint8
 	{
 		Back, Bounce, Circ, Cubic, Elastic, Expo, Linear, Quad, Quart, Quint, Sine
 	};
@@ -31,7 +33,7 @@ public:
 	*enum class Mode
 	*@brief	EasingMode
 	*/
-	enum class Mode
+	enum class EMode : uint8
 	{
 		In, Out, InOut
 	};
@@ -40,7 +42,7 @@ public:
 	*@param[in]	float duration 設定タイム
 	*@return 現在タイム
 	*/
-	float Time(const float duration)
+	float CTime(const float duration)
 	{
 		if (cnt <= duration)
 		{
@@ -73,7 +75,7 @@ public:
 	/**
 	*@brief	constructor
 	*/
-	Easing() { ResetTime(); };
+	CEasing() { ResetTime(); };
 	/**
 	*@brief	開始と終了地点を登録
 	*@param[in] float startValue StartValue

@@ -7,24 +7,24 @@
 ï`âÊèáÇÇ‹Ç∆ÇﬂÇÈÇ±Ç∆ÇçlÇ¶ÇÈÇ∆ìoò^ópïœêîÇ™Ç†Ç¡ÇΩï˚Ç¢Ç¢Ç©Ç»
 
 */
-class RenderingManager
+class CRenderingManager
 {
 	//! Front Canvas
-	std::vector<Sprite*> uiCanvas;
+	std::vector<CSprite*> uiCanvas;
 	//! Canvas
-	std::vector<Sprite*> canvas;
+	std::vector<CSprite*> canvas;
 	//! Back Canvas
-	std::vector<Sprite*> backCanvas;
+	std::vector<CSprite*> backCanvas;
 	//! Plans Front Canvas
-	std::vector<Sprite*> plansUIs;
+	std::vector<CSprite*> plansUIs;
 	//! Plans Canvas
-	std::vector<Sprite*> plansCanvas;
+	std::vector<CSprite*> plansCanvas;
 	//! Plans Back Canvas
-	std::vector<Sprite*> plansBacks;
+	std::vector<CSprite*> plansBacks;
 	/**
 	*@brief	order sort
 	*/
-	void CanvasOrderSort(std::vector<Sprite*>* sortList);
+	void CanvasOrderSort(std::vector<CSprite*>* sortList);
 	/**
 	*@brief UIRendering
 	*/
@@ -48,56 +48,56 @@ class RenderingManager
 	/**
 	*@brief	Canvas Sprite Adaptation
 	*/
-	void CanvasAdaptation(std::vector<Sprite*>* now, std::vector<Sprite*>* plans);
+	void CanvasAdaptation(std::vector<CSprite*>* now, std::vector<CSprite*>* plans);
 public:
 	/**
 	*@brief	constructor
 	*/
-	explicit RenderingManager();
+	explicit CRenderingManager();
 	/**
 	*@brief destructor
 	*/
-	virtual ~RenderingManager();
+	virtual ~CRenderingManager();
 	/**
 	*@brief	Add Sprite to Canvas
 	*@param[in] Sprite* sprite Add Data
 	*/
-	void AddSpriteCanvas(Sprite* sprite);
+	void AddSpriteCanvas(CSprite* sprite);
 	/**
 	*@brief	Add Sprite to UICanvas
 	*@param[in] Sprite* sprite Add Data
 	*/
-	void AddSpriteUI(Sprite* sprite);
+	void AddSpriteUI(CSprite* sprite);
 	/**
 	*@brief	Add Sprite to BackCanvas
 	*@param[in] Sprite* sprite Add Data
 	*/
-	void AddSpriteBack(Sprite* sprite);
+	void AddSpriteBack(CSprite* sprite);
 
 	/**
 	*@brief	Delete Sprite to Canvas
 	*@param[in] Sprite* sprite Delete Data
 	*/
-	void DeleteSpriteCanvas(Sprite* sprite);
+	void DeleteSpriteCanvas(CSprite* sprite);
 	/**
 	*@brief	Delete Sprite to UICanvas
 	*@param[in] Sprite* sprite Delete Data
 	*/
-	void DeleteSpriteUI(Sprite* sprite);
+	void DeleteSpriteUI(CSprite* sprite);
 	/**
 	*@brief	Delete Sprite to BackCanvas
 	*@param[in] Sprite* sprite Delete Data
 	*/
-	void DeleteSpriteBack(Sprite* sprite);
+	void DeleteSpriteBack(CSprite* sprite);
 
 	/**
 	*@brief	AllCanvasRendering
 	*@param[in] RenderingManager* renderingManager this
 	*/
-	static void Render(RenderingManager* renderingManager);
+	static void Render(CRenderingManager* renderingManager);
 	/**
 	*@brief	All Sprite Adaptation
 	*@param[in] RenderingManager* renderingManager this
 	*/
-	static void AllSpriteAdaptation(RenderingManager* renderingManager);
+	static void AllSpriteAdaptation(CRenderingManager* renderingManager);
 };

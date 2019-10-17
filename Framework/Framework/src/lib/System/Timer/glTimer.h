@@ -5,7 +5,7 @@
 /**
 *@brief	実時間を導くためのclass
 */
-class Time : private NonCopyable
+class CTime : private CNonCopyable
 {
 	//! 初期タイム
 	float initTime;
@@ -31,11 +31,11 @@ public:
 	/**
 	*@brief	constructor
 	*/
-	explicit Time();
+	explicit CTime();
 	/**
 	*@brief	destructor
 	*/
-	virtual ~Time();
+	virtual ~CTime();
 	/**
 	*@brief	計測開始
 	*/

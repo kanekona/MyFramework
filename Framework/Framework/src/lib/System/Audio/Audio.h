@@ -4,24 +4,24 @@
 /**
 *@brief	デバイスを設定するためのclass
 */
-class Audio
+class CAudio
 {
 	ALCdevice* device;
 	ALCcontext*context;
 public:
-		Audio();
-		~Audio();
+		CAudio();
+		~CAudio();
 };
 /**
 *@brief	SoundDataのBufferDataを扱う
 */
-class Buffer
+class CBuffer
 {
 public:
-	explicit Buffer();
-	explicit Buffer(const std::string& path_);
-	explicit Buffer(const std::string& path_, const size_t& time);
-	virtual ~Buffer();
+	explicit CBuffer();
+	explicit CBuffer(const std::string& path_);
+	explicit CBuffer(const std::string& path_, const size_t& time);
+	virtual ~CBuffer();
 	std::string path;
 	ALuint id;
 	float nowTime;
@@ -37,13 +37,13 @@ public:
 /**
 *@brief	SoundDataのSourceDataを扱う
 */
-class Source
+class CSource
 {
 public:
-	Source();
-	~Source();
+	CSource();
+	~CSource();
 	ALuint id;
-	void BindBuffer(const Buffer& buffer);
+	void BindBuffer(const CBuffer& buffer);
 	void UnBindBuffer() const;
 	int GetBufferID() const;
 	ALuint GetID() const;
@@ -61,7 +61,7 @@ public:
 	int GetLoop() const;	
 	void SetTime(const float time) const;
 	float GetTime() const;
-	void QueueBuffer(const Buffer& buffer_) const;
+	void QueueBuffer(const CBuffer& buffer_) const;
 	ALuint UnqueueBuffer() const;
 	int GetProcessed() const;
 	int GetQueued() const;
@@ -70,12 +70,12 @@ public:
 	float GetReferenceDistance() const;
 	void SetRolloffFactor(const float factor) const;
 	float GetRolloffFactor() const;
-	void SetPosition(const Vec3& position) const;
-	Vec3 GetPosition() const;
-	void SetVelocity(const Vec3& velocity) const;
-	Vec3 GetVelocity() const;
-	void SetDirection(const Vec3& direction) const;
-	Vec3 GetDirection() const;
+	void SetPosition(const CVec3& position) const;
+	CVec3 GetPosition() const;
+	void SetVelocity(const CVec3& velocity) const;
+	CVec3 GetVelocity() const;
+	void SetDirection(const CVec3& direction) const;
+	CVec3 GetDirection() const;
 	void SetConeInnerAngle(const float angle) const;
 	float GetConeInnerAngle() const;
 	void SetConeOuterAngle(const float angle) const;
@@ -84,17 +84,17 @@ public:
 	float GetConeOuterGain() const;
 	static void SetOrientation(const float* orientation);
 	static float* GetOrientation(float* orientation);
-	static void SetListenerPosition(const Vec3& position);
-	static Vec3 GetListenerPosition();
-	static void SetListenerVelocity(const Vec3& velocity);
-	static Vec3 GetListenerVelocity();
+	static void SetListenerPosition(const CVec3& position);
+	static CVec3 GetListenerPosition();
+	static void SetListenerVelocity(const CVec3& velocity);
+	static CVec3 GetListenerVelocity();
 	static void SetListenerGain(const float volume);
 	static float GetListenerGain();
 };
 /**
 *@brief	Wavファイルのデータを扱う
 */
-class Wav
+class CWav
 {
 public:
 	struct Info {
@@ -104,7 +104,7 @@ public:
 		u_int bit;
 		u_int size;
 	};
-	explicit Wav(const std::string& file);
+	explicit CWav(const std::string& file);
 	//チャンネル数を返す
 	u_int channel() const;
 	//データがステレオならtrueを返す
@@ -136,9 +136,9 @@ private:
 	//チャンクのサイズを取得
 	static u_int getChunkSize(std::ifstream& fstr);
 };
-class StreamWav {
+class CStreamWav {
 public:
-	explicit StreamWav(const std::string& file);
+	explicit CStreamWav(const std::string& file);
 	bool isStereo() const;
 	u_int sampleRate() const;
 	void loop(const bool loop);
@@ -150,7 +150,7 @@ public:
 	size_t read(std::vector<char>& buffer);
 private:
 	std::ifstream fstr_;
-	Wav::Info info;
+	CWav::Info info;
 	size_t top_pos_;
 	bool loop_;
 	size_t last_size_;

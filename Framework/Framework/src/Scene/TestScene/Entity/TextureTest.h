@@ -1,10 +1,10 @@
 #pragma once
 #include "Entity\Entity.h"
 
-class TextureTestEntity : public Entity
+class TextureTestEntity : public CEntity
 {
 	void Update() override;
-	void Enter() override;
+	void Entry() override;
 public:
 	explicit TextureTestEntity();
 	virtual ~TextureTestEntity();

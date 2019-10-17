@@ -2,17 +2,17 @@
 //---------------------------------
 //@:StrimingSoundclass
 //---------------------------------
-void StreamingSound::queueStream(StreamWav& stream, Source& source, Buffer& buffer, std::vector<char>& sound_buffer)
+void CStreamingSound::queueStream(CStreamWav& stream, CSource& source, CBuffer& buffer, std::vector<char>& sound_buffer)
 {
 	size_t length = stream.read(sound_buffer);
 	buffer.Bind(stream.isStereo(), &sound_buffer[0], static_cast<u_int>(length), stream.sampleRate());
 	source.QueueBuffer(buffer);
 }
-void StreamingSound::streamProc(const std::string& path, const bool loop, std::shared_ptr<Source>& source, std::shared_ptr<Param>& param)
+void CStreamingSound::streamProc(const std::string& path, const bool loop, std::shared_ptr<CSource>& source, std::shared_ptr<Param>& param)
 {
-	StreamWav stream(path);
+	CStreamWav stream(path);
 	stream.loop(loop);
-	Buffer buffer[BUFFER_NUM];
+	CBuffer buffer[BUFFER_NUM];
 	// 読み込みバッファを1秒ぶんの長さにする
 	u_int buffer_size = stream.sampleRate() * (stream.isStereo() ? 2 : 1) * sizeof(uint16_t);
 	std::vector<char> sound_buffer(buffer_size);
@@ -53,12 +53,12 @@ void StreamingSound::streamProc(const std::string& path, const bool loop, std::s
 #endif 
 	//stream.End();
 }
-StreamingSound::StreamingSound()
+CStreamingSound::CStreamingSound()
 {
 
 }
-StreamingSound::StreamingSound(const std::string& path, const bool loop) :
-	source_(std::make_shared<Source>()),
+CStreamingSound::CStreamingSound(const std::string& path, const bool loop) :
+	source_(std::make_shared<CSource>()),
 	param_(std::make_shared<Param>()),
 	pause_(false)
 {
@@ -67,9 +67,9 @@ StreamingSound::StreamingSound(const std::string& path, const bool loop) :
 	isplay_ = false;
 	param_->backStartPos = false;
 }
-void StreamingSound::createSound(const std::string& path_, bool loop)
+void CStreamingSound::createSound(const std::string& path_, bool loop)
 {
-	source_ = std::make_shared<Source>();
+	source_ = std::make_shared<CSource>();
 	param_ = std::make_shared<Param>();
 	pause_ = false;
 	filepath_ = path_;
@@ -77,15 +77,15 @@ void StreamingSound::createSound(const std::string& path_, bool loop)
 	isplay_ = false;
 	param_->backStartPos = false;
 }
-void StreamingSound::gain(const float gain)
+void CStreamingSound::gain(const float gain)
 {
 	source_->SetVolume(gain);
 }
-void StreamingSound::pitch(const float value_) const
+void CStreamingSound::pitch(const float value_) const
 {
 	source_->SetPitch(value_);
 }
-void StreamingSound::pause()
+void CStreamingSound::pause()
 {
 	//別スレッドをロックする
 	param_->mutex.lock();
@@ -104,14 +104,14 @@ void StreamingSound::pause()
 		isplay_ = true;
 	}
 }
-void StreamingSound::stop()
+void CStreamingSound::stop()
 {
 	param_->mutex.lock();
 	source_->Stop();
 	param_->mutex.unlock();
 	isplay_ = false;
 }
-bool StreamingSound::isPlaying()
+bool CStreamingSound::isPlaying()
 {
 	param_->mutex.lock();
 	bool stopped = param_->stopped;
@@ -119,7 +119,7 @@ bool StreamingSound::isPlaying()
 	if (stopped) return false;
 	return source_->IsPlay();
 }
-void StreamingSound::play()
+void CStreamingSound::play()
 {
 	if (!isplay_) {
 	//実行スレッドの生成
@@ -132,7 +132,7 @@ void StreamingSound::play()
 	isplay_ = true;
 	}
 }
-void StreamingSound::DeleteSound()
+void CStreamingSound::DeleteSound()
 {
 	gain(0.0);
 	//スレッド間の処理を取得する
@@ -140,7 +140,7 @@ void StreamingSound::DeleteSound()
 	param_->stopped = true;
 	isplay_ = false;
 }
-float StreamingSound::GetTime() const
+float CStreamingSound::GetTime() const
 {
 	//現在の時間を返すけどstreamingだから1秒ごとに読み込み直すから0~1くらいしか返らないよ
 	return source_->GetTime();
