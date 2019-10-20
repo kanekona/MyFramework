@@ -54,15 +54,15 @@ public:
 	*/
 	bool GetActive() const;
 	/**
+	*@brief Get Entity State
+	*@return EState Entity State
+	*/
+	EState GetState() const;
+	/**
 	*@brief	This Entity Children to Registration
 	*@param[in] Entity* child Children
 	*/
 	void SetChildren(CEntity* child);
-	/**
-	*@brief	Entity Destroy
-	*@param[in] Entity* entity this
-	*/
-	static void Destroy(CEntity* entity);
 	/**
 	*@brief	Entity Update
 	*@param[in] Entity* entity this

@@ -42,6 +42,10 @@ bool CEntity::GetActive() const
 {
 	return active;
 }
+CEntity::EState CEntity::GetState() const
+{
+	return state;
+}
 void CEntity::RegisterChildren()
 {
 	/*for (auto id : plansChilds)
@@ -82,10 +86,6 @@ void CEntity::SetChildren(CEntity* child)
 {
 	plansChilds.emplace_back(child);
 	child->parent = this;
-}
-void CEntity::Destroy(CEntity* entity)
-{
-	entity->Destroy();
 }
 void CEntity::Update(CEntity* entity)
 {

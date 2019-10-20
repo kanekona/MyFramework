@@ -44,12 +44,12 @@ void CScene::RegisterEntity()
 }
 void CScene::KillEntity()
 {
-#if DEBUG_ENABLE
-	ENSUREMSG(true, "この処理は使用不可です");
-#endif
-	/*for (auto id = entitys.begin(); id != entitys.end();)
+//#if DEBUG_ENABLE
+//	ENSUREMSG(true, "この処理は使用不可です");
+//#endif
+	for (auto id = entitys.begin(); id != entitys.end();)
 	{
-		if (CEntity::GetStateCount(*id) == KL_ENTITY_KILL)
+		if ((*id)->GetState() == CEntity::EState::KILL)
 		{
 			delete *id;
 			*id = nullptr;
@@ -59,7 +59,7 @@ void CScene::KillEntity()
 		{
 			++id;
 		}
-	}*/
+	}
 }
 CRenderingManager* CScene::GetRenderingManager()
 {
