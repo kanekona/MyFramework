@@ -44,7 +44,9 @@ void CScene::RegisterEntity()
 }
 void CScene::KillEntity()
 {
+#if DEBUG_ENABLE
 	ENSUREMSG(true, "‚±‚Ìˆ—‚Íg—p•s‰Â‚Å‚·");
+#endif
 	/*for (auto id = entitys.begin(); id != entitys.end();)
 	{
 		if (CEntity::GetStateCount(*id) == KL_ENTITY_KILL)
@@ -108,7 +110,7 @@ std::vector<CEntity*>* CScene::GetEntitys()
 	return &entitys;
 }
 #ifdef KL_DEBUG
-void Scene::Debug()
+void CScene::Debug()
 {
 	std::cout << "SceneTag : " << tag << "\n";
 	for (auto it : entitys)

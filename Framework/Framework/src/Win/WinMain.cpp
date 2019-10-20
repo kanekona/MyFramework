@@ -35,7 +35,7 @@ int main() {
 	try
 	{
 		//Create Engine
-		engine = new Engine();
+		engine = new CEngine();
 	}
 	catch (int errorcode)
 	{

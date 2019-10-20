@@ -4,7 +4,7 @@
 #include <Windows.h>
 #endif
 
-#if ENGINE_DEBUG
+#if DEBUG_ENABLE
 bool KLEnsure(bool flag)
 {
 	if (flag)

@@ -42,7 +42,9 @@ void CFramerate::Reset()
 	oneFrameTime = startDeltaTime = static_cast<float>(glfwGetTime());
 	//oneFrameTime = static_cast<float>(glfwGetTime());
 	frameCount = 1;
+#if DEBUG_ENABLE
 	count = 0;
+#endif
 }
 void CFramerate::SetFrameRate(const uint8 rate)
 {

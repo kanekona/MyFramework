@@ -315,9 +315,6 @@
     <ClInclude Include="src\Scene\TestScene\Entity\GraphTest.h">
       <Filter>ソース ファイル\Scene\TestScene\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="src\lib\System\Engine\EngineTypedef.h">
-      <Filter>ソース ファイル\Library\System\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="src\lib\System\Engine\Delegate.h">
       <Filter>ソース ファイル\Library\System\Engine</Filter>
     </ClInclude>
@@ -337,6 +334,9 @@
       <Filter>ソース ファイル\Win</Filter>
     </ClInclude>
     <ClInclude Include="src\lib\System\Engine\GameManager.h">
+      <Filter>ソース ファイル\Library\System\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\System\Engine\EngineTypedef.h">
       <Filter>ソース ファイル\Library\System\Engine</Filter>
     </ClInclude>
   </ItemGroup>

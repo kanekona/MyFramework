@@ -181,8 +181,9 @@
       <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>Windows\include;src;src\lib;src\lib\System;Windows\include\freetype2</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>KL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>EngineTypedef.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>Windows\lib\Debug</AdditionalLibraryDirectories>

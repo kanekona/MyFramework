@@ -146,7 +146,7 @@ float CStreamingSound::GetTime() const
 	return source_->GetTime();
 }
 #ifdef KL_DEBUG
-void StreamingSound::debugUpdata()
+void CStreamingSound::debugUpdata()
 {
 
 }
